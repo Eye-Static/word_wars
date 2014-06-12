@@ -1,0 +1,59 @@
+td
+{
+  background-color: black;
+}
+
+div.board
+{
+  background-color: rgb(128, 128, 128);
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  width: 700px;
+  height: 450px;
+  overflow: scroll;
+}
+
+.square
+{
+  color: black;
+  width: 40px;
+  height: 40px;
+  margin: 1px;
+}
+
+.blank
+{
+  color: rgb(224, 224, 224);
+  background-color: rgb(224, 224, 224);
+}
+
+.start
+{
+  background-color: rgb(255, 128, 128);
+}
+
+.double-letter
+{
+  background-color: rgb(128, 128, 255);
+}
+
+.triple-letter
+{
+  background-color: rgb(64, 64, 255);
+}
+
+.double-word
+{
+  background-color: rgb(255, 128, 128);
+}
+
+.triple-word
+{
+  background-color: rgb(255, 64, 64);
+}
+
+.start
+{
+  //background-color: rgb(255, 128, 128);
+}
