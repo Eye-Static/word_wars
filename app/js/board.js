@@ -1,11 +1,12 @@
+"use strict";
 function Board ()
 {
   this.maxX = 15;   // board width
   this.maxY = 15;   // board height
 
-  this.grid = new Array();  // a 2D array to hold the squares
+  this.grid = [];  // a 2D array to hold the squares
 
-  for (var y = 0; y < this.maxY; y += 1) this.grid[y] = new Array();
+  for (var y = 0; y < this.maxY; y += 1) this.grid[y] = [];
 
   this.generate = function ()
   {
@@ -31,7 +32,7 @@ function Board ()
     // objects that will fill the "smart grid".
 
     // stringX keeps track of the horizontal position in the string array,
-    // since the increment is 3 instead of 1                        
+    // since the increment is 3 instead of 1
     var stringX = 0;
 
     // run through the string array for x and y, creating a table of divs in
@@ -57,7 +58,7 @@ function Board ()
         // The invisible "." needs to be on the blank div.
         // If the board divs are completely blank, the tiles shift downward for some reason.
         // A medal if you can figure out how to fix that.
-          
+
         // if you need to print grid coordinates
         //$(".board").append ("<td><div class='" + htmlInsert + " " + x + ", " + y + "</div></td>");
 
@@ -70,5 +71,5 @@ function Board ()
       stringX = 0;
     }
     $(".board").append ("</table>");
-  }
+  };
 }
