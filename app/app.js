@@ -1,6 +1,10 @@
-var board = new Board();
+'use strict';
+var $     = require('jquery');
+var Board = require('./js/Board');
 
-$(document).ready (function ()
+$(document).ready(function ()
 {
+  var board = new Board();
+  console.log(board);
   board.generate();
 });

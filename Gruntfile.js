@@ -10,7 +10,7 @@ module.exports = function(grunt) {
       options: {
         jshintrc: true
       },
-      all: ['Gruntfile.js', 'server.js', 'test/**/*.js','app/js/**/*.js']
+      all: ['Gruntfile.js', 'server.js', 'test/**/*.js','app/**/**/*.js']
     },
 
     simplemocha: {
@@ -46,11 +46,11 @@ module.exports = function(grunt) {
 
     browserify: {
       all: {
-        src: 'app/js/**/*.js',
+        src: 'app/**/*.js',
         dest: 'dist/app.js'
       },
       options: {
-        transform: [/*'debowerify', 'hbsfy'*/],
+        /*transform: ['debowerify', 'hbsfy'],*/
         debug: true
       }
     },
@@ -72,7 +72,7 @@ module.exports = function(grunt) {
 
     watch: {
       scripts: {
-        files: ['app/js/**/*.js','test/**/*.js']
+        files: ['app/js/**/*.js','app/*.js', 'test/**/*.js']
       }
     }
   });
