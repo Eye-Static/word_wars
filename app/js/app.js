@@ -1,6 +1,6 @@
 'use strict';
 var $     = require('jquery');
-var Board = require('./js/Board');
+var Board = require('./Board');
 
 $(document).ready(function ()
 {
