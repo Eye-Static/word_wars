@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "description": "A Scrabble-like game with some unique features. Made as a project for Code Fellows.",
   "main": "server.js",
-  "directories": {
-    "test": "test"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Eye-Static/word_wars.git"

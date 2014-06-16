@@ -1,0 +1,38 @@
+Style Guide
+
+---JavaScript---
+//use single quotes and 'use strict';
+'use strict';
+
+//npm packages are listed first, then third party packages, then our packages
+var $     = require('jquery');
+var Board = require('./js/Board');
+
+//function names should be camelCase
+//name the params if they are required,
+//use an options object for optional arguments
+//curly braces should be aligned
+//indent is 2 spaces
+var functionName = function(param1, param2)
+{
+  var wellNamedVariable = [];  //use literal notation instead of 'new' when possible
+  var board = new Board();     //constructors are capitalized, objects you instantiate are not
+  this.param1 = param1;
+  this.param2 = param2;   //use this style to set parameters
+}
+
+---File Structure---
+//files that set what an object has/does are constructors and should start with UpperCase
+//make code as modular as reasonably possible
+//the logic that kicks off the application should be in app.js
+
+---HTML---
+//use the proper element (<sidebar> instead of <div class="sidebar">) when possible
+
+//classes are for broader classes of things, ids are for individual things
+//HTML classes, ids, etc are hyphenated, this helps distinguish them from JavaScript variables
+<div class="example-item" id="item-1"></div>
+<div class="example-item" id="item-2"></div>
+<div class="example-item" id="item-3"></div>
+
+//contruct the elements for best clarity
