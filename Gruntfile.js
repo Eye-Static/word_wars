@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       all: {
         expand: true,
         cwd: 'app/',
-        src: ['styles/*.css', '*.html', 'images/**/*'],
+        src: ['styles/**/*', '*.html', 'images/**/*'],
         dest: 'dist/',
         flatten: true,
         filter: 'isFile'
@@ -51,7 +51,8 @@ module.exports = function(grunt) {
       },
       options: {
         /*transform: ['debowerify', 'hbsfy'],*/
-        debug: true
+        debug: true,
+        external: 'jquery',
       }
     },
 
@@ -65,14 +66,19 @@ module.exports = function(grunt) {
       prod: {
         options: {
           script: 'server.js',
-          node_env: 'production'
+          //node_env: 'production'
         }
       }
     },
 
     watch: {
       scripts: {
-        files: ['app/js/**/*.js','app/*.js', 'test/**/*.js']
+        files: ['app/js/**/*.js'],
+        tasks: 'browserify'
+      },
+      htmlcss: {
+        files: ['app/images/**/*', 'app/styles/**/*', 'app/index.html'],
+        tasks: 'copy'
       }
     }
   });

@@ -5,7 +5,8 @@ Style Guide
 'use strict';
 
 //npm packages are listed first, then third party packages, then our packages
-var $     = require('jquery');
+var http  = require('http');
+var $     = require('jquery');//now, there is no need to require jquery
 var Board = require('./js/Board');
 
 //function names should be camelCase

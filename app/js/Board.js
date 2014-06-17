@@ -1,5 +1,4 @@
 'use strict';
-var $      = require('jquery');
 var Square = require('./Square');
 
 module.exports = function Board ()
