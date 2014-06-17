@@ -10,6 +10,8 @@ module.exports = function Board ()
 
   for (var y = 0; y < this.maxY; y += 1) this.grid[y] = [];
 
+  ////////////////////////////////////////////////////////////
+
   this.generate = function ()
   {
     // This array of strings will allow us to easily reconfigure
@@ -37,7 +39,28 @@ module.exports = function Board ()
     // since the increment is 3 instead of 1
     var stringX = 0;
 
-    // run through the string array for x and y, creating a table of divs in
+    // run through the string array for x and y,
+    // creating a grid of square objects as we go
+
+    for (var y = 0; y < this.maxY; y += 1)
+    {
+      for (var x = 0; x < this.maxX; x += 1)
+      {
+        var newSquare  = stupidGrid[y].substring (stringX, stringX + 2);
+
+        this.grid[x][y] = new Square (newSquare);  // add the actual square to the data grid
+
+        stringX += 3;  // move the string reader horizontally
+      }
+      stringX = 0;
+    }
+  };
+
+  ////////////////////////////////////////////////////////////
+
+  this.render = function ()
+  {
+    // run through grid[x][y], creating a table of divs in
     // the html as we go.
     $('.board').append ('<table>');
 
@@ -47,14 +70,13 @@ module.exports = function Board ()
 
       for (var x = 0; x < this.maxX; x += 1)
       {
-        var newSquare  = stupidGrid[y].substring (stringX, stringX + 2);
         var htmlInsert = '';
 
-             if (newSquare == 'st') htmlInsert = 'square start">*';           // start or star
-        else if (newSquare == 'dl') htmlInsert = 'square double-letter">DL';  // double letter
-        else if (newSquare == 'tl') htmlInsert = 'square triple-letter">TL';  // triple letter
-        else if (newSquare == 'dw') htmlInsert = 'square double-word">DW';    // double word
-        else if (newSquare == 'tw') htmlInsert = 'square triple-word">TW';    // triple word
+             if (this.grid[x][y].bonus == 'st') htmlInsert = 'square start">*';           // start or star
+        else if (this.grid[x][y].bonus == 'dl') htmlInsert = 'square double-letter">DL';  // double letter
+        else if (this.grid[x][y].bonus == 'tl') htmlInsert = 'square triple-letter">TL';  // triple letter
+        else if (this.grid[x][y].bonus == 'dw') htmlInsert = 'square double-word">DW';    // double word
+        else if (this.grid[x][y].bonus == 'tw') htmlInsert = 'square triple-word">TW';    // triple word
         else                        htmlInsert = 'square blank">.';           // blank square
 
         // The invisible '.' needs to be on the blank div.
@@ -65,13 +87,10 @@ module.exports = function Board ()
         //$('.board').append ('<td><div class="' + htmlInsert + ' ' + x + ', ' + y + '</div></td>');
 
         $('.board').append ('<td><div class="' + htmlInsert + '</div></td>');
-        this.grid[x][y] = new Square (newSquare);  // add the actual square to the data grid
-
-        stringX += 3;  // move the string reader horizontally
+        //this.grid[x][y] = new Square (newSquare);  // add the actual square to the data grid
       }
       $('.board').append ('</tr>');
-      stringX = 0;
     }
     $('.board').append ('</table>');
-  };
+  }
 };
