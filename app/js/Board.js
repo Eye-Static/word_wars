@@ -5,7 +5,6 @@ var grids          = require('./grids');
 
 module.exports = function Board ()
 {
-
   this.generate = function (gridChoice)
   {
     gridChoice  = gridChoice || 'scrabble';
