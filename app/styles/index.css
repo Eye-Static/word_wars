@@ -1,17 +1,17 @@
 td
 {
-  background-color: black;
+  background-color: rgb(96, 96, 96);
 }
 
-div.board
+#board
 {
   background-color: rgb(128, 128, 128);
   border-style: solid;
-  border-width: 1px;
+  border-width: 2px;
   border-color: black;
-  width: 700px;
-  height: 450px;
-  overflow: scroll;
+  width: 628px;
+  height: 628px;
+  overflow: hidden;
 }
 
 .square
@@ -20,6 +20,10 @@ div.board
   width: 40px;
   height: 40px;
   margin: 1px;
+  font-family: arial;
+  font-weight: bold;
+  font-size: 12pt;
+  text-align: center;
 }
 
 .blank
@@ -60,12 +64,44 @@ div.board
   border-width: 1px;
   border-style: solid;
   font-family: arial;
-  font-size: 10pt;
+  font-size: 18pt;
   width: 40px;
   height: 40px;
   font-weight: bold;
   border-radius: 5px;
+  text-align: center;
+  float: left;
 }
 
+.letterCharacter
+{
+  position: relative;
+  top: 7px;
+}
 
+.letterScore
+{
+  font-size: 7pt;
+  position: relative;
+  left: 15px;
+  top: -25px;
+}
 
+#tray
+{
+  //background-color: white;
+  border-style: solid;
+  border-color: rgb(128, 128, 128);
+  border-width: 2px;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  width: 300px;
+  height: 40px;
+}
+
+#leftColumn
+{
+  float: left;
+}
