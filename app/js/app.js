@@ -6,10 +6,13 @@ var Player = require('./Player');
 
 $(document).ready(function ()
 {
-  var board = new Board();
+  var board = new Board(); // grid layouts can be passed as strings
+                           // like new Board('wordsWithFriends')
+                           console.dir(board);
   var bag = new Bag();
   var player1 = new Player();
 
+  board.render();    // draw the board to html
   console.log(board);
 
   newGame();
