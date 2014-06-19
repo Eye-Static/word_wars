@@ -1,19 +1,31 @@
 'use strict';
-var Board = require('./Board');
-var Bag = require('./Bag');
-var Tray = require('./Tray');
+var Board  = require('./Board');
+var Bag    = require('./Bag');
+var Tray   = require('./Tray');
+var Player = require('./Player');
 
 $(document).ready(function ()
 {
   var board = new Board();
   var bag = new Bag();
-  var tray1 = new Tray();
+  var player1 = new Player();
 
   console.log(board);
 
-  board.generate();  // create the board in data
-  board.render();    // draw the board to html
-  bag.fill();
-  bag.shake();
-  //tray1.refill (bag);
+  newGame();
+
+  player1.startTurn (bag);
+
+  console.log(player1.tray.letters.length);
+  console.log(bag.letters.length);
+
+  //////////////////////////////////////////////////
+
+  function newGame ()
+  {
+    board.generate();    // create the board in data
+    board.render();      // draw the board to html
+    bag.fill();          // add letters to bag
+    bag.shake();         // randomize bag
+  }
 });
