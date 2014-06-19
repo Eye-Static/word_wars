@@ -1,5 +1,6 @@
 'use strict';
-var Square = require('./Square');
+var Square         = require('./Square');
+var squareTemplate = require('./templates/squareTemplate.hbs');
 
 module.exports = function Board ()
 {
@@ -8,70 +9,74 @@ module.exports = function Board ()
 
   this.grid = [];  // a 2D array to hold the squares
 
-  for (var y = 0; y < this.maxY; y += 1) this.grid[y] = [];
+  for (var y = 0; y < this.maxY; y += 1)
+  {
+    this.grid[y] = [];
+  }
 
   this.generate = function ()
   {
-    // This array of strings will allow us to easily reconfigure
-    // the board"s setup visually.
-    var stupidGrid = ['tw .. .. dl .. .. .. tw .. .. .. dl .. .. tw',
-                       '.. dw .. .. .. tl .. .. .. tl .. .. .. dw ..',
-                       '.. .. dw .. .. .. dl .. dl .. .. .. dw .. ..',
-                       'dl .. .. dw .. .. .. dl .. .. .. dw .. .. dl',
-                       '.. .. .. .. dw .. .. .. .. .. dw .. .. .. ..',
-                       '.. tl .. .. .. tl .. .. .. tl .. .. .. tl ..',
-                       '.. .. dl .. .. .. dl .. dl .. .. .. dl .. ..',
-                       'tw .. .. dl .. .. .. st .. .. .. dl .. .. tw',
-                       '.. .. dl .. .. .. dl .. dl .. .. .. dl .. ..',
-                       '.. tl .. .. .. tl .. .. .. tl .. .. .. tl ..',
-                       '.. .. .. .. dw .. .. .. .. .. dw .. .. .. ..',
-                       'dl .. .. dw .. .. .. dl .. .. .. dw .. .. dl',
-                       '.. .. dw .. .. .. dl .. dl .. .. .. dw .. ..',
-                       '.. dw .. .. .. tl .. .. .. tl .. .. .. dw ..',
-                       'tw .. .. dl .. .. .. tw .. .. .. dl .. .. tw'];
+    // This long strings will allow us to easily reconfigure
+    // the board's setup visually.
+    // all
+    var stupidGrid =
+    'TW .. .. DL .. .. .. TW .. .. .. DL .. .. TW ' +
+    '.. DW .. .. .. TL .. .. .. TL .. .. .. DW .. ' +
+    '.. .. DW .. .. .. DL .. DL .. .. .. DW .. .. ' +
+    'DL .. .. DW .. .. .. DL .. .. .. DW .. .. DL ' +
+    '.. .. .. .. DW .. .. .. .. .. DW .. .. .. .. ' +
+    '.. TL .. .. .. TL .. .. .. TL .. .. .. TL .. ' +
+    '.. .. DL .. .. .. DL .. DL .. .. .. DL .. .. ' +
+    'TW .. .. DL .. .. .. *  .. .. .. DL .. .. TW ' +
+    '.. .. DL .. .. .. DL .. DL .. .. .. DL .. .. ' +
+    '.. TL .. .. .. TL .. .. .. TL .. .. .. TL .. ' +
+    '.. .. .. .. DW .. .. .. .. .. DW .. .. .. .. ' +
+    'DL .. .. DW .. .. .. DL .. .. .. DW .. .. DL ' +
+    '.. .. DW .. .. .. DL .. DL .. .. .. DW .. .. ' +
+    '.. DW .. .. .. TL .. .. .. TL .. .. .. DW .. ' +
+    'TW .. .. DL .. .. .. TW .. .. .. DL .. .. TW';
 
     // stupid_grid will get read by the function to create the letter
     // objects that will fill the 'smart grid'.
 
-    // stringX keeps track of the horizontal position in the string array,
-    // since the increment is 3 instead of 1
-    var stringX = 0;
-
-    // run through the string array for x and y, creating a table of divs in
-    // the html as we go.
-    $('.board').append ('<table>');
-
-    for (var y = 0; y < this.maxY; y += 1)
+    $('#board').append ('<table>');
+    $('#board').append('<tr>');
+    var squares = stupidGrid.split(/\s+/);
+    var y = 0;
+    var x = 0;
+    for (var i = 0; i < squares.length; i ++)
     {
-      $('.board').append ('<tr>');
-
-      for (var x = 0; x < this.maxX; x += 1)
+      if(i % this.maxX === 0 && i!== 0)
       {
-        var newSquare  = stupidGrid[y].substring (stringX, stringX + 2);
-        var htmlInsert = '';
-
-             if (newSquare == 'st') htmlInsert = 'square start">*';           // start or star
-        else if (newSquare == 'dl') htmlInsert = 'square double-letter">DL';  // double letter
-        else if (newSquare == 'tl') htmlInsert = 'square triple-letter">TL';  // triple letter
-        else if (newSquare == 'dw') htmlInsert = 'square double-word">DW';    // double word
-        else if (newSquare == 'tw') htmlInsert = 'square triple-word">TW';    // triple word
-        else                        htmlInsert = 'square blank">.';           // blank square
-
-        // The invisible '.' needs to be on the blank div.
-        // If the board divs are completely blank, the tiles shift downward for some reason.
-        // A medal if you can figure out how to fix that.
-
-        // if you need to print grid coordinates
-        //$('.board').append ('<td><div class="' + htmlInsert + ' ' + x + ', ' + y + '</div></td>');
-
-        $('.board').append ('<td><div class="' + htmlInsert + '</div></td>');
-        this.grid[x][y] = new Square (newSquare);  // add the actual square to the data grid
-
-        stringX += 3;  // move the string reader horizontally
+        $('#board').append ('</tr>');
+        $('#board').append ('<tr>');
+        y++;
       }
-      $('.board').append ('</tr>');
-      stringX = 0;
+      x = i % this.maxX;
+
+      var square = new Square();
+      var thisSpace = squares[i];
+      square.bonus = thisSpace;
+      square.x = x;
+      square.y = y;
+      console.log('x is ' + x, 'y is ' + y);
+
+      square.bonus  = thisSpace;
+      thisSpace = (thisSpace === '*' ? 'start' : thisSpace);
+      thisSpace = (thisSpace === '..' ? 'blank' : thisSpace);
+      square.class += ' ' + thisSpace;
+
+      $('#board').append(squareTemplate(square));
+
+      this.grid[x][y] = square;  // add the actual square to the data grid
+
+      // The invisible '.' needs to be on the blank div.
+      // If the board divs are completely blank, the tiles shift downward for some reason.
+      // A medal if you can figure out how to fix that.
+
+      // if you need to print grid coordinates
+      //$('#board').append ('<td><div class="' + square + ' ' + x + ', ' + y + '</div></td>');
     }
-    $('.board').append ('</table>');
+    $('#board').append ('</table>');
   };
 };
