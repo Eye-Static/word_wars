@@ -35,11 +35,11 @@ module.exports = function Tray ()
   };
     
   this.render = function () {
-     $("#tray").empty();
+     $('#tray').empty();
      for(var i=0; i<this.letters.length; i++){
-     $("#tray").append(letterTemplate(this.letters[i]));
+     $('#tray').append(letterTemplate(this.letters[i]));
        
     }
-   //$("#tray").append('string');
+   //$('#tray').append('string');
   };
 };
