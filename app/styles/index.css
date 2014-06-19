@@ -52,3 +52,20 @@ div.board
 {
   background-color: rgb(255, 64, 64);
 }
+
+.letter
+{
+  background-color: rgb(232, 148, 66);
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+  font-family: arial;
+  font-size: 10pt;
+  width: 40px;
+  height: 40px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+
+
