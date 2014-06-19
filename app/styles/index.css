@@ -33,27 +33,22 @@ div.board
   background-color: rgb(255, 128, 128);
 }
 
-.double-letter
+.DL
 {
   background-color: rgb(128, 128, 255);
 }
 
-.triple-letter
+.TL
 {
   background-color: rgb(64, 64, 255);
 }
 
-.double-word
+.DW
 {
   background-color: rgb(255, 128, 128);
 }
 
-.triple-word
+.TW
 {
   background-color: rgb(255, 64, 64);
-}
-
-.start
-{
-  //background-color: rgb(255, 128, 128);
 }

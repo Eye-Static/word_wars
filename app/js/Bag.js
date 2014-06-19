@@ -41,11 +41,11 @@ module.exports = function Bag()
                 ['Z', 10, 1],
                 [0,0,2]
                ];
-    var j, i;            
-  	for (j = 0; j<data.length; j++){            
+    var j, i;
+  	for (j = 0; j<data.length; j++){
   		for(i=0; i<data[j][2]; i++){
 			this.letters.push(new Letter(data[j][0],data[j][1]));
-  		}  	
+  		}
   	}console.log(this.letters.length);
   };
 

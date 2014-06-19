@@ -1,7 +1,10 @@
 'use strict';
-module.exports = function Square (bonus)
+
+module.exports = function Square ()
 {
-  this.letter = null;  // each square starts with no letter on it
-  this.bonus = bonus;  // "st", "dl", "tl", "dw", "tw", ".."
-                       // ".." is a blank square
+  this.letter = null;  // reference to letter object, not a string
+  this.bonus  = null;  // '*', 'DL', 'TL', 'DW', 'TW', '..' is a blank square
+  this.class = 'square'; //ditto to bonus but '*'' becomes 'start', '..' => 'blank'
+  this.x = null;
+  this.y = null;
 };
