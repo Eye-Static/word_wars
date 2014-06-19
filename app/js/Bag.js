@@ -44,7 +44,7 @@ module.exports = function Bag()
     var j, i;
   	for (j = 0; j<data.length; j++){
   		for(i=0; i<data[j][2]; i++){
-			this.letters.push(new Letter(data[j][0],data[j][1]));
+			  this.letters.push(new Letter(data[j][0],data[j][1]));
   		}
   	}console.log(this.letters.length);
   };
@@ -75,4 +75,13 @@ module.exports = function Bag()
   {
     return this.letters.pop();
   };
+
+  this.printAll = function()
+  {
+    for (var i = 0; i < this.letters.length; i ++)
+    {
+      console.log(this.letters[i].character);
+    }
+  };
+
 };
