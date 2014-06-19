@@ -5,6 +5,7 @@ var grids          = require('./grids');
 
 module.exports = function Board ()
 {
+  this.grid = [];
   this.generate = function (gridChoice)
   {
     gridChoice  = gridChoice || 'scrabble';
@@ -17,26 +18,20 @@ module.exports = function Board ()
 
     this.maxX = grids[gridChoice].width;   // board width
     this.maxY = grids[gridChoice].height;   // board height
-    this.grid = [];
+    this.grid;
     for (var j = 0; j < this.maxX; j++)
     {
       this.grid[j] = new Array(this.maxY);
     }
     // create a grid maxX wide and maxY deep
 
-    $('#board').append ('<table>');
     var squares = stringGrid.split(/\s+/);
-    var y = 0;
-    var x = 0;
+    var y = -1;
+    var x = -1;
     for (var i = 0; i < squares.length; i ++)
     {
-
-      if(i % this.maxX === 0)
-      {
-        $('#board').append ('<tr>');
-        y++;
-      }
-      //y increases every row and a new html row is started
+      if(i % this.maxX === 0) { y ++;}
+      //y increases every row
 
       x = i % this.maxX;
       //x increases every iteration & starts again at 0 at the start of every row
@@ -45,6 +40,7 @@ module.exports = function Board ()
       var thisSpace = squares[i];
       square.x = x;
       square.y = y;
+      console.log('x is ' + x + ' y is ' + y + ' bonus is ' + thisSpace);
 
       square.bonus = thisSpace;
       //the bonus is always the same as the on the grid pattern
@@ -58,14 +54,25 @@ module.exports = function Board ()
       // If the board divs are completely blank, the tiles shift downward for some reason.
       // A medal if you can figure out how to fix that.
 
-      $('#board').append(squareTemplate(square));
-      //render the square using square template and the square's data
+      this.grid[y][x] = square;  // add the square to the data grid
+    }
+    console.dir(this);
+  };
 
-      if(i % this.maxX === 0) { $('#board').append ('</tr>'); }
-      //end the html row when the data row ends
+  this.render = function ()
+  {
+    $('#board').append ('<table>');
+    for (var i = 0; i < this.grid.length; i++) // one iteration is a whole row
+    {
+      $('#board').append ('<tr>');
 
-      this.grid[x][y] = square;  // add the actual square to the data grid
+      for (var j = 0; j < this.grid[i].length; j++) //one iteration is one cell
+      {
+        $('#board').append(squareTemplate(this.grid[i][j]));
+        //render the square using square template and the square's data
+      }
 
+      $('#board').append ('</tr>');
     }
     $('#board').append ('</table>');
   };
