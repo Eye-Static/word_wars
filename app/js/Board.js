@@ -1,81 +1,72 @@
 'use strict';
 var Square         = require('./Square');
 var squareTemplate = require('./templates/squareTemplate.hbs');
+var grids          = require('./grids');
 
 module.exports = function Board ()
 {
-  this.maxX = 15;   // board width
-  this.maxY = 15;   // board height
 
-  this.grid = [];  // a 2D array to hold the squares
-
-  for (var y = 0; y < this.maxY; y += 1)
+  this.generate = function (gridChoice)
   {
-    this.grid[y] = [];
-  }
+    gridChoice  = gridChoice || 'scrabble';
+    // the grid defaults to scrabble layout if none specified
+    // other option is 'wordsWithFriends'
 
-  this.generate = function ()
-  {
-    // This long strings will allow us to easily reconfigure
-    // the board's setup visually.
-    // all
-    var stupidGrid =
-    'TW .. .. DL .. .. .. TW .. .. .. DL .. .. TW ' +
-    '.. DW .. .. .. TL .. .. .. TL .. .. .. DW .. ' +
-    '.. .. DW .. .. .. DL .. DL .. .. .. DW .. .. ' +
-    'DL .. .. DW .. .. .. DL .. .. .. DW .. .. DL ' +
-    '.. .. .. .. DW .. .. .. .. .. DW .. .. .. .. ' +
-    '.. TL .. .. .. TL .. .. .. TL .. .. .. TL .. ' +
-    '.. .. DL .. .. .. DL .. DL .. .. .. DL .. .. ' +
-    'TW .. .. DL .. .. .. *  .. .. .. DL .. .. TW ' +
-    '.. .. DL .. .. .. DL .. DL .. .. .. DL .. .. ' +
-    '.. TL .. .. .. TL .. .. .. TL .. .. .. TL .. ' +
-    '.. .. .. .. DW .. .. .. .. .. DW .. .. .. .. ' +
-    'DL .. .. DW .. .. .. DL .. .. .. DW .. .. DL ' +
-    '.. .. DW .. .. .. DL .. DL .. .. .. DW .. .. ' +
-    '.. DW .. .. .. TL .. .. .. TL .. .. .. DW .. ' +
-    'TW .. .. DL .. .. .. TW .. .. .. DL .. .. TW';
+    var stringGrid = grids[gridChoice].grid;
+    // stringGrid is read to create the letter objects that will fill
+    // the this.grid object
 
-    // stupid_grid will get read by the function to create the letter
-    // objects that will fill the 'smart grid'.
+    this.maxX = grids[gridChoice].width;   // board width
+    this.maxY = grids[gridChoice].height;   // board height
+    this.grid = [];
+    for (var j = 0; j < this.maxX; j++)
+    {
+      this.grid[j] = new Array(this.maxY);
+    }
+    // create a grid maxX wide and maxY deep
 
     $('#board').append ('<table>');
-    $('#board').append('<tr>');
-    var squares = stupidGrid.split(/\s+/);
+    var squares = stringGrid.split(/\s+/);
     var y = 0;
     var x = 0;
     for (var i = 0; i < squares.length; i ++)
     {
-      if(i % this.maxX === 0 && i!== 0)
+
+      if(i % this.maxX === 0)
       {
-        $('#board').append ('</tr>');
         $('#board').append ('<tr>');
         y++;
       }
-      x = i % this.maxX;
+      //y increases every row and a new html row is started
 
-      var square = new Square();
+      x = i % this.maxX;
+      //x increases every iteration & starts again at 0 at the start of every row
+
+      var square    = new Square();
       var thisSpace = squares[i];
-      square.bonus = thisSpace;
       square.x = x;
       square.y = y;
-      console.log('x is ' + x, 'y is ' + y);
 
-      square.bonus  = thisSpace;
-      thisSpace = (thisSpace === '*' ? 'start' : thisSpace);
+      square.bonus = thisSpace;
+      //the bonus is always the same as the on the grid pattern
+
+      thisSpace = (thisSpace === '*'  ? 'start' : thisSpace);
       thisSpace = (thisSpace === '..' ? 'blank' : thisSpace);
       square.class += ' ' + thisSpace;
+      //the actual class may need a little changing from the grid pattern
 
-      $('#board').append(squareTemplate(square));
-
-      this.grid[x][y] = square;  // add the actual square to the data grid
-
-      // The invisible '.' needs to be on the blank div.
+      // The invisible '..' needs to be on the blank div.
       // If the board divs are completely blank, the tiles shift downward for some reason.
       // A medal if you can figure out how to fix that.
 
-      // if you need to print grid coordinates
-      //$('#board').append ('<td><div class="' + square + ' ' + x + ', ' + y + '</div></td>');
+      $('#board').append(squareTemplate(square));
+      //render the square using square template and the square's data
+
+      if(i % this.maxX === 0) { $('#board').append ('</tr>'); }
+      //end the html row when the data row ends
+
+      this.grid[x][y] = square;  // add the actual square to the data grid
+
     }
     $('#board').append ('</table>');
   };

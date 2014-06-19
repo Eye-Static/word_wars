@@ -73,11 +73,13 @@ module.exports = function(grunt) {
 
     watch: {
       scripts: {
-        files: ['app/js/**/*.js'],
+        files: ['app/js/**/*.js', 'app/js/templates/*.hbs'],
         tasks: 'browserify'
       },
       htmlcss: {
-        files: ['app/images/**/*', 'app/styles/**/*', 'app/index.html'],
+        files:
+        [
+        'app/images/**/*', 'app/styles/**/*', 'app/index.html'],
         tasks: 'copy'
       }
     }

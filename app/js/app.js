@@ -4,6 +4,6 @@ var Board = require('./Board');
 $(document).ready(function ()
 {
   var board = new Board();
-  console.log(board);
+  console.dir(board);
   board.generate();
 });
