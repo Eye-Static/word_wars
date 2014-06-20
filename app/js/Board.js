@@ -2,7 +2,6 @@
 var Square         = require('./Square');
 var squareTemplate = require('./templates/squareTemplate.hbs');
 var grids          = require('./grids');
-//var rowTemplate = require('./templates/rowTemplate.hbs');
 
 var Board = function (gridChoice)
 {
@@ -62,29 +61,30 @@ Board.prototype.render = function ()
   boardRef.append ('<table>');
   for (var i = 0; i < this.grid.length; i++) // one iteration is a whole row
   {
-    //boardRef.append(rowTemplate(this.grid[i]));
     boardRef.append ('<tr>');
 
     for (var j = 0; j < this.grid[i].length; j++) //one iteration is one cell
     {
       var theSquare = $(squareTemplate(this.grid[i][j]));
       boardRef.append(theSquare); //render square
-
-      theSquare.droppable(
+      if(this.grid[i][j].bonus !== 'XX')
       {
-        drop: function (event, ui)
+        theSquare.droppable(
         {
-          //var letter = $(ui.helper);
-          console.log(this);
-          console.log('this.offset is top', $(this).offset().top, 'left', $(this).offset().left);
-          $('.ui-draggable-dragging').offset({
-                top:  $(this).offset().top,
-                left: $(this).offset().left
-          });
-          console.log('ui is ', ui.helper);
-          console.dir(theSquare);
-        }
-      });
+          drop: function (event, ui)
+          {
+            //var letter = $(ui.helper);
+            console.log(this);
+            console.log('this.offset is top', $(this).offset().top, 'left', $(this).offset().left);
+            $('.ui-draggable-dragging').offset({
+              top:  $(this).offset().top,
+              left: $(this).offset().left
+            });
+            console.log('ui is ', ui.helper);
+            console.dir(theSquare);
+          }
+        });
+      }
     }
     boardRef.append ('</tr>');
   }

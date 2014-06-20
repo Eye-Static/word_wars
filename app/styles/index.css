@@ -14,9 +14,8 @@ td
   border-style: solid;
   border-width: 2px;
   border-color: black;
-  width: 628px;
-  height: 628px;
   overflow: hidden;
+  display: inline-block; /*can't set size manually due to diff board sizes*/
 }
 
 .square
@@ -93,6 +92,7 @@ td
 {
   cursor: grabbing;
   box-shadow: 3px 3px 5px black;
+  z-index: 20;
 }
 
 .letterCharacter

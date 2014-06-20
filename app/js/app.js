@@ -6,29 +6,27 @@ var Player = require('./Player');
 
 $(document).ready(function ()
 {
-  var board = new Board('wordsWithFriends');
-  // grid layouts can be passed as strings like new Board('wordsWithFriends')
+  var board;
+  // var board = new Board();
+  // board.render();
+  //
+  // the only reason to make a new board here is to use it as a
+  // background image on the start screen. The board used for the
+  // game is in newGame()
 
   var bag = new Bag();
   var player1 = new Player();
 
-  board.render();    // draw the board to html
-  console.log(board);
-
   newGame();
-
-  player1.startTurn (bag);
-
-  console.log(player1.tray.letters.length);
-  console.log(bag.letters.length);
 
   //////////////////////////////////////////////////
 
   function newGame ()
   {
-    board = new Board();    // create the board in data
+    board = new Board('diamond');    // create the board in data
     board.render();      // draw the board to html
     bag.fill();          // add letters to bag
     bag.shake();         // randomize bag
+    player1.startTurn (bag);
   }
 });
