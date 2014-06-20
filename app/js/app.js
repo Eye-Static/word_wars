@@ -6,9 +6,9 @@ var Player = require('./Player');
 
 $(document).ready(function ()
 {
-  var board = new Board(); // grid layouts can be passed as strings
-                           // like new Board('wordsWithFriends')
-                           console.dir(board);
+  var board = new Board('wordsWithFriends');
+  // grid layouts can be passed as strings like new Board('wordsWithFriends')
+
   var bag = new Bag();
   var player1 = new Player();
 
@@ -26,7 +26,7 @@ $(document).ready(function ()
 
   function newGame ()
   {
-    board.generate();    // create the board in data
+    board = new Board();    // create the board in data
     board.render();      // draw the board to html
     bag.fill();          // add letters to bag
     bag.shake();         // randomize bag

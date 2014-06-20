@@ -39,7 +39,7 @@ module.exports = function Bag()
                 ['X', 8, 1],
                 ['Y', 4, 2],
                 ['Z', 10, 1],
-                [0,0,2]
+                ['',0,2]
                ];
     var j, i;
   	for (j = 0; j<data.length; j++){

@@ -40,5 +40,28 @@ module.exports =
     '.. .. .. TW .. .. TL .. TL .. .. TW .. .. ..',
     width : 15,
     height: 15
+    },
+
+  diamond :{
+    grid:
+    'XX XX XX XX XX XX XX XX TW XX XX XX XX XX XX XX XX ' +
+    'XX XX XX XX XX XX XX TL .. TL XX XX XX XX XX XX XX ' +
+    'XX XX XX XX XX XX DW .. .. .. DW XX XX XX XX XX XX ' +
+    'XX XX XX XX XX DL .. .. .. .. .. DL XX XX XX XX XX ' +
+    'XX XX XX XX TL .. .. .. DW .. .. .. TL XX XX XX XX ' +
+    'XX XX XX DL .. .. .. DL .. DL .. .. .. DL XX XX XX ' +
+    'XX XX DW .. .. .. TL .. .. .. TL .. .. .. DW XX XX ' +
+    'XX TL .. .. .. DL .. .. .. .. .. DL .. .. .. TL XX ' +
+    'TW .. .. .. DW .. .. .. *  .. .. .. DW .. .. .. TW ' +
+    'XX TL .. .. .. DL .. .. .. .. .. DL .. .. .. TL XX ' +
+    'XX XX DW .. .. .. TL .. .. .. TL .. .. .. DW XX XX ' +
+    'XX XX XX DL .. .. .. DL .. DL .. .. .. DL XX XX XX ' +
+    'XX XX XX XX TL .. .. .. DW .. .. .. TL XX XX XX XX ' +
+    'XX XX XX XX XX DL .. .. .. .. .. DL XX XX XX XX XX ' +
+    'XX XX XX XX XX XX DW .. .. .. DW XX XX XX XX XX XX ' +
+    'XX XX XX XX XX XX XX TL .. TL XX XX XX XX XX XX XX ' +
+    'XX XX XX XX XX XX XX XX TW XX XX XX XX XX XX XX XX',
+    width : 17,
+    height: 17
     }
 };

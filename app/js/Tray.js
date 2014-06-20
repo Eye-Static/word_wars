@@ -6,7 +6,7 @@ var letterTemplate = require('./templates/letterTemplate.hbs');
 module.exports = function Tray ()
 {
   this.letters = [];  // array of letter objects (max 7)
-  
+
   //////////////////////////////////////////////////
 
   // remove letters from the bag and add them to the tray
@@ -17,7 +17,7 @@ module.exports = function Tray ()
     //math randomize to pull tiles from the bag up to 7
     while (this.letters.length<7) {
       this.letters.push(bag.removeNext());
-    }  
+    }
   };
 
   //////////////////////////////////////////////////
@@ -33,13 +33,16 @@ module.exports = function Tray ()
   this.remove = function (letter)
   {
   };
-    
+
   this.render = function () {
-     $('#tray').empty();
-     for(var i=0; i<this.letters.length; i++){
-     $('#tray').append(letterTemplate(this.letters[i]));
-       
+    $('#tray').empty();
+    for(var i=0; i<this.letters.length; i++)
+    {
+      var letter = $(letterTemplate(this.letters[i]));
+      $('#tray').append(letter);
+      letter.draggable();
     }
+    // $('.letter').draggable();
    //$('#tray').append('string');
-  };
+ };
 };
