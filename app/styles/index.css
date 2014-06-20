@@ -25,11 +25,6 @@ td
   width: 40px;
   height: 40px;
   margin: 1px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   font-family: arial;
   font-weight: bold;
@@ -86,6 +81,18 @@ td
   border-radius: 5px;
   text-align: center;
   float: left;
+  user-select: none;
+}
+
+.ui-draggable
+{
+  cursor: grab;
+}
+
+.ui-draggable-dragging
+{
+  cursor: grabbing;
+  box-shadow: 3px 3px 5px black;
 }
 
 .letterCharacter

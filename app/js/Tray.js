@@ -40,7 +40,17 @@ module.exports = function Tray ()
     {
       var letter = $(letterTemplate(this.letters[i]));
       $('#tray').append(letter);
-      letter.draggable();
+      letter.draggable(
+      {
+        stop: function ()
+        {
+          console.log('stopped dragging');
+        },
+        start: function ()
+        {
+          console.log('started dragging');
+        }
+      });
     }
     // $('.letter').draggable();
    //$('#tray').append('string');

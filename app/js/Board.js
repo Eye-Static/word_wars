@@ -67,7 +67,24 @@ Board.prototype.render = function ()
 
     for (var j = 0; j < this.grid[i].length; j++) //one iteration is one cell
     {
-      boardRef.append(squareTemplate(this.grid[i][j])); //render square
+      var theSquare = $(squareTemplate(this.grid[i][j]));
+      boardRef.append(theSquare); //render square
+
+      theSquare.droppable(
+      {
+        drop: function (event, ui)
+        {
+          //var letter = $(ui.helper);
+          console.log(this);
+          console.log('this.offset is top', $(this).offset().top, 'left', $(this).offset().left);
+          $('.ui-draggable-dragging').offset({
+                top:  $(this).offset().top,
+                left: $(this).offset().left
+          });
+          console.log('ui is ', ui.helper);
+          console.dir(theSquare);
+        }
+      });
     }
     boardRef.append ('</tr>');
   }
