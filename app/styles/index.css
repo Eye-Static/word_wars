@@ -14,9 +14,9 @@ td
   border-style: solid;
   border-width: 2px;
   border-color: black;
-  width: 628px;
-  height: 628px;
-  overflow: hidden;
+  width: 650px;
+  height: 450px;
+  overflow: scroll;
 }
 
 .square
@@ -121,9 +121,15 @@ td
   text-align: center;
   width: 300px;
   height: 40px;
+  float: left;
 }
 
 #leftColumn
 {
   float: left;
+}
+
+#rightColumn
+{
+  float: right;
 }
