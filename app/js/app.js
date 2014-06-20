@@ -1,32 +1,35 @@
 'use strict';
 var Board  = require('./Board');
 var Bag    = require('./Bag');
-var Tray   = require('./Tray');
 var Player = require('./Player');
 
 $(document).ready(function ()
 {
   var board;
-  // var board = new Board();
-  // board.render();
-  //
-  // the only reason to make a new board here is to use it as a
-  // background image on the start screen. The board used for the
-  // game is in newGame()
-
-  var bag = new Bag();
-  var player1 = new Player();
+  var bag;
+  var player = [];
 
   newGame();
+
+  console.log(board);
+
+  player[0].startTurn (bag);
+
+  console.log(player[0].tray.letters.length);
+  console.log(bag.letters.length);
 
   //////////////////////////////////////////////////
 
   function newGame ()
   {
-    board = new Board('diamond');    // create the board in data
-    board.render();      // draw the board to html
+    // grid layouts can be passed as strings like new Board('wordsWithFriends')
+    board = new Board('wordsWithFriends');
+    bag = new Bag();
+    player[0] = new Player();
+    player[1] = new Player();
+
     bag.fill();          // add letters to bag
     bag.shake();         // randomize bag
-    player1.startTurn (bag);
+    board.render();      // draw the board to html
   }
 });
