@@ -1,1 +1,5 @@
-<td><div class="letter">{{character}}</div></td>
+<td class="letter">
+<div>
+{{#unless character}}&nbsp;{{else}}{{character}}{{/unless}}<sub>{{#if score}}{{score}}{{/if}}</sub>
+</div>
+</td>

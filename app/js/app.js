@@ -4,9 +4,9 @@ var Bag = require('./Bag');
 var Tray = require('./Tray');
 $(document).ready(function ()
 {
-  var board = new Board(); // grid layouts can be passed as strings
-                           // like new Board('wordsWithFriends')
-                           console.dir(board);
+  var board = new Board('wordsWithFriends');
+  // grid layouts can be passed as strings like new Board('wordsWithFriends')
+
   var bag = new Bag();
   var tray1 = new Tray();
 

@@ -1,0 +1,20 @@
+{
+  "name": "word_wars",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Eye-Static/word_wars",
+  "authors": [
+    "Andy Ernst <AndyCErnst@gmail.com>"
+  ],
+  "description": "a scrabble-like game",
+  "main": "server.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {}
+}

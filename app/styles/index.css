@@ -1,3 +1,8 @@
+body
+{
+  cursor: default;
+}
+
 td
 {
   background-color: black;
@@ -20,6 +25,12 @@ div.board
   width: 40px;
   height: 40px;
   margin: 1px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .blank
@@ -53,14 +64,18 @@ div.board
   background-color: rgb(255, 64, 64);
 }
 
+.XX
+{
+  background-color: rgb(0, 0, 0);
+}
+
 .letter
 {
   background-color: rgb(232, 148, 66);
-  border-color: black;
   border-width: 1px;
   border-style: solid;
   font-family: arial;
-  font-size: 10pt;
+  font-size: 20pt;
   width: 40px;
   height: 40px;
   font-weight: bold;

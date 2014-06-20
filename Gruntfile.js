@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         dest: 'dist/app.js'
       },
       options: {
-        transform: [/*'debowerify', */'hbsfy'],
+        transform: ['debowerify', 'hbsfy'],
         debug: true,
         external: 'jquery',
       }
