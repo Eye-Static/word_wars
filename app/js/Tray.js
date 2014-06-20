@@ -34,13 +34,20 @@ module.exports = function Tray ()
   {
   };
 
-  this.render = function () {
+  this.render = function ()
+  {
     $('#tray').empty();
+
+    console.log ('Player 1 Tray:');
+
     for(var i=0; i<this.letters.length; i++)
     {
-      var letter = $(letterTemplate(this.letters[i]));
-      $('#tray').append(letter);
-      letter.draggable(
+      var letterHtml = $(letterTemplate(this.letters[i]));
+      var letterData = this.letters[i];
+      console.log ('Letter: ' + this.letters[i].character);
+
+      $('#tray').append(letterHtml);
+      letterHtml.draggable(
       {
         stop: function ()
         {
@@ -48,7 +55,8 @@ module.exports = function Tray ()
         },
         start: function ()
         {
-          console.log('started dragging');
+          var z = letterData.character;
+          console.log('started dragging ' + z);//letterData.character);
         }
       });
     }
