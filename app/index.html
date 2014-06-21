@@ -15,13 +15,28 @@
 <body>
   <div id = "leftColumn">
     <div>
-      (title / logo)
+      (title / logo)<br>
+      Board type:
+        <select id="board-type">
+                <option value="scrabble" selected>Scrabble</option>
+                <option value="wordsWithFriends">Words with Friends</option>
+                <option value="diamond" >Diamond</option>
+        </select>
+        <br />
+        Game type:
+        <select id="player-number">
+            <option value="1" selected>Solo</option>
+            <option value="2">2 Players</option>
+        </select>
+        <br />
+        <input type = "button" value = "New Game" id = "new-game-button">
 
-      <input type = "button" value = "New Game" id = "newButton">
-      <input type = "button" value = "Shuffle Tray" id = "shuffleTrayButton">
-      <input type = "button" value = "Print Tray" id = "printTrayButton">
-      <!input type = "button" value = "Test" id = "Test">
+      <input type = "button" value = "Shuffle Tray" id = "shuffle-tray-button">
+      <input type = "button" value = "Print Tray" id = "print-tray-button">
+      <!--input type = "button" value = "Test" id = "Test"-->
     </div>
+
+    <div id = "connection-info">Connection info: </div>
   </div>
 
   <div id = "rightColumn">
