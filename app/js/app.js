@@ -1,58 +1,32 @@
 'use strict';
-var Board  = require('./Board');
-var Bag    = require('./Bag');
-var Player = require('./Player');
+var Game   = require('./Game');
 
 $(document).ready(function ()
 {
-  var board;
-  var bag;
-  var player = [];
-  var turn = 0;
-
-  newGame();
-
-  board.render(player[turn]);  // draw the board
-  player[turn].startTurn (bag);
-
-  console.log(board);
-
-  console.log(player[0].tray.letters.length);
-  console.log(bag.letters.length);
+  var game = new Game(); //this is just for testing, in the final version
+                         //games are only started with the button
 
   //////////////////////////////////////////////////
 
-  function newGame ()
+  $('#new-game-button').on('click', function(event)
   {
-    // grid layouts can be passed as strings like new Board('wordsWithFriends')
-    board = new Board('diamond');
-    bag = new Bag();
-    player[0] = new Player();
-    player[1] = new Player();
-
-    bag.fill();               // add letters to bag
-    bag.shake();              // randomize bag
-  }
-
-  //////////////////////////////////////////////////
-
-  $('#newButton').click (function ()
-  {
-    newGame();
+    var boardType = $('#board-type').val();
+    var playerNum = $('#player-number').val();
+    game = new Game(boardType, playerNum);
   });
 
   //////////////////////////////////////////////////
 
-  $('#printTrayButton').click (function ()
+  $('#print-tray-button').click (function ()
   {
-    player[0].tray.print();
+    game.players[0].tray.print();
   });
 
   //////////////////////////////////////////////////
 
-  $('#shuffleTrayButton').click (function ()
+  $('#shuffle-tray-button').click (function ()
   {
-    player[0].tray.shuffle();
-    player[0].tray.render();
+    game.players[0].tray.shuffle();
+    game.players[0].tray.render();
   });
 });
