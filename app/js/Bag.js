@@ -48,7 +48,7 @@ module.exports = function Bag()
     {
   		for(i=0; i<data[j][2]; i++)
       {
-			  this.letters.push (new Letter (data[j][0], data[j][1], "id" + idCounter));
+			  this.letters.push (new Letter (data[j][0], data[j][1], 'id' + idCounter));
         idCounter += 1;
   		}
   	}

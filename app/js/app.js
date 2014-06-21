@@ -25,7 +25,7 @@ $(document).ready(function ()
   function newGame ()
   {
     // grid layouts can be passed as strings like new Board('wordsWithFriends')
-    board = new Board('wordsWithFriends');
+    board = new Board('diamond');
     bag = new Bag();
     player[0] = new Player();
     player[1] = new Player();
@@ -36,21 +36,21 @@ $(document).ready(function ()
 
   //////////////////////////////////////////////////
 
-  $("#newButton").click (function ()
+  $('#newButton').click (function ()
   {
     newGame();
   });
 
   //////////////////////////////////////////////////
 
-  $("#printTrayButton").click (function ()
+  $('#printTrayButton').click (function ()
   {
     player[0].tray.print();
   });
 
   //////////////////////////////////////////////////
 
-  $("#shuffleTrayButton").click (function ()
+  $('#shuffleTrayButton').click (function ()
   {
     player[0].tray.shuffle();
     player[0].tray.render();

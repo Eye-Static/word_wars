@@ -60,23 +60,34 @@ module.exports = function Tray ()
         {
           //var z = letterData.character;
           console.log('started dragging ' + this.id);
-        }
+        },
+        revert: 'invalid'
       });
     }
+    $('#tray').droppable(
+    {
+      drop: function (event, ui)
+      {
+        $('.ui-draggable-dragging').offset({
+          top: $(this).offset().top +12,
+          //set height to sit in middle of tray
+        });
+      }
+    });
   };
 
   //////////////////////////////////////////////////
 
   this.print = function ()
   {
-    var output = "";
+    var output = '';
 
     for (var x = 0; x < this.letters.length; x += 1)
     {
-      output = output.concat (this.letters[x].character + " ");
+      output = output.concat (this.letters[x].character + ' ');
       //console.log (this.letters[x].character);
     }
-    console.log ("Player 1 Tray Data: " + output);
+    console.log ('Player 1 Tray Data: ' + output);
   };
 
   //////////////////////////////////////////////////
@@ -93,7 +104,7 @@ module.exports = function Tray ()
       this.letters[x] = this.letters[y];
       this.letters[y] = temp;
     }
-  }
+  };
 
   //////////////////////////////////////////////////
 

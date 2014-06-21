@@ -59,45 +59,50 @@ var Board = function (gridChoice)
 // render is passed the player who's turn it is
 Board.prototype.render = function (player)
 {
-  var boardRef = $('#board');
-  boardRef.html('');
+  $('#board').empty();
 
-  boardRef.append ('<table>');
+  $('#board').append ('<table>');
   for (var i = 0; i < this.grid.length; i++) // one iteration is a whole row
   {
-    //boardRef.append(rowTemplate(this.grid[i]));
-    boardRef.append ('<tr>');
-
+    var el = '<tr>';
     for (var j = 0; j < this.grid[i].length; j++) //one iteration is one cell
     {
-      var theSquare = $(squareTemplate(this.grid[i][j]));
-      boardRef.append(theSquare); //render square
-
-      theSquare.droppable(
-      {
-        drop: function (event, ui)
-        {
-          //var letter = $(ui.helper);
-          console.log(this);
-          console.log('this.offset is top', $(this).offset().top, 'left', $(this).offset().left);
-          $('.ui-draggable-dragging').offset({
-                top:  $(this).offset().top,
-                left: $(this).offset().left
-          });
-          console.log ('ui is ', ui.helper);
-          console.log (ui.helper[0].id);
-          //console.dir (theSquare);
-
-          // remove the dropped letter from the tray
-          player.tray.remove (ui.helper[0].id);
-
-          //this.letter = 
-        }
-      });
+      var theSquare = squareTemplate(this.grid[i][j]);
+      el += theSquare;
     }
-    boardRef.append ('</tr>');
+    el += '</tr>';
+    $('table').append(el);
   }
-  boardRef.append ('</table>');
+  this.addListeners(player);
+};
+
+Board.prototype.addListeners = function(player)
+{
+  $('#board').find('td:not(.XX)').droppable(
+  {
+    drop: function (event, ui)
+    {
+      console.log('this.offset is top', $(this).offset().top, 'left', $(this).offset().left);
+      $('.ui-draggable-dragging').position({of: $(this)});
+      $(this).css('box-shadow', 'none');
+
+      console.log('ui is ', ui.helper);
+
+      // remove the dropped letter from the tray
+      player.tray.remove (ui.helper[0].id);
+    },
+
+    over: function (event, ui)
+    {
+      $(this).css('box-shadow', 'inset 0px 0px 10px blue');
+    },
+
+    out: function (event, ui)
+    {
+      $(this).css('box-shadow', 'none');
+    }
+
+  });
 };
 
 module.exports = Board;
