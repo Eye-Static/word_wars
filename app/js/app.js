@@ -8,12 +8,14 @@ $(document).ready(function ()
   var board;
   var bag;
   var player = [];
+  var turn = 0;
 
   newGame();
 
-  console.log(board);
+  board.render(player[turn]);  // draw the board
+  player[turn].startTurn (bag);
 
-  player[0].startTurn (bag);
+  console.log(board);
 
   console.log(player[0].tray.letters.length);
   console.log(bag.letters.length);
@@ -28,8 +30,29 @@ $(document).ready(function ()
     player[0] = new Player();
     player[1] = new Player();
 
-    bag.fill();          // add letters to bag
-    bag.shake();         // randomize bag
-    board.render();      // draw the board to html
+    bag.fill();               // add letters to bag
+    bag.shake();              // randomize bag
   }
+
+  //////////////////////////////////////////////////
+
+  $("#newButton").click (function ()
+  {
+    newGame();
+  });
+
+  //////////////////////////////////////////////////
+
+  $("#printTrayButton").click (function ()
+  {
+    player[0].tray.print();
+  });
+
+  //////////////////////////////////////////////////
+
+  $("#shuffleTrayButton").click (function ()
+  {
+    player[0].tray.shuffle();
+    player[0].tray.render();
+  });
 });

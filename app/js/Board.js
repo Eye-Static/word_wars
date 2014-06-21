@@ -54,7 +54,10 @@ var Board = function (gridChoice)
   return this;
 };
 
-Board.prototype.render = function ()
+//////////////////////////////////////////////////
+
+// render is passed the player who's turn it is
+Board.prototype.render = function (player)
 {
   var boardRef = $('#board');
   boardRef.html('');
@@ -81,8 +84,14 @@ Board.prototype.render = function ()
                 top:  $(this).offset().top,
                 left: $(this).offset().left
           });
-          console.log('ui is ', ui.helper);
-          console.dir(theSquare);
+          console.log ('ui is ', ui.helper);
+          console.log (ui.helper[0].id);
+          //console.dir (theSquare);
+
+          // remove the dropped letter from the tray
+          player.tray.remove (ui.helper[0].id);
+
+          //this.letter = 
         }
       });
     }

@@ -39,14 +39,20 @@ module.exports = function Bag()
                 ['X', 8, 1],
                 ['Y', 4, 2],
                 ['Z', 10, 1],
-                ['',0,2]
+                [ '', 0, 2]
                ];
     var j, i;
-  	for (j = 0; j<data.length; j++){
-  		for(i=0; i<data[j][2]; i++){
-			  this.letters.push(new Letter(data[j][0],data[j][1]));
+    var idCounter = 0;
+
+  	for (j = 0; j<data.length; j++)
+    {
+  		for(i=0; i<data[j][2]; i++)
+      {
+			  this.letters.push (new Letter (data[j][0], data[j][1], "id" + idCounter));
+        idCounter += 1;
   		}
-  	}console.log(this.letters.length);
+  	}
+    console.log(this.letters.length);
   };
 
   //////////////////////////////////////////////////
