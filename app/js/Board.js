@@ -2,6 +2,7 @@
 var Square         = require('./Square');
 var squareTemplate = require('./templates/squareTemplate.hbs');
 var grids          = require('./grids');
+//var rowTemplate = require('./templates/rowTemplate.hbs');
 
 var Board = function (gridChoice)
 {
@@ -53,7 +54,10 @@ var Board = function (gridChoice)
   return this;
 };
 
-Board.prototype.render = function ()
+//////////////////////////////////////////////////
+
+// render is passed the player who's turn it is
+Board.prototype.render = function (player)
 {
   var boardRef = $('#board');
   boardRef.html('');
@@ -61,30 +65,35 @@ Board.prototype.render = function ()
   boardRef.append ('<table>');
   for (var i = 0; i < this.grid.length; i++) // one iteration is a whole row
   {
+    //boardRef.append(rowTemplate(this.grid[i]));
     boardRef.append ('<tr>');
 
     for (var j = 0; j < this.grid[i].length; j++) //one iteration is one cell
     {
       var theSquare = $(squareTemplate(this.grid[i][j]));
       boardRef.append(theSquare); //render square
-      if(this.grid[i][j].bonus !== 'XX')
+
+      theSquare.droppable(
       {
-        theSquare.droppable(
+        drop: function (event, ui)
         {
-          drop: function (event, ui)
-          {
-            //var letter = $(ui.helper);
-            console.log(this);
-            console.log('this.offset is top', $(this).offset().top, 'left', $(this).offset().left);
-            $('.ui-draggable-dragging').offset({
-              top:  $(this).offset().top,
-              left: $(this).offset().left
-            });
-            console.log('ui is ', ui.helper);
-            console.dir(theSquare);
-          }
-        });
-      }
+          //var letter = $(ui.helper);
+          console.log(this);
+          console.log('this.offset is top', $(this).offset().top, 'left', $(this).offset().left);
+          $('.ui-draggable-dragging').offset({
+                top:  $(this).offset().top,
+                left: $(this).offset().left
+          });
+          console.log ('ui is ', ui.helper);
+          console.log (ui.helper[0].id);
+          //console.dir (theSquare);
+
+          // remove the dropped letter from the tray
+          player.tray.remove (ui.helper[0].id);
+
+          //this.letter = 
+        }
+      });
     }
     boardRef.append ('</tr>');
   }
