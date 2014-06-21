@@ -2,6 +2,7 @@
 var Square         = require('./Square');
 var squareTemplate = require('./templates/squareTemplate.hbs');
 var grids          = require('./grids');
+//var rowTemplate = require('./templates/rowTemplate.hbs');
 
 var Board = function (gridChoice)
 {
@@ -53,7 +54,10 @@ var Board = function (gridChoice)
   return this;
 };
 
-Board.prototype.render = function ()
+//////////////////////////////////////////////////
+
+// render is passed the player who's turn it is
+Board.prototype.render = function (player)
 {
   $('#board').empty();
 
@@ -69,10 +73,10 @@ Board.prototype.render = function ()
     el += '</tr>';
     $('table').append(el);
   }
-  this.addListeners();
+  this.addListeners(player);
 };
 
-Board.prototype.addListeners = function()
+Board.prototype.addListeners = function(player)
 {
   $('#board').find('td:not(.XX)').droppable(
   {
@@ -80,8 +84,12 @@ Board.prototype.addListeners = function()
     {
       console.log('this.offset is top', $(this).offset().top, 'left', $(this).offset().left);
       $('.ui-draggable-dragging').position({of: $(this)});
+      $(this).css('box-shadow', 'none');
 
       console.log('ui is ', ui.helper);
+
+      // remove the dropped letter from the tray
+      player.tray.remove (ui.helper[0].id);
     },
 
     over: function (event, ui)

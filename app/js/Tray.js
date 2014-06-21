@@ -13,9 +13,8 @@ module.exports = function Tray ()
   // until the tray has 7.
   this.refill = function (bag)
   {
-
-    //math randomize to pull tiles from the bag up to 7
-    while (this.letters.length<7) {
+    while (this.letters.length < 7)
+    {
       this.letters.push(bag.removeNext());
     }
   };
@@ -29,34 +28,38 @@ module.exports = function Tray ()
 
   //////////////////////////////////////////////////
 
-  // remove one specific letter from the tray
-  this.remove = function (letter)
+  // remove one letter from the tray by id
+  this.remove = function (id)
   {
+    this.letters.splice (this.find (id), 1);
   };
 
+  //////////////////////////////////////////////////
+
+  // draw the tray letters
   this.render = function ()
   {
     $('#tray').empty();
 
-    console.log ('Player 1 Tray:');
+    //console.log ('Player 1 Tray:');
 
     for(var i=0; i<this.letters.length; i++)
     {
       var letterHtml = $(letterTemplate(this.letters[i]));
       var letterData = this.letters[i];
-      console.log ('Letter: ' + this.letters[i].character);
+      //console.log ('Letter: ' + this.letters[i].character);
 
       $('#tray').append(letterHtml);
       letterHtml.draggable(
       {
         stop: function ()
         {
-          console.log('stopped dragging');
+          console.log('stopped dragging ' + this.id);
         },
         start: function ()
         {
-          var z = letterData.character;
-          console.log('started dragging ' + z);//letterData.character);
+          //var z = letterData.character;
+          console.log('started dragging ' + this.id);
         },
         revert: 'invalid'
       });
@@ -71,5 +74,46 @@ module.exports = function Tray ()
         });
       }
     });
+  };
+
+  //////////////////////////////////////////////////
+
+  this.print = function ()
+  {
+    var output = '';
+
+    for (var x = 0; x < this.letters.length; x += 1)
+    {
+      output = output.concat (this.letters[x].character + ' ');
+      //console.log (this.letters[x].character);
+    }
+    console.log ('Player 1 Tray Data: ' + output);
+  };
+
+  //////////////////////////////////////////////////
+
+  this.shuffle = function ()
+  {
+    var temp;  // for storing a letter to do the swap
+    var y;     // the random letter
+
+    for (var x = 0; x < this.letters.length; x += 1)
+    {
+      temp = this.letters[x];
+      y = Math.floor (Math.random() * this.letters.length);
+      this.letters[x] = this.letters[y];
+      this.letters[y] = temp;
+    }
+  };
+
+  //////////////////////////////////////////////////
+
+  // find a letter in the tray by id and return the array index
+  this.find = function (id)
+  {
+    for (var x = 0; x < this.letters.length; x += 1)
+    {
+      if (this.letters[x].id === id) return x;
+    }
   };
 };
