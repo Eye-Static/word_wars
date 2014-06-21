@@ -1,35 +1,72 @@
+html, body, div, span, applet, object, iframe,h1,
+h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym,
+address, big, cite, code,del, dfn, em, img, ins, kbd, q, s,
+samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl,
+dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption,
+tbody, tfoot, thead, tr, th, td,article, aside, canvas, details,
+embed, figure, figcaption, footer, header, hgroup, menu, nav,
+output, ruby, section, summary,time, mark, audio, video
+{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align:
+  baseline;
+}
+article, aside, details, figcaption, figureF,
+footer, header, hgroup, menu, nav, section
+{
+  display: block;
+}
+ol, ul
+{
+  list-style: none;
+}
+table
+{
+  border-collapse: collapse;
+  border-spacing: 0;
+
+}
+/*the above is CSS reset junk*/
+
 body
 {
+  line-height: 1;
   cursor: default;
-}
-
-td
-{
-  background-color: rgb(96, 96, 96);
+  user-select: none;
 }
 
 #board
 {
-  background-color: rgb(128, 128, 128);
+  background-color: rgb(0, 0, 0);
   border-style: solid;
   border-width: 2px;
   border-color: black;
-  width: 650px;
+  width: 850px;
   height: 450px;
   overflow: scroll;
 }
-
+td
+{
+  width:  42px;
+  height: 42px;
+}
 .square
 {
   color: black;
-  width: 40px;
-  height: 40px;
-  margin: 1px;
-  user-select: none;
+  width:  42px;
+  height: 42px;
   font-family: arial;
   font-weight: bold;
   font-size: 12pt;
   text-align: center;
+  border-style: solid;
+  border-width: 1px;
+  border-color: gray;
+  background-color: rgb(96, 96, 96);
 }
 
 .blank
@@ -66,6 +103,7 @@ td
 .XX
 {
   background-color: rgb(0, 0, 0);
+  border-color: black;
 }
 
 .letter
@@ -82,6 +120,7 @@ td
   text-align: center;
   float: left;
   user-select: none;
+  padding: 0;
 }
 
 .ui-draggable
@@ -104,7 +143,7 @@ td
 
 .letterScore
 {
-  font-size: 7pt;
+  font-size: 10pt;
   position: relative;
   left: 15px;
   top: -25px;

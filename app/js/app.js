@@ -23,7 +23,7 @@ $(document).ready(function ()
   function newGame ()
   {
     // grid layouts can be passed as strings like new Board('wordsWithFriends')
-    board = new Board('wordsWithFriends');
+    board = new Board('diamond');
     bag = new Bag();
     player[0] = new Player();
     player[1] = new Player();

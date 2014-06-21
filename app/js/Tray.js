@@ -57,10 +57,19 @@ module.exports = function Tray ()
         {
           var z = letterData.character;
           console.log('started dragging ' + z);//letterData.character);
-        }
+        },
+        revert: 'invalid'
       });
     }
-    // $('.letter').draggable();
-   //$('#tray').append('string');
- };
+    $('#tray').droppable(
+    {
+      drop: function (event, ui)
+      {
+        $('.ui-draggable-dragging').offset({
+          top: $(this).offset().top +12,
+          //set height to sit in middle of tray
+        });
+      }
+    });
+  };
 };

@@ -55,40 +55,46 @@ var Board = function (gridChoice)
 
 Board.prototype.render = function ()
 {
-  var boardRef = $('#board');
-  boardRef.html('');
+  $('#board').empty();
 
-  boardRef.append ('<table>');
+  $('#board').append ('<table>');
   for (var i = 0; i < this.grid.length; i++) // one iteration is a whole row
   {
-    boardRef.append ('<tr>');
-
+    var el = '<tr>';
     for (var j = 0; j < this.grid[i].length; j++) //one iteration is one cell
     {
-      var theSquare = $(squareTemplate(this.grid[i][j]));
-      boardRef.append(theSquare); //render square
-      if(this.grid[i][j].bonus !== 'XX')
-      {
-        theSquare.droppable(
-        {
-          drop: function (event, ui)
-          {
-            //var letter = $(ui.helper);
-            console.log(this);
-            console.log('this.offset is top', $(this).offset().top, 'left', $(this).offset().left);
-            $('.ui-draggable-dragging').offset({
-              top:  $(this).offset().top,
-              left: $(this).offset().left
-            });
-            console.log('ui is ', ui.helper);
-            console.dir(theSquare);
-          }
-        });
-      }
+      var theSquare = squareTemplate(this.grid[i][j]);
+      el += theSquare;
     }
-    boardRef.append ('</tr>');
+    el += '</tr>';
+    $('table').append(el);
   }
-  boardRef.append ('</table>');
+  this.addListeners();
+};
+
+Board.prototype.addListeners = function()
+{
+  $('#board').find('td:not(.XX)').droppable(
+  {
+    drop: function (event, ui)
+    {
+      console.log('this.offset is top', $(this).offset().top, 'left', $(this).offset().left);
+      $('.ui-draggable-dragging').position({of: $(this)});
+
+      console.log('ui is ', ui.helper);
+    },
+
+    over: function (event, ui)
+    {
+      $(this).css('box-shadow', 'inset 0px 0px 10px blue');
+    },
+
+    out: function (event, ui)
+    {
+      $(this).css('box-shadow', 'none');
+    }
+
+  });
 };
 
 module.exports = Board;
