@@ -132,16 +132,15 @@ td
 {
   cursor: grabbing;
   box-shadow: 3px 3px 5px black;
-  z-index: 20;
 }
 
-.letterCharacter
+.letter-character
 {
   position: relative;
   top: 7px;
 }
 
-.letterScore
+.letter-score
 {
   font-size: 10pt;
   position: relative;
@@ -164,12 +163,12 @@ td
   float: left;
 }
 
-#leftColumn
+#left-column
 {
   float: left;
 }
 
-#rightColumn
+#right-column
 {
   float: right;
 }

@@ -87,6 +87,7 @@ Board.prototype.addListeners = function(player)
       $(this).css('box-shadow', 'none');
 
       console.log('ui is ', ui.helper);
+      // $('.ui-draggable-dragging').removeClass('ui-draggable-dragging');
 
       // remove the dropped letter from the tray
       player.tray.remove (ui.helper[0].id);

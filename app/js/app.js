@@ -1,5 +1,6 @@
 'use strict';
 var Game   = require('./Game');
+require('./connect');
 
 $(document).ready(function ()
 {

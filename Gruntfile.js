@@ -87,6 +87,10 @@ module.exports = function(grunt) {
         files: ['app/js/**/*.js', 'app/js/templates/*.hbs'],
         tasks: 'browserify'
       },
+      server: {
+        files: 'server.js',
+        tasks: 'build'
+      },
       htmlcss: {
         files:
         ['app/images/**/*', 'app/styles/**/*', 'app/index.html'],
