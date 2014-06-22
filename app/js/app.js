@@ -30,4 +30,11 @@ $(document).ready(function ()
     game.players[0].tray.shuffle();
     game.players[0].tray.render();
   });
+
+  //////////////////////////////////////////////////
+
+  $('#print-grid-button').click (function ()
+  {
+    game.board.printGrid();
+  });
 });
