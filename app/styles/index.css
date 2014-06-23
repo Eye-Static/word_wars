@@ -109,8 +109,8 @@ td
 .letter
 {
   background-color: rgb(232, 148, 66);
-  border-width: 1px;
-  border-style: solid;
+  //border-width: 1px;
+  border: solid 1px rgb(90, 60, 30);
   font-family: arial;
   font-size: 18pt;
   width: 40px;
@@ -147,6 +147,7 @@ td
   position: relative;
   left: 15px;
   top: -25px;
+  color: rgb(90, 60, 30);
 }
 
 #tray
