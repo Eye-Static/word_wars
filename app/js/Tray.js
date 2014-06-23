@@ -3,10 +3,10 @@ var Letter = require('./Letter');
 var Bag = require('./Bag');
 var letterTemplate = require('./templates/letterTemplate.hbs');
 
-module.exports = function Tray ()
+module.exports = function Tray (board)
 {
   this.letters = [];  // array of letter objects (max 7)
-
+  this.board = board;
   //////////////////////////////////////////////////
 
   // remove letters from the bag and add them to the tray
@@ -50,18 +50,18 @@ module.exports = function Tray ()
   };
   /////////////////////////////////////////////////
 
-  this.retrieveLetter = function(letterID, board)
+  this.retrieveLetter = function(letterID)
   {
     console.log('this in tray is');
     console.dir(this);
-    var letter = board.retrieveLetter(letterID, this);
+    var letter = this.board.retrieveLetter(letterID, this);
     return letter;
   };
 
   //////////////////////////////////////////////////
 
   // draw the tray letters
-  this.render = function (board)
+  this.render = function ()
   {
     var that = this;
     $('#tray').empty();
@@ -90,7 +90,7 @@ module.exports = function Tray ()
           //set height to sit in middle of tray
         });
         var letterID = ui.helper[0].id;
-        var letter = that.retrieveLetter(letterID, board);
+        var letter = that.retrieveLetter(letterID);
         that.add(letter);
       }
     });

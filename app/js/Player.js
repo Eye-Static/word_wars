@@ -1,10 +1,10 @@
 'use strict';
 var Tray = require ('./Tray');
 
-module.exports = function Player ()
+module.exports = function Player (board)
 {
   this.score = 0;
-  this.tray = new Tray();
+  this.tray = new Tray(board);
 
   ////////////////////////////////////////
 

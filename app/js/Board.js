@@ -151,18 +151,17 @@ Board.prototype.retrieveLetter = function(letterID, playerTray)
 {
     // remove the dropped letter from the tray
     console.log('letter ID is', letterID, 'and letter removed is:');
-    var letter = player.tray.remove(letterID);
+    var letter = playerTray.remove(letterID);
 
     if(letter)
     {
-      console.log('letter was found on tray of player:');
-      console.dir(player);
+      console.log('letter was found on tray of player');
     }
     else
     {
       //if tray didn't have the letter, find/remove letter from board
       console.log('letter did not come from tray');
-      letter = this.board.findAndRemoveLetter(letterID);
+      letter = this.findAndRemoveLetter(letterID);
     }
 
     console.log('removed id: ' + letterID + ' with letter object ');
