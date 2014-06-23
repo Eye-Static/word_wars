@@ -172,3 +172,16 @@ td
 {
   float: right;
 }
+#login-box
+{
+  background: rgb(80, 100, 200);
+}
+#game-lobby
+{
+  background: rgb(100, 200, 100);
+}
+.game-listing
+{
+  background: rgb(150, 200, 150);
+  border: 1px solid black;
+}
