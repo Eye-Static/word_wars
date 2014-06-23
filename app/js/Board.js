@@ -146,8 +146,9 @@ Board.prototype.printGrid = function ()
 
     for (x = 0; x < this.maxX; x += 1)
     {
-      if (this.grid[x][y].letter) row = row.concat (this.grid[x][y].letter.character);
-      else row = row.concat ('.');
+      if (this.grid[x][y].letter) row += this.grid[x][y].letter.character;
+        //= row.concat (this.grid[x][y].letter.character);
+      else row += '.';  //= row.concat ('.');
     }
     console.log (row);
   }
