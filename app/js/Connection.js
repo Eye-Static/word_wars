@@ -4,7 +4,7 @@ var Connection = function()
 {
   socket.on('message', function(data)
   {
-    console.dir(data.message);
+    console.log(data.message);
   });
 
   socket.on('gameAppeared', function(data)
@@ -13,7 +13,7 @@ var Connection = function()
       '<div class="game-listing" id=' + data.gameID + '>' +
       'board: ' + data.board + '<br>' +
       'players: ' + data.numPlayers + '<br>' +
-      'created by: ' + (data.userName || 'anon') +
+      'created by: ' + (data.creator || 'anon') +
       '</div>');
   });
 };

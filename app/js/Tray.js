@@ -18,12 +18,23 @@ module.exports = function Tray ()
       this.letters.push(bag.removeNext());
     }
   };
+  //////////////////////////////////////////////////
 
+  // find a letter in the tray by id and return the array index
+  this.find = function (id)
+  {
+    for (var x = 0; x < this.letters.length; x += 1)
+    {
+      if (this.letters[x].id === id) return x;
+    }
+    return -1;
+  };
   //////////////////////////////////////////////////
 
   // add one specific letter to the tray
-  this.add = function (letter)
+  this.add = function (letterObj)
   {
+    this.letters.push(letterObj);
   };
 
   //////////////////////////////////////////////////
@@ -31,63 +42,59 @@ module.exports = function Tray ()
   // remove one letter from the tray by id
   this.remove = function (id)
   {
-    this.letters.splice (this.find (id), 1);
+    var index = this.find (id);
+    if (index < 0) { return null; }
+    var returnVal = this.letters.splice(index, 1);
+    if (returnVal > 1) {console.error('tray found', returnVal.length, 'letters with same id');}
+    return returnVal[0];
+  };
+  /////////////////////////////////////////////////
+
+  this.retrieveLetter = function(letterID, board)
+  {
+    console.log('this in tray is');
+    console.dir(this);
+    var letter = board.retrieveLetter(letterID, this);
+    return letter;
   };
 
   //////////////////////////////////////////////////
 
   // draw the tray letters
-  this.render = function ()
+  this.render = function (board)
   {
+    var that = this;
     $('#tray').empty();
-    // $('#tray').sortable(
-    // // {
-    // //   start: function(){$('.ui-draggable-dragging').offset(
-    // //   {
-    // //     top: event.clientY,
-    // //     left: event.clientX
-    // //   });
-    // //   }
-
-    // // }
-    // );
     for(var i=0; i<this.letters.length; i++)
     {
       var letterHtml = $(letterTemplate(this.letters[i]));
       var letterData = this.letters[i];
-      //console.log ('Letter: ' + this.letters[i].character);
-
       $('#tray').append(letterHtml);
       letterHtml.draggable(
       {
         stop: function ()
-        {
-          console.log('stopped dragging ' + this.id);
-          // $('.ui-draggable-dragging').removeClass('ui-draggable-dragging');
-        },
+        {},
         start: function (event)
-        {
-          //var z = letterData.character;
-          console.dir(event);
-
-          console.log('started dragging ' + this.id);
-        },
+        {},
         zIndex: 20,
         revert: 'invalid',
-        connectToSortable: '#tray'
       });
     }
     $('#tray').droppable(
     {
       drop: function (event, ui)
       {
-        $('.ui-draggable-dragging').offset({
+        $('.ui-draggable-dragging').offset(
+        {
           top: $(this).offset().top +12,
           //set height to sit in middle of tray
         });
+        var letterID = ui.helper[0].id;
+        var letter = that.retrieveLetter(letterID, board);
+        that.add(letter);
       }
     });
-};
+  };
 
   //////////////////////////////////////////////////
 
@@ -119,14 +126,4 @@ module.exports = function Tray ()
     }
   };
 
-  //////////////////////////////////////////////////
-
-  // find a letter in the tray by id and return the array index
-  this.find = function (id)
-  {
-    for (var x = 0; x < this.letters.length; x += 1)
-    {
-      if (this.letters[x].id === id) return x;
-    }
-  };
 };

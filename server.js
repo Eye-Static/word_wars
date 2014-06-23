@@ -34,7 +34,7 @@ io.on('connection', function(socket)
   socket.on('submitName', function(data)
   {
     console.log(data.userName + ' logged in');
-    socket.user = data.userName;
+    socket.user = data.userName; //socket just has user name
     users[data.userName] = data;
     console.dir(users);
   });
@@ -42,7 +42,7 @@ io.on('connection', function(socket)
   socket.on('startGameRequest', function(data)
   {
     console.log('game request data', data);
-    data.gameID = gameCounter;
+    data.gameID = gameCounter++;
     games.push(data);
     socket.broadcast.emit('gameAppeared', data);
   });
