@@ -8,27 +8,31 @@
   <link rel="stylesheet" type="text/css" href="./index.css">
   <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
   <script src = "app.js"></script>
-
 </head>
-
 <body>
-  <div id = "leftColumn">
+  <div id = "left-column">
     <div>
-      (title / logo)<br>
+      (title / logo)
+      <div id = "login-box">
+        Username <input type = "text" id = "user-name">
+        <input type = "button" value = "Log in" id = "login-button">
+        <br>
+      </div>
       Board type:
         <select id="board-type">
-                <option value="scrabble" selected>Scrabble</option>
-                <option value="wordsWithFriends">Words with Friends</option>
-                <option value="diamond" >Diamond</option>
+          <option value="scrabble" selected>Scrabble</option>
+          <option value="wordsWithFriends">Words with Friends</option>
+          <option value="diamond" >Diamond</option>
         </select>
-        <br />
+        <br>
         Game type:
         <select id="player-number">
-            <option value="1" selected>Solo</option>
-            <option value="2">2 Players</option>
+          <option value="1" selected>Solo</option>
+          <option value="2">2 Players</option>
         </select>
-        <br />
+        <br>
         <input type = "button" value = "New Game" id = "new-game-button">
 
       <input type = "button" value = "Shuffle Tray" id = "shuffle-tray-button">
@@ -37,9 +41,10 @@
     </div>
 
     <div id = "connection-info">Connection info: </div>
+    <div id = "game-lobby">Game Lobby: </div>
   </div>
 
-  <div id = "rightColumn">
+  <div id = "right-column">
     <div id = "game">
       <div id = "board"></div>
       <div id = "tray"></div>

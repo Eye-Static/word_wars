@@ -1,0 +1,23 @@
+Core Stories:
+  As a casual gamer, I want to sign up and play quickly
+  As a casual gamer, I want to be able to sign in with facebook or google
+  As a hardcore scrabbler, I want all words to be legit, dictionary words
+  As a gamer, the game should show my score and when I win
+  As a novice computer user, the tiles should be easy to drag and drop without strange bugs
+  As a gamer, I want to play with people on other devices, over the internet
+  As a scrabble fan, I expect the game will only allow me to submit letters in straight lines.
+  As a strategist, I don’t want my opponent to see my letter tray.
+  As a player, I expect the points to be added correctly.
+  As a clever player, I want to be able to form multiple words with clever line placement.
+  As a player, I expect the game to end when we run out of letters.
+  As a player, I want to be able to end the game early, before the bag is empty.
+
+
+Additional Feature Stories:
+  As a style-conscious gamer, I want to be able to switch the color scheme
+  As a lifelong learner, I want to check the definition of words played.
+  As a Words with Friends player, I want the game to have features that make the game different
+  As a mobile user, the game should be easy to play on a smartphone
+  As a casual gamer, I want to close my browser and have the game return to the same spot
+  As a casual gamer, I want to play multiple games at once, with different people
+  As a gamer on the go, I want to be able to play against people who are on their own separate device.

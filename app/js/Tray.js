@@ -40,9 +40,17 @@ module.exports = function Tray ()
   this.render = function ()
   {
     $('#tray').empty();
+    // $('#tray').sortable(
+    // // {
+    // //   start: function(){$('.ui-draggable-dragging').offset(
+    // //   {
+    // //     top: event.clientY,
+    // //     left: event.clientX
+    // //   });
+    // //   }
 
-    //console.log ('Player 1 Tray:');
-
+    // // }
+    // );
     for(var i=0; i<this.letters.length; i++)
     {
       var letterHtml = $(letterTemplate(this.letters[i]));
@@ -55,13 +63,18 @@ module.exports = function Tray ()
         stop: function ()
         {
           console.log('stopped dragging ' + this.id);
+          // $('.ui-draggable-dragging').removeClass('ui-draggable-dragging');
         },
-        start: function ()
+        start: function (event)
         {
           //var z = letterData.character;
+          console.dir(event);
+
           console.log('started dragging ' + this.id);
         },
-        revert: 'invalid'
+        zIndex: 20,
+        revert: 'invalid',
+        connectToSortable: '#tray'
       });
     }
     $('#tray').droppable(
@@ -74,7 +87,7 @@ module.exports = function Tray ()
         });
       }
     });
-  };
+};
 
   //////////////////////////////////////////////////
 

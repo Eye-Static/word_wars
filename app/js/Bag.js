@@ -52,7 +52,6 @@ module.exports = function Bag()
         idCounter += 1;
   		}
   	}
-    console.log(this.letters.length);
   };
 
   //////////////////////////////////////////////////
