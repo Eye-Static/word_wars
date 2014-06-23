@@ -91,6 +91,7 @@ Board.prototype.addListeners = function(player)
       $(this).css('box-shadow', 'none');
 
       console.log('ui is ', ui.helper);
+      // $('.ui-draggable-dragging').removeClass('ui-draggable-dragging');
 
       // get the tray array index of the letter we dropped, using the id
       var trayIndex = player.tray.find (ui.helper[0].id);
