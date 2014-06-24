@@ -2,6 +2,7 @@
 var Board  = require('./Board');
 var Bag    = require('./Bag');
 var Player = require('./Player');
+// var utils  = ('./utils');
 
 var Game = function (boardType, playerNum)
 {
@@ -13,14 +14,18 @@ var Game = function (boardType, playerNum)
   this.turn  = 0;
   this.players = [];
 
+  // utils.setGame(this);
+  // utils.players = this.players;
+  // utils.board = this.board;
+
   for (var i = 0; i < (playerNum || 1); i++)
   {
     //console.log('creating player', i+1);
-    this.players[i] = new Player(this.board);//pass board
+    this.players[i] = new Player(this.board, i+1);//pass board & playerNum
   }
 
-  this.board.render(this.players[0].tray); // tray is passed for binding reasons
-  //in future, pass player array so search func can searh both trays
+  this.board.render(); // tray is passed for binding reasons
+  this.board.addListeners(this.players); //now this must be called manually
 
   this.bag.fill();               // add letters to bag
   this.bag.shake();              // randomize bag

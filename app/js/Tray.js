@@ -3,10 +3,12 @@ var Letter = require('./Letter');
 var Bag = require('./Bag');
 var letterTemplate = require('./templates/letterTemplate.hbs');
 
-module.exports = function Tray (board)
+module.exports = function Tray (board, playerNum)
 {
   this.letters = [];  // array of letter objects (max 7)
   this.board = board;
+  this.playerNum = playerNum;
+  var trayObject = $('#player-' + playerNum + '-tray');
   //////////////////////////////////////////////////
 
   // remove letters from the bag and add them to the tray
@@ -45,15 +47,14 @@ module.exports = function Tray (board)
     var index = this.find (id);
     if (index < 0) { return null; }
     var returnVal = this.letters.splice(index, 1);
-    if (returnVal > 1) {console.error('tray found', returnVal.length, 'letters with same id');}
+    if (returnVal > 1) {console.error('ERROR: tray found', returnVal.length, 'letters with same id');}
     return returnVal[0];
   };
   /////////////////////////////////////////////////
 
   this.retrieveLetter = function(letterID)
   {
-    console.log('this in tray is');
-    console.dir(this);
+    //this is the sloppy part, but hey, it works
     var letter = this.board.retrieveLetter(letterID, this);
     return letter;
   };
@@ -64,12 +65,12 @@ module.exports = function Tray (board)
   this.render = function ()
   {
     var that = this;
-    $('#tray').empty();
+    trayObject.empty();
     for(var i=0; i<this.letters.length; i++)
     {
       var letterHtml = $(letterTemplate(this.letters[i]));
       var letterData = this.letters[i];
-      $('#tray').append(letterHtml);
+      trayObject.append(letterHtml);
       letterHtml.draggable(
       {
         stop: function ()
@@ -77,10 +78,10 @@ module.exports = function Tray (board)
         start: function (event)
         {},
         zIndex: 20,
-        revert: 'invalid',
+        revert: 'invalid', // will revert when placed on invalid area
       });
     }
-    $('#tray').droppable(
+    trayObject.droppable(
     {
       drop: function (event, ui)
       {
