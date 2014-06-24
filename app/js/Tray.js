@@ -9,7 +9,7 @@ module.exports = function Tray (board, playerNum)
   this.board = board;
   this.playerNum = playerNum;
   var trayObject = $('#player-' + playerNum + '-tray');
-  trayObject.show();
+
   //////////////////////////////////////////////////
 
   // remove letters from the bag and add them to the tray
@@ -61,6 +61,18 @@ module.exports = function Tray (board, playerNum)
     var letter = this.board.retrieveLetter(letterID, this);
     return letter;
   };
+
+  //////////////////////////////////////////////////
+
+  this.showTray = function ()
+  {
+    trayObject.show();
+    $('#whose-turn').text('Player ' + (this.playerNum+1) + '\'s turn');
+  }
+  this.hideTray = function ()
+  {
+    trayObject.hide();
+  }
 
   //////////////////////////////////////////////////
 

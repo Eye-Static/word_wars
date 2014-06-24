@@ -16,7 +16,7 @@ $(document).ready(function ()
   {
     userName  = $('#user-name').val();
     $('#user-name').empty();
-    $('#login-box').append('Logged in as ' + userName);
+    $('#login-box').text('Logged in as ' + userName);
     connection.sendUserName(userName); //func from connect
   });
 
