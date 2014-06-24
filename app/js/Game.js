@@ -3,8 +3,6 @@ var Board  = require('./Board');
 var Bag    = require('./Bag');
 var Player = require('./Player');
 
-// var utils  = ('./utils');
-
 var Game = function (boardType, numOfPlayers)
 {
   console.log('starting new game with board type: ' + (boardType || 'not set'));
@@ -17,9 +15,6 @@ var Game = function (boardType, numOfPlayers)
   this.players = [];
   this.whoseTurn = 0; // refers to which player in players array
                       // so 0 means the first player
-  // utils.setGame(this);
-  // utils.players = this.players;
-  // utils.board = this.board;
 
   this.bag.fill();               // add letters to bag
   this.bag.shake();              // randomize bag
@@ -40,6 +35,7 @@ Game.prototype.start = function()
 {
   //more to come in this space??
   this.printGameStatus();
+  this.players[0].tray.showTray();
 };
 
 Game.prototype.finishTurn = function ()
@@ -47,7 +43,6 @@ Game.prototype.finishTurn = function ()
   var justFinishedPlayer = this.players[this.whoseTurn];
   justFinishedPlayer.score+= this.wordScore();
   this.renderScore();
-  console.dir(justFinishedPlayer);
   justFinishedPlayer.refillTiles(this.bag);
   if(this.bag.letters.length === 0)
   { //no more letters
@@ -60,17 +55,19 @@ Game.prototype.finishTurn = function ()
 Game.prototype.nextTurn = function()
 {
   this.turn.turnNum ++;
+  this.players[this.whoseTurn].tray.hideTray();
   // set whoseTurn to the next player
   this.whoseTurn = this.players[this.whoseTurn +1] ? this.whoseTurn + 1 : 0;
+  this.players[this.whoseTurn].tray.showTray();
   this.printGameStatus();
 };
 
 Game.prototype.printGameStatus = function ()
 {
   //change what this is connected to on the DOM
-  $('#connection-info').text('player ' + (this.whoseTurn+1) +
+  $('#game-info').text('player ' + (this.whoseTurn+1) +
   '\'s turn. Turn: ' + (this.turn.message || this.turn.turnNum));
-}
+};
 
 Game.prototype.cleanGameSpace = function ()
 {

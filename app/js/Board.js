@@ -4,10 +4,8 @@ var Letter         = require('./Letter');
 var squareTemplate = require('./templates/squareTemplate.hbs');
 var letterTemplate = require('./templates/letterTemplate.hbs');
 var grids          = require('./grids');
-// var utils = require('./utils');
 var Board = function (gridChoice)
 {
-  // console.dir(utils.game);
   this.grid = [];
   var stringGrid;
   if(!gridChoice || !grids.hasOwnProperty(gridChoice))
