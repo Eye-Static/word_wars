@@ -34,7 +34,7 @@ Connection.prototype.startGameRequest = function(desiredBoard, desiredPlayers, u
   );
   if(!inProgress)
   {
-    $('#connection-info').append('<br><div id ="waiting status">waiting for other player(s)</div>');
+    $('#connection-info').append('<br><div id ="waiting status">waiting for players</div>');
   }
 };
 

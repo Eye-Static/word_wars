@@ -9,6 +9,7 @@ module.exports = function Tray (board, playerNum)
   this.board = board;
   this.playerNum = playerNum;
   var trayObject = $('#player-' + playerNum + '-tray');
+  trayObject.show();
   //////////////////////////////////////////////////
 
   // remove letters from the bag and add them to the tray
@@ -108,7 +109,7 @@ module.exports = function Tray (board, playerNum)
       output = output.concat (this.letters[x].character + ' ');
       //console.log (this.letters[x].character);
     }
-    console.log ('Player 1 Tray Data: ' + output);
+    console.log ('Player ' + this.playerNum +  ' Tray Data: ' + output);
   };
 
   //////////////////////////////////////////////////
