@@ -87,6 +87,7 @@ Board.prototype.addListeners = function(player)
       console.log('this.offset is top', $(this).offset().top, 'left', $(this).offset().left);
       $('.ui-draggable-dragging').position({of: $(this)});
       $(this).css('box-shadow', 'none');
+      $(this).droppable('disable');
 
       // letter with what ID was dropped?
       var letterID = ui.helper[0].id;
@@ -150,7 +151,6 @@ Board.prototype.printGrid = function ()
 Board.prototype.retrieveLetter = function(letterID, playerTray)
 {
     // remove the dropped letter from the tray
-    console.log('letter ID is', letterID, 'and letter removed is:');
     var letter = playerTray.remove(letterID);
 
     if(letter)
@@ -180,7 +180,8 @@ Board.prototype.findAndRemoveLetter = function (letterID)
     {
       if (this.grid[x][y].letter && this.grid[x][y].letter.id === letterID)
         {
-          console.log('letter ' + this.grid[x][y].letter.character + ' found at ' + x + ' ' + y);
+          console.log('letter', this.grid[x][y].letter.character, 'found at', x, y);
+          $('#square\\:' + x +'\\:'+ y).droppable('enable');
           return this.removeLetter(x,y);
         }
     }
