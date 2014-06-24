@@ -2,6 +2,7 @@
 var Board  = require('./Board');
 var Bag    = require('./Bag');
 var Player = require('./Player');
+
 // var utils  = ('./utils');
 
 var Game = function (boardType, numOfPlayers)
@@ -44,6 +45,8 @@ Game.prototype.start = function()
 Game.prototype.finishTurn = function ()
 {
   var justFinishedPlayer = this.players[this.whoseTurn];
+  justFinishedPlayer.score+= this.wordScore();
+  this.renderScore();
   console.dir(justFinishedPlayer);
   justFinishedPlayer.refillTiles(this.bag);
   if(this.bag.letters.length === 0)
@@ -74,5 +77,33 @@ Game.prototype.cleanGameSpace = function ()
   $('#player-1-tray').empty();
   $('#player-2-tray').empty();
 };
+
+Game.prototype.wordScore = function()
+{
+  var score = 0;
+  var x,y;
+  for(y=0;y<this.board.grid.length; y++){
+    for(x=0;x<this.board.grid[y].length; x++){
+      
+      if(this.board.grid[y][x].letter && this.board.grid[y][x].letter.justPlaced == true) {
+        score += this.board.grid[y][x].letter.score;
+
+
+      }
+    }
+  }
+  console.log("Score: " + score);
+  return score;
+}
+
+Game.prototype.renderScore = function () 
+{
+  $("#score").empty();
+  var p = 0;
+  for(p=0;p<this.players.length; p++) {
+    $("#score").append("Player " + (p+1) + " Total: " + this.players[p].score + "<br>");
+  }
+  
+}
 
 module.exports = Game;
