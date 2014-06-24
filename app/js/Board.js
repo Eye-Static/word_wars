@@ -125,7 +125,7 @@ Board.prototype.addListeners = function(players)
       console.log('this.offset is top', $(this).offset().top, 'left', $(this).offset().left);
       $('.ui-draggable-dragging').position({of: $(this)});
       $(this).css('box-shadow', 'none');
-      //$(this).droppable('disable');
+      $(this).droppable('disable');
 
       // get id of dropped letter
       var letterID = ui.helper[0].id;
@@ -135,6 +135,7 @@ Board.prototype.addListeners = function(players)
 
       //search the player's tray and the board for the letter & take it
       var letter = that.retrieveLetter(letterID, players);
+      letter.justPlaced = true;
 
       // remove the dropped letter from the tray
       //players[].tray.remove (letterID);
