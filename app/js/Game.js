@@ -4,16 +4,18 @@ var Bag    = require('./Bag');
 var Player = require('./Player');
 // var utils  = ('./utils');
 
-var Game = function (boardType, playerNum)
+var Game = function (boardType, numOfPlayers)
 {
   console.log('starting new game with board type: ' + (boardType || 'not set'));
-  console.log('and players: ' + (playerNum || 'not set'));
+  console.log('and players: ' + (numOfPlayers || 'not set'));
+  this.cleanGameSpace();
 
   this.board = new Board(boardType);
   this.bag   = new Bag();
-  this.turn  = 0;
+  this.turn  = {turnNum: 1, message: ''};
   this.players = [];
-  this.whoseTurn = 0; //no 0 player number but will increase
+  this.whoseTurn = 0; // refers to which player in players array
+                      // so 0 means the first player
   // utils.setGame(this);
   // utils.players = this.players;
   // utils.board = this.board;
@@ -21,10 +23,10 @@ var Game = function (boardType, playerNum)
   this.bag.fill();               // add letters to bag
   this.bag.shake();              // randomize bag
 
-  for (var i = 0; i < (playerNum || 1); i++)
+  for (var i = 0; i < (numOfPlayers || 1); i++)
   {
-    console.log('creating player', i+1);
-    this.players[i] = new Player(this.board, i+1);//pass board & playerNum
+    console.log('creating player', i);
+    this.players[i] = new Player(this.board, i);//pass board & the player number
     this.players[i].refillTiles (this.bag);
   }
 
@@ -36,17 +38,41 @@ var Game = function (boardType, playerNum)
 Game.prototype.start = function()
 {
   //more to come in this space??
-  this.nextTurn();
+  this.printGameStatus();
+};
+
+Game.prototype.finishTurn = function ()
+{
+  var justFinishedPlayer = this.players[this.whoseTurn];
+  console.dir(justFinishedPlayer);
+  justFinishedPlayer.refillTiles(this.bag);
+  if(this.bag.letters.length === 0)
+  { //no more letters
+    console.log('No more letters in the bag, last turn');
+    this.turn.message = 'LAST TURN';
+  }
+  justFinishedPlayer.tray.render();
 };
 
 Game.prototype.nextTurn = function()
 {
-  //change what this is connected to
-  this.turn ++;
-  console.log('turn is now ' + this.turn);
-  this.whoseTurn = this.players[this.whoseTurn] ? this.whoseTurn + 1 : 1;
-  console.log(this.whoseTurn);
-  $('#connection-info').text('player ' + this.whoseTurn + '\'s turn.');
+  this.turn.turnNum ++;
+  // set whoseTurn to the next player
+  this.whoseTurn = this.players[this.whoseTurn +1] ? this.whoseTurn + 1 : 0;
+  this.printGameStatus();
+};
+
+Game.prototype.printGameStatus = function ()
+{
+  //change what this is connected to on the DOM
+  $('#connection-info').text('player ' + (this.whoseTurn+1) +
+  '\'s turn. Turn: ' + (this.turn.message || this.turn.turnNum));
+}
+
+Game.prototype.cleanGameSpace = function ()
+{
+  $('#player-1-tray').empty();
+  $('#player-2-tray').empty();
 };
 
 module.exports = Game;

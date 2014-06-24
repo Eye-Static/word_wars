@@ -18,7 +18,10 @@ module.exports = function Tray (board, playerNum)
   {
     while (this.letters.length < 7)
     {
-      this.letters.push(bag.removeNext());
+      var letter = bag.removeNext();
+      console.log('retrieved letter' + letter);
+      if(!letter) { return; }
+      this.letters.push(letter);
     }
   };
   //////////////////////////////////////////////////
