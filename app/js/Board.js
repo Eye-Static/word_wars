@@ -2,7 +2,6 @@
 var Square         = require('./Square');
 var squareTemplate = require('./templates/squareTemplate.hbs');
 var grids          = require('./grids');
-//var rowTemplate = require('./templates/rowTemplate.hbs');
 
 var Board = function (gridChoice)
 {
@@ -51,12 +50,11 @@ var Board = function (gridChoice)
 
     this.grid[y][x] = square;  // add square to the data grid
   }
-  return this;
 };
 
 //////////////////////////////////////////////////
 
-// render is passed the player who's turn it is
+// render is passed the current player
 Board.prototype.render = function (player)
 {
   $('#board').empty();
@@ -90,20 +88,15 @@ Board.prototype.addListeners = function(player)
       $('.ui-draggable-dragging').position({of: $(this)});
       $(this).css('box-shadow', 'none');
 
-      console.log('ui is ', ui.helper);
-      // $('.ui-draggable-dragging').removeClass('ui-draggable-dragging');
+      // letter with what ID was dropped?
+      var letterID = ui.helper[0].id;
 
-      // get the tray array index of the letter we dropped, using the id
-      var trayIndex = player.tray.find (ui.helper[0].id);
-
-      // get the square object using the sqaure div's id
+      // get the square object using the square div's id
       var dropSquare = that.getSquareObject (this.id);
+      var letter = that.retrieveLetter(letterID, player);
 
-      // assign the dropped letter object to the square object's letter property
-      dropSquare.letter = player.tray.letters[trayIndex];
-
-      // remove the dropped letter from the tray
-      player.tray.remove (ui.helper[0].id);
+      // assign the new letter object to the squares 'letter' field
+      dropSquare.letter = letter;
     },
 
     over: function (event, ui)
@@ -122,12 +115,12 @@ Board.prototype.addListeners = function(player)
 //////////////////////////////////////////////////
 
 // take the id (string) from a <td> square and return the square's object (grid[x][y])
-// squareID = "square:x,y"
-Board.prototype.getSquareObject = function (squareID)
+// letterID = "square:x,y"
+Board.prototype.getSquareObject = function (letterID)
 {
-  squareID = squareID.split (':');
-  var x = squareID[1];
-  var y = squareID[2];
+  letterID = letterID.split (':');
+  var x = letterID[1];
+  var y = letterID[2];
 
   return this.grid[x][y];
 };
@@ -138,7 +131,7 @@ Board.prototype.getSquareObject = function (squareID)
 Board.prototype.printGrid = function ()
 {
   var x, y;
-  var row = '';
+  var row;
 
   for (y = 0; y < this.maxY; y += 1)
   {
@@ -146,12 +139,62 @@ Board.prototype.printGrid = function ()
 
     for (x = 0; x < this.maxX; x += 1)
     {
-      if (this.grid[x][y].letter) row += this.grid[x][y].letter.character;
-        //= row.concat (this.grid[x][y].letter.character);
-      else row += '.';  //= row.concat ('.');
+      if (this.grid[x][y].letter) { row += this.grid[x][y].letter.character; }
+      else { row += '.'; }
     }
     console.log (row);
   }
 };
+/////////////////////////////////////////////////
+
+Board.prototype.retrieveLetter = function(letterID, playerTray)
+{
+    // remove the dropped letter from the tray
+    console.log('letter ID is', letterID, 'and letter removed is:');
+    var letter = playerTray.remove(letterID);
+
+    if(letter)
+    {
+      console.log('letter was found on tray of player');
+    }
+    else
+    {
+      //if tray didn't have the letter, find/remove letter from board
+      console.log('letter did not come from tray');
+      letter = this.findAndRemoveLetter(letterID);
+    }
+
+    console.log('removed id: ' + letterID + ' with letter object ');
+    console.dir(letter);
+    return letter;
+};
+
+/////////////////////////////////////////////////
+
+Board.prototype.findAndRemoveLetter = function (letterID)
+{
+  var x, y;
+  for (y = 0; y < this.maxY; y += 1)
+  {
+    for (x = 0; x < this.maxX; x += 1)
+    {
+      if (this.grid[x][y].letter && this.grid[x][y].letter.id === letterID)
+        {
+          console.log('letter ' + this.grid[x][y].letter.character + ' found at ' + x + ' ' + y);
+          return this.removeLetter(x,y);
+        }
+    }
+  }
+};
+////////////////////////////////////////////////
+
+
+Board.prototype.removeLetter = function (x, y)
+{
+  var letter = this.grid[x][y].letter;
+  this.grid[x][y].letter = null;
+  return letter;
+};
+
 
 module.exports = Board;

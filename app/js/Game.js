@@ -16,10 +16,12 @@ var Game = function (boardType, playerNum)
   for (var i = 0; i < (playerNum || 1); i++)
   {
     //console.log('creating player', i+1);
-    this.players[i] = new Player();
+    this.players[i] = new Player(this.board);//pass board
   }
 
-  this.board.render(this.players[0]); // player is passed for binding reasons
+  this.board.render(this.players[0].tray); // tray is passed for binding reasons
+  //in future, pass player array so search func can searh both trays
+
   this.bag.fill();               // add letters to bag
   this.bag.shake();              // randomize bag
   //console.log(this.bag.letters.length + ' letters generated');
