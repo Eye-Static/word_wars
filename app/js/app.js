@@ -79,6 +79,7 @@ $(document).ready(function ()
 
   $('#done-button').on('click', function()
   {
+    game.finishTurn();
     game.nextTurn();
   })
 

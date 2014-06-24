@@ -37,6 +37,9 @@ body
   line-height: 1;
   cursor: default;
   user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 #board
