@@ -64,6 +64,8 @@ $(document).ready(function ()
   {
     game.players[0].tray.shuffle();
     game.players[0].tray.render();
+    //game.board.render (game.players[game.turn]);
+    game.board.addListeners (game.players);
   });
 
   //////////////////////////////////////////////////
