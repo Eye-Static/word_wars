@@ -149,9 +149,10 @@ td
   color: rgb(90, 60, 30);
 }
 
-#tray
+.tray
 {
   //background-color: white;
+  display: none;
   border-style: solid;
   border-color: rgb(128, 128, 128);
   border-width: 2px;

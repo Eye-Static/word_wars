@@ -2,9 +2,10 @@
 var Square         = require('./Square');
 var squareTemplate = require('./templates/squareTemplate.hbs');
 var grids          = require('./grids');
-
+// var utils = require('./utils');
 var Board = function (gridChoice)
 {
+  // console.dir(utils.game);
   this.grid = [];
   var stringGrid;
   if(!gridChoice || !grids.hasOwnProperty(gridChoice))
@@ -49,13 +50,14 @@ var Board = function (gridChoice)
     square.class = 'square ' + thisSpace;
 
     this.grid[y][x] = square;  // add square to the data grid
+    //the y and x are reversed here, I think this is only important in creation
   }
 };
 
 //////////////////////////////////////////////////
 
 // render is passed the current player
-Board.prototype.render = function (player)
+Board.prototype.render = function ()
 {
   $('#board').empty();
 
@@ -71,12 +73,11 @@ Board.prototype.render = function (player)
     el += '</tr>';
     $('table').append(el);
   }
-  this.addListeners(player);
 };
 
 //////////////////////////////////////////////////
 
-Board.prototype.addListeners = function(player)
+Board.prototype.addListeners = function(players)
 {
   var that = this;
 
@@ -89,12 +90,14 @@ Board.prototype.addListeners = function(player)
       $(this).css('box-shadow', 'none');
       $(this).droppable('disable');
 
-      // letter with what ID was dropped?
+      // get id of dropped letter
       var letterID = ui.helper[0].id;
 
       // get the square object using the square div's id
       var dropSquare = that.getSquareObject (this.id);
-      var letter = that.retrieveLetter(letterID, player);
+
+      //search the player's tray and the board for the letter & take it
+      var letter = that.retrieveLetter(letterID, players);
 
       // assign the new letter object to the squares 'letter' field
       dropSquare.letter = letter;
@@ -147,31 +150,44 @@ Board.prototype.printGrid = function ()
   }
 };
 /////////////////////////////////////////////////
-
-Board.prototype.retrieveLetter = function(letterID, playerTray)
+//this can be given a tray OR the players array
+Board.prototype.retrieveLetter = function(letterID, input)
 {
-    // remove the dropped letter from the tray
-    var letter = playerTray.remove(letterID);
-
-    if(letter)
+    var letter;
+    console.dir(input);
+    if(Array.isArray(input)) //players array, search ALL THE TRAYS!
     {
-      console.log('letter was found on tray of player');
+      for(var i = 0; i < input.length; i ++)
+      {
+        letter = input[i].tray.remove(letterID);
+        if(letter)
+        {
+          console.log('letter was found on tray');
+          console.log('removed id: ' + letterID);
+          return letter;
+        }
+      }
     }
-    else
+    else //tray was given instead of players array
     {
-      //if tray didn't have the letter, find/remove letter from board
-      console.log('letter did not come from tray');
-      letter = this.findAndRemoveLetter(letterID);
+      letter = input.remove(letterID);
+      if(letter)
+      {
+        console.log('letter was found on tray');
+        console.log('removed id: ' + letterID);
+        return letter;
+      }
     }
 
-    console.log('removed id: ' + letterID + ' with letter object ');
-    console.dir(letter);
+    console.log('letter did not come from tray');
+    //if tray didn't have the letter, find/remove letter from board
+    letter = this.retrieveBoardLetter(letterID);
     return letter;
 };
 
 /////////////////////////////////////////////////
 
-Board.prototype.findAndRemoveLetter = function (letterID)
+Board.prototype.retrieveBoardLetter = function (letterID)
 {
   var x, y;
   for (y = 0; y < this.maxY; y += 1)

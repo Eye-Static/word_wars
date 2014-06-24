@@ -28,9 +28,10 @@
         </select>
         <br>
         Game type:
-        <select id="player-number">
-          <option value="1" selected>Solo</option>
-          <option value="2">2 Players</option>
+        <select id="game-type">
+          <option value="local 1">Practice game</option>
+          <option value="local 2" selected>2 Player local game</option>
+          <option value="network 2">2 Player network game</option>
         </select>
         <br>
         <input type = "button" value = "New Game" id = "new-game-button">
@@ -47,9 +48,11 @@
   <div id = "right-column">
     <div id = "game">
       <div id = "board"></div>
-      <div id = "tray"></div>
+      <div id = "player-1-tray" class="tray"></div>
+      <div id = "player-2-tray" class="tray"></div>
+
     </div>
-    <input type = "button" value = "Play Word">
+    <input type = "button" id = "done-button" value = "Play Word">
   </div>
 </body>
 

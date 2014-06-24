@@ -8,8 +8,8 @@ $(document).ready(function ()
   var game;
   game = new Game(); //this is just for testing, in the final version
                          //games are only started with the button
-  var connection = new Connection();//move into login-button click?
-  //for some reason having this here fixes the gameAppeared bug
+  var connection = new Connection();
+
   //////////////////////////////////////////////////
 
   $('#login-button').on('click', function ()
@@ -25,12 +25,19 @@ $(document).ready(function ()
   $('#new-game-button').on('click', function(event)
   {
     var boardType = $('#board-type').val();
-    var playerNum = Number.parseInt($('#player-number').val());
-    if(playerNum === 1)
+    var gameType  = $('#game-type').val(); //such as 'local 2'
+    var playerNum = Number.parseInt(gameType.split(' ')[1]);
+    gameType      = gameType.split(' ')[0];
+
+    if(gameType === 'local')
     {
       game = new Game(boardType, playerNum);
     }
-    connection.startGameRequest(boardType, playerNum, userName);
+    else
+    {
+      //request for more player over internet
+      connection.startGameRequest(boardType, playerNum, userName);
+    }
   });
 
   //////////////////////////////////////////////////
@@ -45,7 +52,10 @@ $(document).ready(function ()
 
   $('#print-tray-button').click (function ()
   {
-    game.players[0].tray.print();
+    for(var i = 0; i < game.players.length; i ++)
+    {
+      game.players[i].tray.print();
+    }
   });
 
   //////////////////////////////////////////////////
@@ -62,4 +72,12 @@ $(document).ready(function ()
   {
     game.board.printGrid();
   });
+
+  //////////////////////////////////////////////////
+
+  $('#done-button').on('click', function()
+  {
+    game.nextTurn();
+  })
+
 });
