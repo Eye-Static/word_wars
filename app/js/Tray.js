@@ -3,10 +3,13 @@ var Letter = require('./Letter');
 var Bag = require('./Bag');
 var letterTemplate = require('./templates/letterTemplate.hbs');
 
-module.exports = function Tray ()
+module.exports = function Tray (board, playerNum)
 {
   this.letters = [];  // array of letter objects (max 7)
-
+  this.board = board;
+  this.playerNum = playerNum;
+  var trayObject = $('#player-' + playerNum + '-tray');
+  trayObject.show();
   //////////////////////////////////////////////////
 
   // remove letters from the bag and add them to the tray
@@ -18,12 +21,23 @@ module.exports = function Tray ()
       this.letters.push(bag.removeNext());
     }
   };
+  //////////////////////////////////////////////////
 
+  // find a letter in the tray by id and return the array index
+  this.find = function (id)
+  {
+    for (var x = 0; x < this.letters.length; x += 1)
+    {
+      if (this.letters[x].id === id) return x;
+    }
+    return -1;
+  };
   //////////////////////////////////////////////////
 
   // add one specific letter to the tray
-  this.add = function (letter)
+  this.add = function (letterObj)
   {
+    this.letters.push(letterObj);
   };
 
   //////////////////////////////////////////////////
@@ -31,7 +45,19 @@ module.exports = function Tray ()
   // remove one letter from the tray by id
   this.remove = function (id)
   {
-    this.letters.splice (this.find (id), 1);
+    var index = this.find (id);
+    if (index < 0) { return null; }
+    var returnVal = this.letters.splice(index, 1);
+    if (returnVal > 1) {console.error('ERROR: tray found', returnVal.length, 'letters with same id');}
+    return returnVal[0];
+  };
+  /////////////////////////////////////////////////
+
+  this.retrieveLetter = function(letterID)
+  {
+    //this is the sloppy part, but hey, it works
+    var letter = this.board.retrieveLetter(letterID, this);
+    return letter;
   };
 
   //////////////////////////////////////////////////
@@ -39,55 +65,38 @@ module.exports = function Tray ()
   // draw the tray letters
   this.render = function ()
   {
-    $('#tray').empty();
-    // $('#tray').sortable(
-    // // {
-    // //   start: function(){$('.ui-draggable-dragging').offset(
-    // //   {
-    // //     top: event.clientY,
-    // //     left: event.clientX
-    // //   });
-    // //   }
-
-    // // }
-    // );
+    var that = this;
+    trayObject.empty();
     for(var i=0; i<this.letters.length; i++)
     {
       var letterHtml = $(letterTemplate(this.letters[i]));
       var letterData = this.letters[i];
-      //console.log ('Letter: ' + this.letters[i].character);
-
-      $('#tray').append(letterHtml);
+      trayObject.append(letterHtml);
       letterHtml.draggable(
       {
         stop: function ()
-        {
-          console.log('stopped dragging ' + this.id);
-          // $('.ui-draggable-dragging').removeClass('ui-draggable-dragging');
-        },
+        {},
         start: function (event)
-        {
-          //var z = letterData.character;
-          console.dir(event);
-
-          console.log('started dragging ' + this.id);
-        },
+        {},
         zIndex: 20,
-        revert: 'invalid',
-        connectToSortable: '#tray'
+        revert: 'invalid', // will revert when placed on invalid area
       });
     }
-    $('#tray').droppable(
+    trayObject.droppable(
     {
       drop: function (event, ui)
       {
-        $('.ui-draggable-dragging').offset({
+        $('.ui-draggable-dragging').offset(
+        {
           top: $(this).offset().top +12,
           //set height to sit in middle of tray
         });
+        var letterID = ui.helper[0].id;
+        var letter = that.retrieveLetter(letterID);
+        that.add(letter);
       }
     });
-};
+  };
 
   //////////////////////////////////////////////////
 
@@ -100,7 +109,7 @@ module.exports = function Tray ()
       output = output.concat (this.letters[x].character + ' ');
       //console.log (this.letters[x].character);
     }
-    console.log ('Player 1 Tray Data: ' + output);
+    console.log ('Player ' + this.playerNum +  ' Tray Data: ' + output);
   };
 
   //////////////////////////////////////////////////
@@ -119,14 +128,4 @@ module.exports = function Tray ()
     }
   };
 
-  //////////////////////////////////////////////////
-
-  // find a letter in the tray by id and return the array index
-  this.find = function (id)
-  {
-    for (var x = 0; x < this.letters.length; x += 1)
-    {
-      if (this.letters[x].id === id) return x;
-    }
-  };
 };

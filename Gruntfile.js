@@ -37,21 +37,10 @@ module.exports = function(grunt) {
       all: {
         expand: true,
         cwd: 'app/',
-        src: ['*.html', 'images/**/*'],
+        src: ['*.html', 'images/**/*', 'styles/*.css'],
         dest: 'dist/',
         flatten: true,
         filter: 'isFile'
-      },
-    },
-
-    autoprefixer: {
-      options: {
-        flatten: true,
-        verbose: true
-      },
-      all: {
-        src: 'app/styles/**/*',
-        dest: 'dist/index.css',
       },
     },
 
@@ -94,14 +83,14 @@ module.exports = function(grunt) {
       htmlcss: {
         files:
         ['app/images/**/*', 'app/styles/**/*', 'app/index.html'],
-        tasks: ['autoprefixer', 'copy']
+        tasks: ['copy']
       }
     }
   });
 
   grunt.registerTask('serve', ['build', 'express:dev','watch']);
   grunt.registerTask('server', 'serve');
-  grunt.registerTask('build', ['clean', 'browserify', 'autoprefixer', 'copy']);
+  grunt.registerTask('build', ['clean', 'browserify', 'copy']);
   grunt.registerTask('test:acceptance',['express:dev','casper']);
   grunt.registerTask('test:api','simplemocha');
   grunt.registerTask('test', ['test:acceptance','test:api']);

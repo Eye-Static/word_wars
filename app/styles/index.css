@@ -154,9 +154,10 @@ td
   z-index: 20;
 }
 
-#tray
+.tray
 {
   //background-color: white;
+  display: none;
   border-style: solid;
   border-color: rgb(128, 128, 128);
   border-width: 2px;
