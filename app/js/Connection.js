@@ -4,7 +4,7 @@ var Connection = function()
 {
   socket.on('message', function(data)
   {
-    console.dir(data.message);
+    //console.dir(data.message);
   });
 
   socket.on('gameAppeared', function(data)

@@ -48,6 +48,7 @@ body
   width: 850px;
   height: 450px;
   overflow: scroll;
+  z-index: 10;
 }
 td
 {
@@ -67,6 +68,7 @@ td
   border-width: 1px;
   border-color: gray;
   background-color: rgb(96, 96, 96);
+  z-index: 10;
 }
 
 .blank
@@ -121,6 +123,7 @@ td
   float: left;
   user-select: none;
   padding: 0;
+  z-index: 20;
 }
 
 .ui-draggable
@@ -138,6 +141,7 @@ td
 {
   position: relative;
   top: 7px;
+  z-index: 20;
 }
 
 .letter-score
@@ -147,6 +151,7 @@ td
   left: 15px;
   top: -25px;
   color: rgb(90, 60, 30);
+  z-index: 20;
 }
 
 #tray
@@ -185,4 +190,17 @@ td
 {
   background: rgb(150, 200, 150);
   border: 1px solid black;
+}
+
+#test-1
+{
+  background-color: rgb(0, 255, 0);
+  color: blue;
+  font-family: arial;
+  font-size: 10pt;
+  text-align: center;
+  border: solid 1px black;
+  width: 60px;
+  height: 60px;
+  z-index: 1;
 }

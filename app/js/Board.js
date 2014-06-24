@@ -1,6 +1,8 @@
 'use strict';
 var Square         = require('./Square');
+var Letter         = require('./Letter');
 var squareTemplate = require('./templates/squareTemplate.hbs');
+var letterTemplate = require('./templates/letterTemplate.hbs');
 var grids          = require('./grids');
 //var rowTemplate = require('./templates/rowTemplate.hbs');
 
@@ -62,18 +64,54 @@ Board.prototype.render = function (player)
   $('#board').empty();
 
   $('#board').append ('<table>');
-  for (var i = 0; i < this.grid.length; i++) // one iteration is a whole row
+  for (var y = 0; y < this.grid.length; y++) // one iteration is a whole row
   {
     var el = '<tr>';
-    for (var j = 0; j < this.grid[i].length; j++) //one iteration is one cell
+    for (var x = 0; x < this.grid[y].length; x++) //one iteration is one cell
     {
-      var theSquare = squareTemplate(this.grid[i][j]);
+      var theSquare = squareTemplate(this.grid[y][x]);
       el += theSquare;
     }
     el += '</tr>';
     $('table').append(el);
   }
+
   this.addListeners(player);
+  this.renderLetters();
+};
+
+//////////////////////////////////////////////////
+
+Board.prototype.renderLetters = function ()
+{
+  var el = '';
+
+  for (var y = 0; y < this.grid.length; y++) // one iteration is a whole row
+  {
+    for (var x = 0; x < this.grid[y].length; x++) //one iteration is one cell
+    {
+      if (this.grid[y][x].letter != null)  // if the square has a letter on it
+      {
+        var theLetter = letterTemplate (this.grid[y][x].letter);
+
+        var theLetterArray = theLetter.split ('"');
+        var theLetterID = theLetterArray[3];
+
+        $('#board').append (theLetter);  // put the div in the board
+
+        console.log ("Repositioning: #" + theLetterID);
+
+        var destination = '#square-' + y.toString() + '-' + x.toString();
+
+        $('#' + theLetterID).position (  // move the div to the square
+        {
+          my: 'center',
+          at: 'center',
+          of: '#square-' + y.toString() + '-' + x.toString()//destination
+        });
+      }
+    }
+  }
 };
 
 //////////////////////////////////////////////////
@@ -96,7 +134,7 @@ Board.prototype.addListeners = function(player)
       // get the tray array index of the letter we dropped, using the id
       var trayIndex = player.tray.find (ui.helper[0].id);
 
-      // get the square object using the sqaure div's id
+      // get the square object using the square div's id
       var dropSquare = that.getSquareObject (this.id);
 
       // assign the dropped letter object to the square object's letter property
@@ -104,6 +142,9 @@ Board.prototype.addListeners = function(player)
 
       // remove the dropped letter from the tray
       player.tray.remove (ui.helper[0].id);
+
+      that.render (player);  // redraw the board to stick the new letter to it visually
+      player.tray.render();  // redraw the tray the clear the floaters we just dropped
     },
 
     over: function (event, ui)
@@ -125,7 +166,7 @@ Board.prototype.addListeners = function(player)
 // squareID = "square:x,y"
 Board.prototype.getSquareObject = function (squareID)
 {
-  squareID = squareID.split (':');
+  squareID = squareID.split ('-');
   var x = squareID[1];
   var y = squareID[2];
 

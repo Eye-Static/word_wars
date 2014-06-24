@@ -10,6 +10,7 @@ $(document).ready(function ()
                          //games are only started with the button
   var connection = new Connection();//move into login-button click?
   //for some reason having this here fixes the gameAppeared bug
+
   //////////////////////////////////////////////////
 
   $('#login-button').on('click', function ()
@@ -54,6 +55,7 @@ $(document).ready(function ()
   {
     game.players[0].tray.shuffle();
     game.players[0].tray.render();
+    game.board.render (game.players[game.turn]);
   });
 
   //////////////////////////////////////////////////
