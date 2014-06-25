@@ -1,56 +1,64 @@
 <!doctype html>
-
 <html>
-
 <head>
-  <title>Word Wars</title>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="./index.css">
-  <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-  <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
-  <script src = "app.js"></script>
+    <title>Word Wars</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <link rel="stylesheet" type="text/css" href="./base.css">
+    <link rel="stylesheet" type="text/css" href="./layout.css">
+    <link rel="stylesheet" type="text/css" href="./typography.css">
+    <link rel="stylesheet" type="text/css" href="./theme.css">
+    <link rel="stylesheet" type="text/css" href="./module.css">
+    <link rel="stylesheet" type="text/css" href="./state.css">
+
+    <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
+    <script src = "app.js"></script>
 </head>
-<body>
-  <div id = "left-column">
-    <div>
-      (title / logo)
-      <div id = "login-box">
-        Username <input type = "text" id = "user-name">
-        <input type = "button" value = "Log in" id = "login-button">
-        <br>
-      </div>
-      Board type:
-        <select id="board-type">
+<body id="main">
+
+<div id="left-column">
+ <header><h1 class="hello-world"></h1>Word Wars</h1></header>
+    <article class="scorebox">
+      <section id="plyone">Player 1 Score</section>
+      <section id="plytwo">Player 2 Score</section>
+    </article>
+    <article id="tilebox">
+      <p>There are x number of tiles left</p>
+    </article>
+
+      <button type="input" value="New Game" style="margin-left:65px">New Game</button>
+      <button type= "input" value="Shuffle Tray">Shuffle Tray</button>
+      <button type="input" value="Continue Game">Continue Game</button>
+
+    <!--<button><input type = "button" value = "Print Tray" id = "print-tray-button"></button>
+      <select id="board-type">
           <option value="scrabble" selected>Scrabble</option>
           <option value="wordsWithFriends">Words with Friends</option>
           <option value="diamond" >Diamond</option>
-        </select>
-        <br>
-        Game type:
-        <select id="player-number">
-          <option value="1" selected>Solo</option>
-          <option value="2">2 Players</option>
-        </select>
-        <br>
-        <input type = "button" value = "New Game" id = "new-game-button">
+      </select>-->
+</div>
 
-      <input type = "button" value = "Shuffle Tray" id = "shuffle-tray-button">
-      <input type = "button" value = "Print Tray" id = "print-tray-button">
-      <input type = "button" value = "Print Grid" id = "print-grid-button">
-    </div>
-
-    <div id = "connection-info">Connection info: </div>
-    <div id = "game-lobby">Game Lobby: </div>
+<div id="right-column">
+  <div id="container">
+  <div id = "board"></div>
   </div>
 
-  <div id = "right-column">
-    <div id = "game">
-      <div id = "board"></div>
-      <div id = "tray"></div>
-    </div>
-    <input type = "button" value = "Play Word">
+      <!--<div id="whose-turn"></div>-->
+
+
+      <button value="Play Word" style="margin-left:155px; margin-right:15px">Play Word</button>
+      <button value="1">One Player</button>
+      <button value="2">2 Players</button>
+
+
+      <div class="tray">
+      <div id="player-0-tray"></div>
+      <div id="player-1-tray"></div>
+      </div>
   </div>
 </body>
-
 </html>
+
