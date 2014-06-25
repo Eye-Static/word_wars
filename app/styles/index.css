@@ -164,11 +164,8 @@ td
 
 .tray
 {
-  //background-color: white;
   display: none;
-  border-style: solid;
-  border-color: rgb(128, 128, 128);
-  border-width: 2px;
+  border: solid 2px rgb(128, 128, 128);
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
@@ -214,6 +211,27 @@ td
   z-index: 1;
 }
 
+#score
+{
+  border: solid 1px grey;
+  border-radius: 5px;
+  font-family: arial;
+  font-size: 14pt;
+  color: blue;
+  padding: 10px;
+  margin: 10px;
+  line-height: 1.5;
+  width: 350px;
+}
+
+#letter-select
+{
+  float: left;
+  margin: 0 7px 20px 0;
+  background-color: rgb(100, 255, 100);
+  z-index: 30;
+}
+
 #overlay
 {
   display: none;
@@ -226,6 +244,7 @@ td
   background-color: rgba(0,0,0,.25);
   z-index: 1000;
 }
+
 #overlay div
 {
   width: 300px;
@@ -235,6 +254,7 @@ td
   padding: 15px;
   text-align: center;
 }
+
 .letter-button
 {
   width: 25px;

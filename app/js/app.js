@@ -6,7 +6,7 @@ $(document).ready(function ()
 {
   var userName;
   var game;
-  game = new Game(); //this is just for testing, in the final version
+  game = new Game("scrabble", 2); //this is just for testing, in the final version
                          //games are only started with the button
   var connection = new Connection();
 
@@ -79,8 +79,15 @@ $(document).ready(function ()
 
   $('#done-button').on('click', function()
   {
-    game.finishTurn();
-    game.nextTurn();
+    if (game.isLine() == null)
+    {
+      alert ("Letters must be placed in a straight line.");
+    } 
+    else 
+    {
+      game.finishTurn();
+      game.nextTurn();
+    }
   })
 
 });
