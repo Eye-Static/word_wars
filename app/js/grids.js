@@ -63,5 +63,28 @@ module.exports =
     'XX XX XX XX XX XX XX XX TW XX XX XX XX XX XX XX XX',
     width : 17,
     height: 17
+    },
+
+    donut :{
+    grid:
+    'XX XX XX XX XX XX XX .. TW .. XX XX XX XX XX XX XX ' +
+    'XX XX XX XX XX DW .. .. .. .. .. DW XX XX XX XX XX ' +
+    'XX XX XX .. .. .. .. .. .. .. .. .. .. .. XX XX XX ' +
+    'XX XX TW .. .. .. .. .. .. .. .. .. .. .. TW XX XX ' +
+    'XX XX .. .. .. .. .. .. .. .. .. .. .. .. .. XX XX ' +
+    'XX DW .. .. .. .. .. .. TL .. .. .. .. .. .. DW XX ' +
+    'XX .. .. TL .. .. TL XX XX XX TL .. .. TL .. .. XX ' +
+    '.. .. .. .. .. .. XX XX XX XX XX .. .. .. .. .. .. ' +
+    'TW .. .. .. .. DW XX XX XX XX XX DW .. .. .. .. TW ' +
+    '.. .. .. .. .. .. XX XX XX XX XX .. .. .. .. .. .. ' +
+    'XX .. .. TL .. .. TL XX XX XX TL .. .. TL .. .. XX ' +
+    'XX DW .. .. .. .. .. .. TL .. .. .. .. .. .. DW XX ' +
+    'XX XX .. .. .. .. .. .. .. .. .. .. .. .. .. XX XX ' +
+    'XX XX TW .. .. .. .. .. .. .. .. .. .. .. TW XX XX ' +
+    'XX XX XX .. .. .. .. .. .. .. .. .. .. .. XX XX XX ' +
+    'XX XX XX XX XX DW .. .. .. .. .. DW XX XX XX XX XX ' +
+    'XX XX XX XX XX XX XX .. TW .. XX XX XX XX XX XX XX',
+    width : 17,
+    height: 17
     }
 };

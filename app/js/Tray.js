@@ -28,9 +28,9 @@ module.exports = function Tray (board, playerNum)
   // find a letter in the tray by id and return the array index
   this.find = function (id)
   {
-    for (var x = 0; x < this.letters.length; x += 1)
+    for (var i = 0; i < this.letters.length; i += 1)
     {
-      if (this.letters[x].id === id) return x;
+      if (this.letters[i].id === id) return i;
     }
     return -1;
   };
@@ -88,12 +88,8 @@ module.exports = function Tray (board, playerNum)
       trayObject.append(letterHtml);
       letterHtml.draggable(
       {
-        stop: function ()
-        {},
-        start: function (event)
-        {},
         zIndex: 20,
-        revert: 'invalid', // will revert when placed on invalid area
+        revert: 'invalid' // will revert when placed on invalid area
       });
     }
     trayObject.droppable(
@@ -118,10 +114,9 @@ module.exports = function Tray (board, playerNum)
   {
     var output = '';
 
-    for (var x = 0; x < this.letters.length; x += 1)
+    for (var i = 0; i < this.letters.length; i += 1)
     {
-      output = output.concat (this.letters[x].character + ' ');
-      //console.log (this.letters[x].character);
+      output += this.letters[i].character + ' ';
     }
     console.log ('Player ' + this.playerNum +  ' Tray Data: ' + output);
   };
@@ -133,12 +128,12 @@ module.exports = function Tray (board, playerNum)
     var temp;  // for storing a letter to do the swap
     var y;     // the random letter
 
-    for (var x = 0; x < this.letters.length; x += 1)
+    for (var i = 0; i < this.letters.length; i += 1)
     {
-      temp = this.letters[x];
+      temp = this.letters[i];
       y = Math.floor (Math.random() * this.letters.length);
-      this.letters[x] = this.letters[y];
-      this.letters[y] = temp;
+      this.letters[i] = this.letters[j];
+      this.letters[j] = temp;
     }
   };
 

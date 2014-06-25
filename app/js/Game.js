@@ -7,7 +7,6 @@ var Game = function (boardType, numOfPlayers)
 {
   console.log('starting new game with board type: ' + (boardType || 'not set'));
   console.log('and players: ' + (numOfPlayers || 'not set'));
-  this.cleanGameSpace();
 
   this.board = new Board(boardType);
   this.bag   = new Bag();
@@ -65,12 +64,6 @@ Game.prototype.printGameStatus = function ()
   //change what this is connected to on the DOM
   $('#game-info').text('player ' + (this.whoseTurn+1) +
   '\'s turn. Turn: ' + (this.turn.message || this.turn.turnNum));
-};
-
-Game.prototype.cleanGameSpace = function ()
-{
-  $('#player-1-tray').empty();
-  $('#player-2-tray').empty();
 };
 
 module.exports = Game;

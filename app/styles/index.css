@@ -132,12 +132,17 @@ td
 .ui-draggable
 {
   cursor: grab;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
 }
 
 .ui-draggable-dragging
 {
   cursor: grabbing;
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
   box-shadow: 3px 3px 5px black;
+  position: absolute;
 }
 
 .letter-character
@@ -207,4 +212,11 @@ td
   width: 60px;
   height: 60px;
   z-index: 1;
+}
+#letter-select
+{
+  float: left;
+  margin: 0 7px 20px 0;
+  background-color: rgb(100, 255, 100);
+  z-index: 30;
 }
