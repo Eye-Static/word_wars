@@ -24,17 +24,20 @@ io.on('connection', function(socket)
   console.log('user connected');
   socket.emit('message', {message:'connected to server'});
 
-  games.forEach(function(game)
+  if(games.length>0)
   {
-    console.log('sending game:');
-    console.log(game);
-    socket.emit('gameAppeared', game);
-  });
+    games.forEach(function(game)
+    {
+      console.log('sending game:');
+      console.log(game);
+      socket.emit('gameAppeared', game);
+    });
+  }
 
   socket.on('submitName', function(data)
   {
     console.log(data.userName + ' logged in');
-    socket.user = data.userName;
+    socket.user = data.userName; //socket just has user name
     users[data.userName] = data;
     console.dir(users);
   });
@@ -42,7 +45,7 @@ io.on('connection', function(socket)
   socket.on('startGameRequest', function(data)
   {
     console.log('game request data', data);
-    data.gameID = gameCounter;
+    data.gameID = gameCounter++;
     games.push(data);
     socket.broadcast.emit('gameAppeared', data);
   });

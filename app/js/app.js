@@ -6,17 +6,17 @@ $(document).ready(function ()
 {
   var userName;
   var game;
-  game = new Game(); //this is just for testing, in the final version
+  game = new Game("scrabble", 2); //this is just for testing, in the final version
                          //games are only started with the button
-  var connection = new Connection();//move into login-button click?
-  //for some reason having this here fixes the gameAppeared bug
+  var connection = new Connection();
+
   //////////////////////////////////////////////////
 
   $('#login-button').on('click', function ()
   {
     userName  = $('#user-name').val();
     $('#user-name').empty();
-    $('#login-box').append('Logged in as ' + userName);
+    $('#login-box').text('Logged in as ' + userName);
     connection.sendUserName(userName); //func from connect
   });
 
@@ -25,12 +25,19 @@ $(document).ready(function ()
   $('#new-game-button').on('click', function(event)
   {
     var boardType = $('#board-type').val();
-    var playerNum = Number.parseInt($('#player-number').val());
-    if(playerNum === 1)
+    var gameData  = $('#game-type').val().split(' '); //such as 'local 2'
+    var gameType  = gameData[0];
+    var playerNum = Number.parseInt(gameData[1]);
+
+    if(gameType === 'local')
     {
       game = new Game(boardType, playerNum);
     }
-    connection.startGameRequest(boardType, playerNum, userName);
+    else
+    {
+      //request for more player over internet
+      connection.startGameRequest(boardType, playerNum, userName);
+    }
   });
 
   //////////////////////////////////////////////////
@@ -45,7 +52,10 @@ $(document).ready(function ()
 
   $('#print-tray-button').click (function ()
   {
-    game.players[0].tray.print();
+    for(var i = 0; i < game.players.length; i ++)
+    {
+      game.players[i].tray.print();
+    }
   });
 
   //////////////////////////////////////////////////
@@ -54,6 +64,8 @@ $(document).ready(function ()
   {
     game.players[0].tray.shuffle();
     game.players[0].tray.render();
+    //game.board.render (game.players[game.turn]);
+    game.board.addListeners (game.players);
   });
 
   //////////////////////////////////////////////////
@@ -62,4 +74,20 @@ $(document).ready(function ()
   {
     game.board.printGrid();
   });
+
+  //////////////////////////////////////////////////
+
+  $('#done-button').on('click', function()
+  {
+    if (game.isLine() == null)
+    {
+      alert ("Letters must be placed in a straight line.");
+    } 
+    else 
+    {
+      game.finishTurn();
+      game.nextTurn();
+    }
+  })
+
 });
