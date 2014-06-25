@@ -151,7 +151,7 @@ Game.prototype.getNewLetters = function ()
 
 //////////////////////////////////////////////////
 
-Game.prototype.renderScore = function () 
+Game.prototype.renderScore = function (recentScore) 
 {
   $("#score").empty();
 
