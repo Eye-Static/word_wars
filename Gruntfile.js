@@ -44,18 +44,6 @@ module.exports = function(grunt) {
       },
     },
 
-    autoprefixer: {
-      options: {
-        flatten: true,
-        expand: true,
-        verbose: true
-      },
-      all: {
-        src: 'app/styles/**/*.css',
-        dest: 'dist/'
-      },
-    },
-
     browserify: {
       all: {
         src: 'app/**/*.js',
@@ -94,8 +82,13 @@ module.exports = function(grunt) {
       // },
       htmlcss: {
         files:
+
         ['app/images/**/*', 'app/styles/**/*', 'app/index.html', 'app/signin.html'],
         tasks: ['build']
+
+        //['app/images/**/*', 'app/styles/**/*', 'app/index.html'],
+        //tasks: ['copy']
+
       }
     }
   });
