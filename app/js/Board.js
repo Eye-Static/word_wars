@@ -131,6 +131,7 @@ Board.prototype.addListeners = function(players)
 
       //search the player's tray and the board for the letter & take it
       var letter = that.retrieveLetter(letterID, players);
+      letter.justPlaced = true;
 
       // assign the new letter object to the squares 'letter' field
       dropSquare.letter = letter;

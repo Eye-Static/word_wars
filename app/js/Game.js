@@ -39,6 +39,8 @@ Game.prototype.start = function()
 Game.prototype.finishTurn = function ()
 {
   var justFinishedPlayer = this.players[this.whoseTurn];
+  justFinishedPlayer.score+= this.wordScore();
+  this.renderScore();
   justFinishedPlayer.refillTiles(this.bag);
   if(this.bag.letters.length === 0)
   { //no more letters
@@ -64,5 +66,33 @@ Game.prototype.printGameStatus = function ()
   $('#game-info').text('player ' + (this.whoseTurn+1) +
   '\'s turn. Turn: ' + (this.turn.message || this.turn.turnNum));
 };
+
+Game.prototype.wordScore = function()
+{
+  var score = 0;
+  var x,y;
+  for(y=0;y<this.board.grid.length; y++){
+    for(x=0;x<this.board.grid[y].length; x++){
+
+      if(this.board.grid[y][x].letter && this.board.grid[y][x].letter.justPlaced == true) {
+        score += this.board.grid[y][x].letter.score;
+
+
+      }
+    }
+  }
+  console.log("Score: " + score);
+  return score;
+}
+
+Game.prototype.renderScore = function ()
+{
+  $("#score").empty();
+  var p = 0;
+  for(p=0;p<this.players.length; p++) {
+    $("#score").append("Player " + (p+1) + " Total: " + this.players[p].score + "<br>");
+  }
+
+}
 
 module.exports = Game;
