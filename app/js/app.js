@@ -25,9 +25,9 @@ $(document).ready(function ()
   $('#new-game-button').on('click', function(event)
   {
     var boardType = $('#board-type').val();
-    var gameType  = $('#game-type').val(); //such as 'local 2'
-    var playerNum = Number.parseInt(gameType.split(' ')[1]);
-    gameType      = gameType.split(' ')[0];
+    var gameData  = $('#game-type').val().split(' '); //such as 'local 2'
+    var gameType  = gameData[0];
+    var playerNum = Number.parseInt(gameData[1]);
 
     if(gameType === 'local')
     {

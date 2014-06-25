@@ -31,7 +31,7 @@ var Game = function (boardType, numOfPlayers)
 
 Game.prototype.start = function()
 {
-  //more to come in this space??
+  this.clearGameArea();
   this.printGameStatus();
   this.players[0].tray.showTray();
   this.renderScore();
@@ -161,6 +161,16 @@ Game.prototype.renderScore = function ()
   }
   $('#score').append('Player ' + (this.whoseTurn+1) +
     ' just played a word for ' + recentScore + ' points!');
+};
+
+Game.prototype.clearGameArea = function (recentScore)
+{
+  $('#score').empty();
+  $('#game-info').empty();
+  this.players.forEach(function(player)
+  {
+    player.tray.hideTray();
+  });
 }
 
 module.exports = Game;
