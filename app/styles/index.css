@@ -50,7 +50,7 @@ body
   border-color: black;
   width: 850px;
   height: 450px;
-  overflow: scroll;
+  overflow: scroll;/*if we remove this, dragging tile -> tray works again */
   z-index: 10;
 }
 td
@@ -132,12 +132,17 @@ td
 .ui-draggable
 {
   cursor: grab;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
 }
 
 .ui-draggable-dragging
 {
   cursor: grabbing;
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
   box-shadow: 3px 3px 5px black;
+  position: absolute;
 }
 
 .letter-character
@@ -205,6 +210,7 @@ td
   height: 60px;
   z-index: 1;
 }
+<<<<<<< HEAD
 
 #score
 {
@@ -216,4 +222,12 @@ td
   padding: 10px;
   margin: 10px;
   line-height: 1.5;
+=======
+#letter-select
+{
+  float: left;
+  margin: 0 7px 20px 0;
+  background-color: rgb(100, 255, 100);
+  z-index: 30;
+>>>>>>> master
 }

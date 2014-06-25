@@ -7,7 +7,6 @@ var Game = function (boardType, numOfPlayers)
 {
   console.log('starting new game with board type: ' + (boardType || 'not set'));
   console.log('and players: ' + (numOfPlayers || 'not set'));
-  this.cleanGameSpace();
 
   this.board = new Board(boardType);
   this.bag   = new Bag();
@@ -21,7 +20,6 @@ var Game = function (boardType, numOfPlayers)
 
   for (var i = 0; i < (numOfPlayers || 1); i++)
   {
-    console.log('creating player', i);
     this.players[i] = new Player(this.board, i);//pass board & the player number
     this.players[i].refillTiles (this.bag);
   }
@@ -43,8 +41,9 @@ Game.prototype.finishTurn = function ()
 {
   var justFinishedPlayer = this.players[this.whoseTurn];
 
-  justFinishedPlayer.score += this.wordScore();
-  this.renderScore();
+  var recentScore = this.wordScore();
+  justFinishedPlayer.score += recentScore;
+  this.renderScore(recentScore);
 
   justFinishedPlayer.refillTiles(this.bag);
   if(this.bag.letters.length === 0)
@@ -160,6 +159,8 @@ Game.prototype.renderScore = function ()
   {
     $("#score").append("Player " + (p+1) + " Points: " + this.players[p].score + "<br>");
   }
+  $('#score').append('Player ' + (this.whoseTurn+1) +
+    ' just played a word for ' + recentScore + ' points!');
 }
 
 module.exports = Game;
