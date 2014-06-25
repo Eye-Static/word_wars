@@ -72,11 +72,11 @@ module.exports =
     'XX XX TW .. .. .. .. DL .. DL .. .. .. .. TW XX XX ' +
     'XX XX .. .. TL .. .. .. .. .. .. .. TL .. .. XX XX ' +
     'XX DW .. .. .. DL .. .. *  .. .. DL .. .. .. DW XX ' +
-    'XX .. .. .. .. .. DW XX XX XX DW .. .. .. .. .. XX ' +
+    'XX .. .. .. .. .. DL XX XX XX DL .. .. .. .. .. XX ' +
     '.. .. .. DL .. .. XX XX XX XX XX .. .. DL .. .. .. ' +
     'TW .. .. .. .. TL XX XX XX XX XX TL .. .. .. .. TW ' +
     '.. .. .. DL .. .. XX XX XX XX XX .. .. DL .. .. .. ' +
-    'XX .. .. .. .. .. DW XX XX XX DW .. .. .. .. .. XX ' +
+    'XX .. .. .. .. .. DL XX XX XX DL .. .. .. .. .. XX ' +
     'XX DW .. .. .. DL .. .. DW .. .. DL .. .. .. DW XX ' +
     'XX XX .. .. TL .. .. .. .. .. .. .. TL .. .. XX XX ' +
     'XX XX TW .. .. .. .. DL .. DL .. .. .. .. TW XX XX ' +
