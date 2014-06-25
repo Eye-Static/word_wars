@@ -39,8 +39,9 @@ Game.prototype.start = function()
 Game.prototype.finishTurn = function ()
 {
   var justFinishedPlayer = this.players[this.whoseTurn];
-  justFinishedPlayer.score+= this.wordScore();
-  this.renderScore();
+  var recentScore = this.wordScore();
+  justFinishedPlayer.score+= recentScore;
+  this.renderScore(recentScore);
   justFinishedPlayer.refillTiles(this.bag);
   if(this.bag.letters.length === 0)
   { //no more letters
@@ -74,25 +75,24 @@ Game.prototype.wordScore = function()
   for(y=0;y<this.board.grid.length; y++){
     for(x=0;x<this.board.grid[y].length; x++){
 
-      if(this.board.grid[y][x].letter && this.board.grid[y][x].letter.justPlaced == true) {
+      if(this.board.grid[y][x].letter && this.board.grid[y][x].letter.justPlaced === true) {
         score += this.board.grid[y][x].letter.score;
-
-
       }
     }
   }
-  console.log("Score: " + score);
+  console.log('Score: ' + score);
   return score;
-}
+};
 
-Game.prototype.renderScore = function ()
+Game.prototype.renderScore = function (recentScore)
 {
-  $("#score").empty();
+  $('#score').empty();
   var p = 0;
   for(p=0;p<this.players.length; p++) {
-    $("#score").append("Player " + (p+1) + " Total: " + this.players[p].score + "<br>");
+    $('#score').append('Player ' + (p+1) + ' Total: ' + this.players[p].score + '<br>');
   }
-
-}
+  $('#score').append('Player ' + (this.whoseTurn+1) +
+    ' just played a word for ' + recentScore + ' points!');
+};
 
 module.exports = Game;
