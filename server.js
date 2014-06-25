@@ -24,12 +24,15 @@ io.on('connection', function(socket)
   console.log('user connected');
   socket.emit('message', {message:'connected to server'});
 
-  games.forEach(function(game)
+  if(games.length>0)
   {
-    console.log('sending game:');
-    console.log(game);
-    socket.emit('gameAppeared', game);
-  });
+    games.forEach(function(game)
+    {
+      console.log('sending game:');
+      console.log(game);
+      socket.emit('gameAppeared', game);
+    });
+  }
 
   socket.on('submitName', function(data)
   {

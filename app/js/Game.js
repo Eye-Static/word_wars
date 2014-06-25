@@ -7,7 +7,6 @@ var Game = function (boardType, numOfPlayers)
 {
   console.log('starting new game with board type: ' + (boardType || 'not set'));
   console.log('and players: ' + (numOfPlayers || 'not set'));
-  this.cleanGameSpace();
 
   this.board = new Board(boardType);
   this.bag   = new Bag();
@@ -21,7 +20,6 @@ var Game = function (boardType, numOfPlayers)
 
   for (var i = 0; i < (numOfPlayers || 1); i++)
   {
-    console.log('creating player', i);
     this.players[i] = new Player(this.board, i);//pass board & the player number
     this.players[i].refillTiles (this.bag);
   }
@@ -41,8 +39,9 @@ Game.prototype.start = function()
 Game.prototype.finishTurn = function ()
 {
   var justFinishedPlayer = this.players[this.whoseTurn];
-  justFinishedPlayer.score+= this.wordScore();
-  this.renderScore();
+  var recentScore = this.wordScore();
+  justFinishedPlayer.score+= recentScore;
+  this.renderScore(recentScore);
   justFinishedPlayer.refillTiles(this.bag);
   if(this.bag.letters.length === 0)
   { //no more letters
@@ -69,38 +68,31 @@ Game.prototype.printGameStatus = function ()
   '\'s turn. Turn: ' + (this.turn.message || this.turn.turnNum));
 };
 
-Game.prototype.cleanGameSpace = function ()
-{
-  $('#player-1-tray').empty();
-  $('#player-2-tray').empty();
-};
-
 Game.prototype.wordScore = function()
 {
   var score = 0;
   var x,y;
   for(y=0;y<this.board.grid.length; y++){
     for(x=0;x<this.board.grid[y].length; x++){
-      
-      if(this.board.grid[y][x].letter && this.board.grid[y][x].letter.justPlaced == true) {
+
+      if(this.board.grid[y][x].letter && this.board.grid[y][x].letter.justPlaced === true) {
         score += this.board.grid[y][x].letter.score;
-
-
       }
     }
   }
-  console.log("Score: " + score);
+  console.log('Score: ' + score);
   return score;
-}
+};
 
-Game.prototype.renderScore = function () 
+Game.prototype.renderScore = function (recentScore)
 {
-  $("#score").empty();
+  $('#score').empty();
   var p = 0;
   for(p=0;p<this.players.length; p++) {
-    $("#score").append("Player " + (p+1) + " Total: " + this.players[p].score + "<br>");
+    $('#score').append('Player ' + (p+1) + ' Total: ' + this.players[p].score + '<br>');
   }
-  
-}
+  $('#score').append('Player ' + (this.whoseTurn+1) +
+    ' just played a word for ' + recentScore + ' points!');
+};
 
 module.exports = Game;

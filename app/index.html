@@ -25,18 +25,21 @@
           <option value="scrabble" selected>Scrabble</option>
           <option value="wordsWithFriends">Words with Friends</option>
           <option value="diamond" >Diamond</option>
+          <option value="donut" >Donut</option>
         </select>
         <br>
         Game type:
         <select id="game-type">
           <option value="local 1">Practice game</option>
           <option value="local 2" selected>2 Player local game</option>
+          <option value="local 3">3 Player local game</option>
+          <option value="local 4">4 Player local game</option>
           <option value="network 2">2 Player network game</option>
         </select>
         <br>
         <input type = "button" value = "New Game" id = "new-game-button">
 
-      <input type = "button" value = "Shuffle Tray" id = "shuffle-tray-button">
+
       <input type = "button" value = "Print Tray" id = "print-tray-button">
       <input type = "button" value = "Print Grid" id = "print-grid-button">
     </div>
@@ -55,10 +58,14 @@
       <div id = "board"></div>
       <div id = "player-0-tray" class="tray"></div>
       <div id = "player-1-tray" class="tray"></div>
+      <div id = "player-2-tray" class="tray"></div>
+      <div id = "player-3-tray" class="tray"></div>
       <div id = "whose-turn"></div>
     </div>
     <input type = "button" id = "done-button" value = "Play Word">
+    <input type = "button" value = "Shuffle Tray" id = "shuffle-tray-button">
   </div>
+  <div id = "select-letter"><!--select letter goes here--></div>
 </body>
 
 </html>
