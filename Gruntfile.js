@@ -82,8 +82,13 @@ module.exports = function(grunt) {
       // },
       htmlcss: {
         files:
-        ['app/images/**/*', 'app/styles/**/*', 'app/index.html'],
-        tasks: ['copy']
+
+        ['app/images/**/*', 'app/styles/**/*', 'app/index.html', 'app/signin.html'],
+        tasks: ['build']
+
+        //['app/images/**/*', 'app/styles/**/*', 'app/index.html'],
+        //tasks: ['copy']
+
       }
     }
   });
