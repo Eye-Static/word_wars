@@ -50,7 +50,7 @@ body
   border-color: black;
   width: 850px;
   height: 450px;
-  overflow: scroll;
+  overflow: scroll;/*if we remove this, dragging tile -> tray works again */
   z-index: 10;
 }
 td

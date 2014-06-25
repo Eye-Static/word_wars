@@ -67,24 +67,22 @@ module.exports =
 
     donut :{
     grid:
-    'XX XX XX XX XX XX XX .. TW .. XX XX XX XX XX XX XX ' +
-    'XX XX XX XX XX DW .. .. .. .. .. DW XX XX XX XX XX ' +
-    'XX XX XX .. .. .. .. .. .. .. .. .. .. .. XX XX XX ' +
-    'XX XX TW .. .. .. .. .. .. .. .. .. .. .. TW XX XX ' +
-    'XX XX .. .. .. .. .. .. .. .. .. .. .. .. .. XX XX ' +
-    'XX DW .. .. .. .. .. .. TL .. .. .. .. .. .. DW XX ' +
-    'XX .. .. TL .. .. TL XX XX XX TL .. .. TL .. .. XX ' +
-    '.. .. .. .. .. .. XX XX XX XX XX .. .. .. .. .. .. ' +
-    'TW .. .. .. .. DW XX XX XX XX XX DW .. .. .. .. TW ' +
-    '.. .. .. .. .. .. XX XX XX XX XX .. .. .. .. .. .. ' +
-    'XX .. .. TL .. .. TL XX XX XX TL .. .. TL .. .. XX ' +
-    'XX DW .. .. .. .. .. .. TL .. .. .. .. .. .. DW XX ' +
-    'XX XX .. .. .. .. .. .. .. .. .. .. .. .. .. XX XX ' +
-    'XX XX TW .. .. .. .. .. .. .. .. .. .. .. TW XX XX ' +
-    'XX XX XX .. .. .. .. .. .. .. .. .. .. .. XX XX XX ' +
-    'XX XX XX XX XX DW .. .. .. .. .. DW XX XX XX XX XX ' +
-    'XX XX XX XX XX XX XX .. TW .. XX XX XX XX XX XX XX',
+    'XX XX XX XX XX XX DW .. .. .. DW XX XX XX XX XX XX ' +
+    'XX XX XX XX .. .. .. .. .. .. .. .. .. XX XX XX XX ' +
+    'XX XX TW .. .. .. .. DL .. DL .. .. .. .. TW XX XX ' +
+    'XX XX .. .. TL .. .. .. .. .. .. .. TL .. .. XX XX ' +
+    'XX DW .. .. .. DL .. .. *  .. .. DL .. .. .. DW XX ' +
+    'XX .. .. .. .. .. DW XX XX XX DW .. .. .. .. .. XX ' +
+    '.. .. .. DL .. .. XX XX XX XX XX .. .. DL .. .. .. ' +
+    'TW .. .. .. .. TL XX XX XX XX XX TL .. .. .. .. TW ' +
+    '.. .. .. DL .. .. XX XX XX XX XX .. .. DL .. .. .. ' +
+    'XX .. .. .. .. .. DW XX XX XX DW .. .. .. .. .. XX ' +
+    'XX DW .. .. .. DL .. .. DW .. .. DL .. .. .. DW XX ' +
+    'XX XX .. .. TL .. .. .. .. .. .. .. TL .. .. XX XX ' +
+    'XX XX TW .. .. .. .. DL .. DL .. .. .. .. TW XX XX ' +
+    'XX XX XX XX .. .. .. .. .. .. .. .. .. XX XX XX XX ' +
+    'XX XX XX XX XX XX DW .. .. .. DW XX XX XX XX XX XX',
     width : 17,
-    height: 17
+    height: 15
     }
 };

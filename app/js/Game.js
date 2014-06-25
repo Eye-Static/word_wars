@@ -20,7 +20,6 @@ var Game = function (boardType, numOfPlayers)
 
   for (var i = 0; i < (numOfPlayers || 1); i++)
   {
-    console.log('creating player', i);
     this.players[i] = new Player(this.board, i);//pass board & the player number
     this.players[i].refillTiles (this.bag);
   }

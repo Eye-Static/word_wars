@@ -19,7 +19,7 @@ module.exports = function Tray (board, playerNum)
     while (this.letters.length < 7)
     {
       var letter = bag.removeNext();
-      if(!letter) { return; }
+      if(!letter) { return; }  //no more letters, exit
       this.letters.push(letter);
     }
   };
@@ -84,12 +84,11 @@ module.exports = function Tray (board, playerNum)
     for(var i=0; i<this.letters.length; i++)
     {
       var letterHtml = $(letterTemplate(this.letters[i]));
-      var letterData = this.letters[i];
       trayObject.append(letterHtml);
       letterHtml.draggable(
       {
-        zIndex: 20,
-        revert: 'invalid' // will revert when placed on invalid area
+        zIndex: 100,
+        revert: 'invalid', // will revert when placed on invalid area
       });
     }
     trayObject.droppable(
