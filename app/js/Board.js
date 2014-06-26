@@ -245,7 +245,7 @@ Board.prototype.retrieveLetter = function(letterID, input)
 
 /////////////////////////////////////////////////
 
-Board.prototype.retrieveBoardLetter = function (letterID) //!!!
+Board.prototype.retrieveBoardLetter = function (letterID)
 {
   var x, y;
   for (y = 0; y < this.maxY; y += 1)
@@ -263,7 +263,7 @@ Board.prototype.retrieveBoardLetter = function (letterID) //!!!
 
 ////////////////////////////////////////////////
 
-Board.prototype.removeLetter = function (y, x) //!!!
+Board.prototype.removeLetter = function (y, x)
 {
   var letter = this.grid[y][x].letter;
   this.grid[y][x].letter = null;

@@ -239,3 +239,7 @@ td
 {
   width: 25px;
 }
+.game-button
+{
+  display: none;
+}

@@ -2,19 +2,21 @@
 var Board  = require('./Board');
 var Bag    = require('./Bag');
 var Player = require('./Player');
+var dictionary = require('./dictionary');
+var GameButtons = require('./gameButtons');
 
 var Game = function (boardType, numOfPlayers)
 {
   console.log('starting new game with board type: ' + (boardType || 'not set'));
   console.log('and players: ' + (numOfPlayers || 'not set'));
 
+  new GameButtons(this);
   this.board = new Board(boardType);
   this.bag   = new Bag();
   this.turn  = {turnNum: 1, message: ''};
   this.players = [];
   this.whoseTurn = 0; // refers to which player in players array
                       // so 0 means the first player
-
   this.bag.fill();               // add letters to bag
   this.bag.shake();              // randomize bag
 
@@ -45,7 +47,6 @@ Game.prototype.finishTurn = function ()
   justFinishedPlayer.refillTiles(this.bag);
   if(this.bag.letters.length === 0)
   { //no more letters
-    console.log('No more letters in the bag, last turn');
     this.turn.message = 'LAST TURN';
   }
   justFinishedPlayer.tray.render();
@@ -68,15 +69,27 @@ Game.prototype.printGameStatus = function ()
   '\'s turn. Turn: ' + (this.turn.message || this.turn.turnNum));
 };
 
+Game.prototype.checkWords = function()
+{
+  //input goes in as an array
+  dictionary.lookup(['tyler', 'is', 'a', 'mensch'], function(returnData){
+    console.dir(returnData);
+    //returnData comes out as an array of objects like the following:
+    //{word : 'the word', definition: 'definition' (or null if word not found)}
+    //returnData is in SAME order as input, woohoo!
+  });
+};
+
 Game.prototype.wordScore = function()
 {
   var score = 0;
   var x,y;
   for(y=0;y<this.board.grid.length; y++){
     for(x=0;x<this.board.grid[y].length; x++){
-
-      if(this.board.grid[y][x].letter && this.board.grid[y][x].letter.justPlaced === true) {
-        score += this.board.grid[y][x].letter.score;
+      var letter = this.board.grid[y][x].letter;
+      if(letter && letter.justPlaced) {
+        letter.justPlaced = false;
+        score += letter.score;
       }
     }
   }
@@ -102,5 +115,5 @@ Game.prototype.clearGameArea = function (recentScore)
   {
     player.tray.hideTray();
   });
-}
+};
 module.exports = Game;
