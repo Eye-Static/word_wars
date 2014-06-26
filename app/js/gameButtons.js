@@ -21,11 +21,11 @@ module.exports = function(game)
       game.finishTurn();
       game.nextTurn();
     }
-    else
-    {
-      alert ('Words must be placed in a solid straight line.');
-    }
-  });
+    // else
+    // {
+    //   alert ("Words must be placed in a solid straight line.");
+    // } 
+  })
 
   //////////////////////////////////////////////////
   $('#return-letters-button').show();
@@ -68,5 +68,12 @@ module.exports = function(game)
     {
       game.players[i].tray.print();
     }
+  });
+
+  //////////////////////////////////////////////////
+
+  $('#print-placed-button').click (function ()
+  {
+    game.board.printPlaced();
   });
 };

@@ -7,16 +7,42 @@ var validator = {};
 validator.isValid = function (gameRef)
 {
   game = gameRef;
+
   // get an array of all the new letter coordinates
-  var newletters = validator.getNewLetters(game);
-  var orientation = validator.isLine (newletters, game);
+  var newletters = this.getNewLetters();
+  var orientation = this.isLine (newletters);
 
   console.log ('Orientation: ' + orientation);
 
-  if (orientation === null) return false;  // not a line
-  else if (!validator.isConnected (newletters, orientation)) return false;  // has a break
+  // check for no letters being played (turn skip)
+  if (newletters.length == 0) return true;
+
+  // check for star
+  else if (game.turn.turnNum == 1 && !this.onStar (newletters))
+  {
+    alert ('The first word must be placed on the STAR tile.');
+    return false;
+  }
+  // check for lines
+  else if (orientation == null)
+  {
+    alert ('Words must be placed in a straight lines.');
+    return false;
+  }
+  // check for breaks
+  else if (!this.isConnected (newletters, orientation))
+  {
+    alert ('Words may not contain spaces.');
+    return false;
+  }
+  // check for... touching?
+  else if (game.turn.turnNum > 1 && !this.isTouching (newletters, orientation))
+  {
+    alert ('New words must touch an existing word.');
+    return false;
+  }
   else return true;
-};
+}
 
 //////////////////////////////////////////////////
 
@@ -37,6 +63,25 @@ validator.getNewLetters = function ()
     }
   }
   return newletters;
+};
+
+//////////////////////////////////////////////////
+
+// take an array of grid coordinates for the new letters.
+// check if one of the letters is on the star.
+// return true/false.
+validator.onStar = function (newletters)
+{
+  var x, y;
+
+  for (var l = 0; l < newletters.length; l += 1)
+  {
+    y = newletters[l][0];
+    x = newletters[l][1];
+
+    if (game.board.grid[y][x].bonus == '*') return true;
+  }
+  return false;
 };
 
 //////////////////////////////////////////////////
@@ -68,15 +113,6 @@ validator.isConnected = function (newletters, orientation)
     }
   }
   return true;
-
-  // var x1, y1, x2, y2;  // the first and last letters in the word
-
-  // if (orientation === 'horizontal'
-  // {
-  //   x1 = newletters[0][1];
-  //   y1 = newletters[0][0];
-  //   x2 = newletters[newletters
-  // }
 };
 
 //////////////////////////////////////////////////
@@ -103,6 +139,63 @@ validator.isLine = function (newletters)
   if (isHorizontal === true) return 'horizontal';
   else if (isVertical === true) return 'vertical';
   else return null;
+};
+
+//////////////////////////////////////////////////
+
+// take an array of grid coordinates for the new letters.
+// check to make sure at least one new letter is touching an old letter.
+// returns true/false.
+validator.isTouching = function (newletters)
+{
+  var y, x, l;
+
+  for (l = 0; l < newletters.length; l += 1)
+  {
+    y = newletters[l][0];
+    x = newletters[l][1];
+
+    if (x > 0 && game.board.grid[y][x - 1].letter != null
+        && game.board.grid[y][x - 1].letter.justPlaced == false) return true;
+
+    else if (x < game.board.maxX - 1 && game.board.grid[y][x + 1].letter != null
+        && game.board.grid[y][x + 1].letter.justPlaced == false) return true;
+
+    else if (y > 0 && game.board.grid[y - 1][x].letter != null
+        && game.board.grid[y - 1][x].letter.justPlaced == false) return true;
+
+    else if (y < 0 && game.board.grid[y + 1][x].letter != null
+        && game.board.grid[y + 1][x].letter.justPlaced == false) return true;
+  }
+  return false;
+};
+
+//////////////////////////////////////////////////
+
+// take an array of grid coordinates for the new letters, and the h/v orientation.
+// create a string for each new word spelled and return them in an array.
+validator.spellWords = function (newletters, orientation)
+{
+  for (var l = 0; l < newletters.length; l += 1)
+  {
+    if (orientation == "horizontal")
+    {
+      
+    }
+    else  // vertical
+    {
+    }
+  }
+};
+
+//////////////////////////////////////////////////
+
+// take an array of one [y, x] letter position.
+// find the first letter of a word that was spelled horizontally.
+// return the [y, x] coordinates in an arry.
+validator.findFirstHorizontal = function (newletters)
+{
+  //for (var x = newletters
 };
 
 //////////////////////////////////////////////////
