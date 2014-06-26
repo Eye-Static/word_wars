@@ -142,3 +142,7 @@ box-shadow: 15px 15px 15px 9px #0A0A0F;
 {
   width: 25px;
 }
+.game-button
+{
+  display: none;
+}
