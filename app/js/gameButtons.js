@@ -14,9 +14,16 @@ module.exports = function(game)
   $('#done-button').show();
   $('#done-button').on('click', function()
   {
-    game.finishTurn();
-    game.nextTurn();
-  });
+    if (game.isValid())
+    {
+      game.finishTurn();
+      game.nextTurn();
+    }
+    else 
+    {
+      alert ("Words must be placed in a solid straight line.");
+    } 
+  })
 
   //////////////////////////////////////////////////
   $('#return-letters-button').show();
