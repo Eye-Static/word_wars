@@ -83,12 +83,6 @@ Game.prototype.checkWords = function()
   });
 };
 
-// Game.prototype.cleanGameSpace = function ()
-// {
-//   $('#player-1-tray').empty();
-//   $('#player-2-tray').empty();
-// };
-
 //////////////////////////////////////////////////
 
 // returns the score of the new letters placed this turn
