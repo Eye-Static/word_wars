@@ -6,8 +6,8 @@ module.exports = function(game)
   $('#shuffle-tray-button').show();
   $('#shuffle-tray-button').click (function ()
   {
-    game.players[0].tray.shuffle();
-    game.players[0].tray.render();
+    game.players[game.whoseTurn].tray.shuffle();
+    game.players[game.whoseTurn].tray.render();
     //game.board.render (game.players[game.turn]);
     game.board.addListeners (game.players);
   });
@@ -21,11 +21,11 @@ module.exports = function(game)
       game.finishTurn();
       game.nextTurn();
     }
-    else
-    {
-      alert ('Words must be placed in a solid straight line.');
-    }
-  });
+    // else
+    // {
+    //   alert ("Words must be placed in a solid straight line.");
+    // } 
+  })
 
   //////////////////////////////////////////////////
   $('#return-letters-button').show();
@@ -68,5 +68,12 @@ module.exports = function(game)
     {
       game.players[i].tray.print();
     }
+  });
+
+  //////////////////////////////////////////////////
+
+  $('#print-placed-button').click (function ()
+  {
+    game.board.printPlaced();
   });
 };

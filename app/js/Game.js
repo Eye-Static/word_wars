@@ -3,6 +3,7 @@ var Board  = require('./Board');
 var Bag    = require('./Bag');
 var Player = require('./Player');
 var GameButtons = require('./gameButtons');
+var validator = require('./validator');
 
 var Game = function (boardType, numOfPlayers)
 {
@@ -77,7 +78,7 @@ Game.prototype.printGameStatus = function ()
 Game.prototype.wordScore = function()
 {
  // get an array of all the new letter coordinates
-  var newletters = this.getNewLetters();
+  var newletters = validator.getNewLetters();
   var score = 0;
   var y, x, l;
 

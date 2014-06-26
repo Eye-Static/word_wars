@@ -7,16 +7,45 @@ var validator = {};
 validator.isValid = function (gameRef)
 {
   game = gameRef;
+
   // get an array of all the new letter coordinates
-  var newletters = validator.getNewLetters(game);
-  var orientation = validator.isLine (newletters, game);
+  var newletters = this.getNewLetters();
+  var orientation = this.isLine (newletters);
+  var spelledWords = [];
 
   console.log ('Orientation: ' + orientation);
 
-  if (orientation === null) return false;  // not a line
-  else if (!validator.isConnected (newletters, orientation)) return false;  // has a break
-  else return true;
-};
+  // check for no letters being played (turn skip)
+  if (newletters.length == 0) return true;
+
+  // check for star
+  else if (game.turn.turnNum == 1 && !this.onStar (newletters))
+  {
+    alert ('The first word must be placed on the STAR tile.');
+    return false;
+  }
+  // check for lines
+  else if (orientation == null)
+  {
+    alert ('Words must be placed in a straight lines.');
+    return false;
+  }
+  // check for breaks
+  else if (!this.isConnected (newletters, orientation))
+  {
+    alert ('Words may not contain spaces.');
+    return false;
+  }
+  // check for... touching?
+  else if (game.turn.turnNum > 1 && !this.isTouching (newletters, orientation))
+  {
+    alert ('New words must touch an existing word.');
+    return false;
+  }
+  spelledWords = this.spellWords(newletters, orientation);
+  this.checkWords(spelledWords);
+  return true;
+}
 
 //////////////////////////////////////////////////
 
@@ -37,6 +66,25 @@ validator.getNewLetters = function ()
     }
   }
   return newletters;
+};
+
+//////////////////////////////////////////////////
+
+// take an array of grid coordinates for the new letters.
+// check if one of the letters is on the star.
+// return true/false.
+validator.onStar = function (newletters)
+{
+  var x, y;
+
+  for (var l = 0; l < newletters.length; l += 1)
+  {
+    y = newletters[l][0];
+    x = newletters[l][1];
+
+    if (game.board.grid[y][x].bonus == '*') return true;
+  }
+  return false;
 };
 
 //////////////////////////////////////////////////
@@ -68,15 +116,6 @@ validator.isConnected = function (newletters, orientation)
     }
   }
   return true;
-
-  // var x1, y1, x2, y2;  // the first and last letters in the word
-
-  // if (orientation === 'horizontal'
-  // {
-  //   x1 = newletters[0][1];
-  //   y1 = newletters[0][0];
-  //   x2 = newletters[newletters
-  // }
 };
 
 //////////////////////////////////////////////////
@@ -107,11 +146,150 @@ validator.isLine = function (newletters)
 
 //////////////////////////////////////////////////
 
-validator.checkWords = function()
+// take an array of grid coordinates for the new letters.
+// check to make sure at least one new letter is touching an old letter.
+// returns true/false.
+validator.isTouching = function (newletters)
+{
+  var y, x, l;
+
+  for (l = 0; l < newletters.length; l += 1)
+  {
+    y = newletters[l][0];
+    x = newletters[l][1];
+
+    if (x > 0 && game.board.grid[y][x - 1].letter != null
+        && game.board.grid[y][x - 1].letter.justPlaced == false) return true;
+
+    else if (x < game.board.maxX - 1 && game.board.grid[y][x + 1].letter != null
+        && game.board.grid[y][x + 1].letter.justPlaced == false) return true;
+
+    else if (y > 0 && game.board.grid[y - 1][x].letter != null
+        && game.board.grid[y - 1][x].letter.justPlaced == false) return true;
+
+    else if (y < 0 && game.board.grid[y + 1][x].letter != null
+        && game.board.grid[y + 1][x].letter.justPlaced == false) return true;
+  }
+  return false;
+};
+
+//////////////////////////////////////////////////
+
+// take an array of grid coordinates for the new letters, and the h/v orientation.
+// create a string for each new word spelled and return them in an array.
+validator.spellWords = function (newletters, orientation)
+{
+  var firstLetter, lastLetter, x, y;
+  var word = '';
+  var wordArray = [];
+  
+  if (orientation == "horizontal")
+  {
+    firstLetter = this.findFirstHorizontal(newletters[0]);
+    lastLetter =  this.findLastHorizontal(newletters[0]);
+    y = firstLetter[0];
+    
+    for (x = firstLetter[1]; x<=lastLetter[1]; x++)
+        
+    {
+      word = word.concat(game.board.grid[y][x].letter.character);
+      
+    }
+    wordArray[0] = word.toLowerCase();
+  }
+
+  else  // vertical
+  {
+    firstLetter = this.findFirstVertical(newletters[0]);
+    lastLetter =  this.findLastVertical(newletters[0]);
+    x = firstLetter[1];
+    
+    for (y = firstLetter[0]; y<=lastLetter[0]; y++)
+        
+    {
+      word = word.concat(game.board.grid[y][x].letter.character);
+      
+    }
+    wordArray[0] = word.toLowerCase();
+  }
+
+  console.log ("You spelled: " + word);
+  return wordArray;
+};
+
+//////////////////////////////////////////////////
+
+// take an array of one [y, x] letter position.
+// find the first letter of a word that was spelled horizontally.
+// return the [y, x] coordinates in an array.
+validator.findFirstHorizontal = function (letter)
+{
+  var x = letter[1];
+  var y = letter[0];
+  
+  while(x>0 && game.board.grid[y][x].letter !== null) {
+    x--;
+
+  } 
+  return [y, x+1];
+
+}
+
+//////////////////////////////////////////////////
+
+
+validator.findLastHorizontal = function (letter)
+{
+  var x = letter[1];
+  var y = letter[0];
+  
+  while(x<game.board.maxX && game.board.grid[y][x].letter !== null) {
+    x++;
+
+  } 
+  return [y, x-1];
+
+}
+
+//////////////////////////////////////////////////
+
+validator.findFirstVertical = function (letter)
+{
+  var x = letter[1];
+  var y = letter[0];
+  
+  while(y>0 && game.board.grid[y][x].letter !== null) {
+    y--;
+
+  } 
+  return [y+1, x];
+
+}
+
+//////////////////////////////////////////////////
+
+
+validator.findLastVertical = function (letter)
+{
+  var x = letter[1];
+  var y = letter[0];
+  
+  while(y<game.board.maxY && game.board.grid[y][x].letter !== null) {
+    y++;
+
+  } 
+  return [y-1, x];
+
+}
+/////////////////////////////////////////////////
+
+validator.checkWords = function(spelledWords)
 {
   //input goes in as an array
-  dictionary.lookup(['tyler', 'is', 'a', 'mensch'], function(returnData){
+  dictionary.lookup(spelledWords, function(returnData){
     console.dir(returnData);
+    //  dictionary.lookup(['tyler', 'is', 'a', 'mensch'], function(returnData){
+    // console.dir(returnData);
     //returnData comes out as an array of objects like the following:
     //{word : 'the word', definition: 'definition' (or null if word not found)}
     //returnData is in SAME order as input, woohoo!
