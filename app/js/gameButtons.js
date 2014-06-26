@@ -1,3 +1,5 @@
+var validator = require('./validator');
+
 module.exports = function(game)
 {
 
@@ -14,7 +16,7 @@ module.exports = function(game)
   $('#done-button').show();
   $('#done-button').on('click', function()
   {
-    if (game.isValid())
+    if (validator.isValid(game))
     {
       game.finishTurn();
       game.nextTurn();
@@ -66,5 +68,12 @@ module.exports = function(game)
     {
       game.players[i].tray.print();
     }
+  });
+
+  //////////////////////////////////////////////////
+
+  $('#print-placed-button').click (function ()
+  {
+    game.board.printPlaced();
   });
 };
