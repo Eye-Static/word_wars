@@ -41,7 +41,10 @@ var Board = function (gridChoice)
     square.y = y;
 
     var thisSpace = squares[i];
-    square.bonus = thisSpace;
+
+    if (thisSpace == '..') square.bonus = '•';
+    else square.bonus = thisSpace;
+
     // the bonus field is same as the on the grid pattern
     // class may need to be adjusted
     if (thisSpace === '*' ) {thisSpace = 'start';}
@@ -99,8 +102,8 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs)
 
     theLetter.position (  // move the div to the square
     {
-      my: 'center',
-      at: 'center',
+      my: 'top left',
+      at: 'top left',
       of: '#square-' + y + '-' + x //destination
     });
 
@@ -184,7 +187,7 @@ Board.prototype.addDropListener = function(square, letterID, players)
 //////////////////////////////////////////////////
 
 // take the id (string) from a <td> square and return the square's object (grid[y][x])
-// letterID = "square-y-x"
+// letterID = 'square-y-x'
 Board.prototype.getSquareObject = function (squareID)
 {
   squareID = squareID.split ('-');

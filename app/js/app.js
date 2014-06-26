@@ -6,8 +6,8 @@ $(document).ready(function ()
 {
   var userName;
   var game;
-  game = new Game(); //this is just for testing, in the final version
-                     //games are only started with the button
+  game = new Game('scrabble', 2); //this is just for testing, in the final version
+                         //games are only started with the button
   var connection = new Connection();
 
   //////////////////////////////////////////////////

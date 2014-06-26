@@ -1,36 +1,8 @@
-html, body, div, span, applet, object, iframe,h1,
-h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym,
-address, big, cite, code,del, dfn, em, img, ins, kbd, q, s,
-samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl,
-dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption,
-tbody, tfoot, thead, tr, th, td,article, aside, canvas, details,
-embed, figure, figcaption, footer, header, hgroup, menu, nav,
-output, ruby, section, summary,time, mark, audio, video
-{
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align:
-  baseline;
-}
-article, aside, details, figcaption, figureF,
-footer, header, hgroup, menu, nav, section
-{
-  display: block;
-}
-ol, ul
-{
-  list-style: none;
-}
 table
 {
   border-collapse: collapse;
   border-spacing: 0;
-
 }
-/*the above is CSS reset junk*/
 
 body
 {
@@ -42,80 +14,22 @@ body
   -ms-user-select: none;
 }
 
-#board
-{
-  background-color: rgb(0, 0, 0);
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-  width: 850px;
-  height: 450px;
-  overflow: scroll;/*if we remove this, dragging tile -> tray works again */
-  z-index: 10;
-}
 td
 {
   width:  42px;
   height: 42px;
 }
-.square
-{
-  color: black;
-  width:  42px;
-  height: 42px;
-  font-family: arial;
-  font-weight: bold;
-  font-size: 12pt;
-  text-align: center;
-  border-style: solid;
-  border-width: 1px;
-  border-color: gray;
-  background-color: rgb(96, 96, 96);
-  z-index: 10;
-}
 
 .blank
 {
   color: rgb(224, 224, 224);
-  background-color: rgb(224, 224, 224);
-}
-
-.start
-{
-  background-color: rgb(255, 128, 128);
-}
-
-.DL
-{
-  background-color: rgb(128, 128, 255);
-}
-
-.TL
-{
-  background-color: rgb(64, 64, 255);
-}
-
-.DW
-{
-  background-color: rgb(255, 128, 128);
-}
-
-.TW
-{
-  background-color: rgb(255, 64, 64);
-}
-
-.XX
-{
-  background-color: rgb(0, 0, 0);
-  border-color: black;
 }
 
 .letter
 {
   background-color: rgb(232, 148, 66);
-  //border-width: 1px;
-  border: solid 1px rgb(90, 60, 30);
+  border: 1px solid rgb(151, 84, 19);
+  color: black;
   font-family: arial;
   font-size: 18pt;
   width: 40px;
@@ -126,6 +40,7 @@ td
   float: left;
   user-select: none;
   padding: 0;
+  box-shadow: 2px 2px 0px rgb(151, 84, 19);
   z-index: 20;
 }
 
@@ -154,64 +69,50 @@ td
 
 .letter-score
 {
-  font-size: 10pt;
   position: relative;
+  font-size: 10pt;
   left: 15px;
-  top: -25px;
-  color: rgb(90, 60, 30);
+  color: rgb(151, 84, 19);
   z-index: 20;
 }
 
 .tray
 {
-  //background-color: white;
   display: none;
-  border-style: solid;
-  border-color: rgb(128, 128, 128);
-  border-width: 2px;
+  border: solid 2px navy;
   border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
+  background-color: #ADADFF;
   text-align: center;
   width: 300px;
-  height: 40px;
+  height: 42px;  /*4em;*/
+  z-index: 1000;
+  margin-top: 6%;
+  margin-left: 10%;
+  display: inline-block;
+  box-shadow: 15px 15px 15px 9px #0A0A0F;
+  padding: 5px;
+}
+
+/*
+#player-1-tray {
+border: 2px solid navy;
+border-radius: 5px;
+background-color: #ADADFF;
+margin-top: 1%;
+margin-right: 0;
+width: 45%;
+height: 4em;
+display: inline-block;
+box-shadow: 15px 15px 15px 9px #0A0A0F;
+}
+*/
+
+#letter-select
+{
   float: left;
-}
-
-#left-column
-{
-  float: left;
-}
-
-#right-column
-{
-  float: right;
-}
-#login-box
-{
-  background: rgb(80, 100, 200);
-}
-#game-lobby
-{
-  background: rgb(100, 200, 100);
-}
-.game-listing
-{
-  background: rgb(150, 200, 150);
-  border: 1px solid black;
-}
-
-#test-1
-{
-  background-color: rgb(0, 255, 0);
-  color: blue;
-  font-family: arial;
-  font-size: 10pt;
-  text-align: center;
-  border: solid 1px black;
-  width: 60px;
-  height: 60px;
-  z-index: 1;
+  margin: 0 7px 20px 0;
+  background-color: rgb(100, 255, 100);
+  z-index: 30;
 }
 
 #overlay
@@ -226,6 +127,7 @@ td
   background-color: rgba(0,0,0,.25);
   z-index: 1000;
 }
+
 #overlay div
 {
   width: 300px;
@@ -235,6 +137,7 @@ td
   padding: 15px;
   text-align: center;
 }
+
 .letter-button
 {
   width: 25px;
