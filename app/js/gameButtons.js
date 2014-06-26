@@ -6,8 +6,8 @@ module.exports = function(game)
   $('#shuffle-tray-button').show();
   $('#shuffle-tray-button').click (function ()
   {
-    game.players[0].tray.shuffle();
-    game.players[0].tray.render();
+    game.players[game.whoseTurn].tray.shuffle();
+    game.players[game.whoseTurn].tray.render();
     //game.board.render (game.players[game.turn]);
     game.board.addListeners (game.players);
   });

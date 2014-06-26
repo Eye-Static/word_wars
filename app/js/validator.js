@@ -11,6 +11,7 @@ validator.isValid = function (gameRef)
   // get an array of all the new letter coordinates
   var newletters = this.getNewLetters();
   var orientation = this.isLine (newletters);
+  var spelledWords = [];
 
   console.log ('Orientation: ' + orientation);
 
@@ -41,7 +42,9 @@ validator.isValid = function (gameRef)
     alert ('New words must touch an existing word.');
     return false;
   }
-  else return true;
+  spelledWords = this.spellWords(newletters, orientation);
+  this.checkWords(spelledWords);
+  return true;
 }
 
 //////////////////////////////////////////////////
@@ -176,35 +179,117 @@ validator.isTouching = function (newletters)
 // create a string for each new word spelled and return them in an array.
 validator.spellWords = function (newletters, orientation)
 {
-  for (var l = 0; l < newletters.length; l += 1)
+  var firstLetter, lastLetter, x, y;
+  var word = '';
+  var wordArray = [];
+  
+  if (orientation == "horizontal")
   {
-    if (orientation == "horizontal")
+    firstLetter = this.findFirstHorizontal(newletters[0]);
+    lastLetter =  this.findLastHorizontal(newletters[0]);
+    y = firstLetter[0];
+    
+    for (x = firstLetter[1]; x<=lastLetter[1]; x++)
+        
     {
+      word = word.concat(game.board.grid[y][x].letter.character);
       
     }
-    else  // vertical
-    {
-    }
+    wordArray[0] = word.toLowerCase();
   }
+
+  else  // vertical
+  {
+    firstLetter = this.findFirstVertical(newletters[0]);
+    lastLetter =  this.findLastVertical(newletters[0]);
+    x = firstLetter[1];
+    
+    for (y = firstLetter[0]; y<=lastLetter[0]; y++)
+        
+    {
+      word = word.concat(game.board.grid[y][x].letter.character);
+      
+    }
+    wordArray[0] = word.toLowerCase();
+  }
+
+  console.log ("You spelled: " + word);
+  return wordArray;
 };
 
 //////////////////////////////////////////////////
 
 // take an array of one [y, x] letter position.
 // find the first letter of a word that was spelled horizontally.
-// return the [y, x] coordinates in an arry.
-validator.findFirstHorizontal = function (newletters)
+// return the [y, x] coordinates in an array.
+validator.findFirstHorizontal = function (letter)
 {
-  //for (var x = newletters
-};
+  var x = letter[1];
+  var y = letter[0];
+  
+  while(x>0 && game.board.grid[y][x].letter !== null) {
+    x--;
+
+  } 
+  return [y, x+1];
+
+}
 
 //////////////////////////////////////////////////
 
-validator.checkWords = function()
+
+validator.findLastHorizontal = function (letter)
+{
+  var x = letter[1];
+  var y = letter[0];
+  
+  while(x<game.board.maxX && game.board.grid[y][x].letter !== null) {
+    x++;
+
+  } 
+  return [y, x-1];
+
+}
+
+//////////////////////////////////////////////////
+
+validator.findFirstVertical = function (letter)
+{
+  var x = letter[1];
+  var y = letter[0];
+  
+  while(y>0 && game.board.grid[y][x].letter !== null) {
+    y--;
+
+  } 
+  return [y+1, x];
+
+}
+
+//////////////////////////////////////////////////
+
+
+validator.findLastVertical = function (letter)
+{
+  var x = letter[1];
+  var y = letter[0];
+  
+  while(y<game.board.maxY && game.board.grid[y][x].letter !== null) {
+    y++;
+
+  } 
+  return [y-1, x];
+
+}
+/////////////////////////////////////////////////
+
+validator.checkWords = function(spelledWords)
 {
   //input goes in as an array
-  dictionary.lookup(['tyler', 'is', 'a', 'mensch'], function(returnData){
+  dictionary.lookup(spelledWords, function(returnData){
     console.dir(returnData);
+    //  dictionary.lookup(['tyler', 'is', 'a', 'mensch'], function(returnData){
+    // console.dir(returnData);
     //returnData comes out as an array of objects like the following:
     //{word : 'the word', definition: 'definition' (or null if word not found)}
     //returnData is in SAME order as input, woohoo!
