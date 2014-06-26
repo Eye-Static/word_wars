@@ -122,8 +122,24 @@ Game.prototype.isValid = function ()
 
   console.log ("Orientation: " + orientation);
 
-  if (orientation == null) return false;  // not a line
-  else if (!this.isConnected (newletters, orientation)) return false;  // has a break
+  // check for lines
+  if (orientation == null)
+  {
+    alert ("Words must be placed in a straight lines.");
+    return false;
+  }
+  // check for breaks
+  else if (!this.isConnected (newletters, orientation))
+  {
+    alert ("Words may not contain spaces.");
+    return false;
+  }
+  // check for... touching?
+  else if (this.turn.turnNum > 1 && !this.isTouching (newletters, orientation))
+  {
+    alert ("New words must touch an existing word.");
+    return false;
+  }
   else return true;
 }
 
@@ -182,16 +198,63 @@ Game.prototype.isConnected = function (newletters, orientation)
     }
   }
   return true;
+};
 
-  // var x1, y1, x2, y2;  // the first and last letters in the word
+//////////////////////////////////////////////////
 
-  // if (orientation === "horizontal"
-  // {
-  //   x1 = newletters[0][1];
-  //   y1 = newletters[0][0];
-  //   x2 = newletters[newletters
-  // }
-}
+// take an array of grid coordinates for the new letters.
+// check to make sure at least one new letter is touching an old letter.
+// returns true/false.
+Game.prototype.isTouching = function (newletters)
+{
+  var y, x;
+  for (var l = 0; l < newletters.length; l += 1)
+  {
+    y = newletters[l][0];
+    x = newletters[l][1];
+
+    if (x > 0 && this.board.grid[y][x - 1].letter != null
+        && this.board.grid[y][x - 1].letter.justPlaced == false) return true;
+
+    else if (x < this.board.maxX - 1 && this.board.grid[y][x + 1].letter != null
+        && this.board.grid[y][x + 1].letter.justPlaced == false) return true;
+
+    else if (y > 0 && this.board.grid[y - 1][x].letter != null
+        && this.board.grid[y - 1][x].letter.justPlaced == false) return true;
+
+    else if (y < 0 && this.board.grid[y + 1][x].letter != null
+        && this.board.grid[y + 1][x].letter.justPlaced == false) return true;
+  }
+  return false;
+};
+
+//////////////////////////////////////////////////
+
+// take an array of grid coordinates for the new letters, and the h/v orientation.
+// create a string for each new word spelled and return them in an array.
+Game.prototype.spellWords = function (newletters, orientation)
+{
+  for (var l = 0; l < newletters.length; l += 1)
+  {
+    if (orientation == "horizontal")
+    {
+      
+    }
+    else  // vertical
+    {
+    }
+  }
+};
+
+//////////////////////////////////////////////////
+
+// take an array of one [y, x] letter position.
+// find the first letter of a word that was spelled horizontally.
+// return the [y, x] coordinates in an arry.
+Game.prototype.findFirstHorizontal (newletters)
+{
+  //for (var x = newletters
+};
 
 //////////////////////////////////////////////////
 

@@ -19,10 +19,10 @@ module.exports = function(game)
       game.finishTurn();
       game.nextTurn();
     }
-    else 
-    {
-      alert ("Words must be placed in a solid straight line.");
-    } 
+    // else
+    // {
+    //   alert ("Words must be placed in a solid straight line.");
+    // } 
   })
 
   //////////////////////////////////////////////////
