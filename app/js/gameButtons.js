@@ -1,3 +1,5 @@
+var validator = require('./validator');
+
 module.exports = function(game)
 {
 
@@ -14,16 +16,16 @@ module.exports = function(game)
   $('#done-button').show();
   $('#done-button').on('click', function()
   {
-    if (game.isValid())
+    if (validator.isValid(game))
     {
       game.finishTurn();
       game.nextTurn();
     }
-    else 
+    else
     {
-      alert ("Words must be placed in a solid straight line.");
-    } 
-  })
+      alert ('Words must be placed in a solid straight line.');
+    }
+  });
 
   //////////////////////////////////////////////////
   $('#return-letters-button').show();
