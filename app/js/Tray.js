@@ -2,11 +2,12 @@
 var Letter = require('./Letter');
 var Bag = require('./Bag');
 var letterTemplate = require('./templates/letterTemplate.hbs');
+var board;
 
-module.exports = function Tray (board, playerNum)
+module.exports = function Tray (boardRef, playerNum)
 {
   this.letters = [];  // array of letter objects (max 7)
-  this.board = board;
+  // this.board = board;
   this.playerNum = playerNum;
   var trayObject = $('#player-' + playerNum + '-tray');
 
@@ -40,6 +41,7 @@ module.exports = function Tray (board, playerNum)
   this.add = function (letterObj)
   {
     this.letters.push(letterObj);
+    this.render();
   };
 
   //////////////////////////////////////////////////
@@ -53,14 +55,14 @@ module.exports = function Tray (board, playerNum)
     if (returnVal > 1) {console.error('ERROR: tray found', returnVal.length, 'letters with same id');}
     return returnVal[0];
   };
-  /////////////////////////////////////////////////
+  // /////////////////////////////////////////////////
 
-  this.retrieveLetter = function(letterID)
-  {
-    //this is the sloppy part, but hey, it works
-    var letter = this.board.retrieveLetter(letterID, this);
-    return letter;
-  };
+  // this.retrieveLetter = function(letterID)
+  // {
+  //   //this is the sloppy part, but hey, it works
+  //   var letter = board.retrieveLetter(letterID, this);
+  //   return letter;
+  // };
 
   //////////////////////////////////////////////////
 
@@ -83,12 +85,25 @@ module.exports = function Tray (board, playerNum)
     trayObject.empty();
     for(var i=0; i<this.letters.length; i++)
     {
-      var letterHtml = $(letterTemplate(this.letters[i]));
+      var letterHtml = $(letterTemplate(that.letters[i]));
+      var letID = letterHtml.attr('id');
       trayObject.append(letterHtml);
       letterHtml.draggable(
       {
         zIndex: 100,
         revert: 'invalid', // will revert when placed on invalid area
+        containment: '#game',
+        helper: function()
+        {
+          var clone = letterHtml.clone().attr('id', letID);
+          return clone;
+        },
+        start: function(event, ui) {
+          $(this).css('opacity', 0);
+        },
+        stop: function(event, ui) {
+          $(this).remove();
+        }
       });
     }
     trayObject.droppable(
@@ -101,7 +116,7 @@ module.exports = function Tray (board, playerNum)
           //set height to sit in middle of tray
         });
         var letterID = ui.helper[0].id;
-        var letter = that.retrieveLetter(letterID);
+        var letter = boardRef.retrieveLetter(letterID, that);
         that.add(letter);
       }
     });

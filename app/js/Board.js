@@ -4,6 +4,7 @@ var Letter         = require('./Letter');
 var squareTemplate = require('./templates/squareTemplate.hbs');
 var letterTemplate = require('./templates/letterTemplate.hbs');
 var grids          = require('./grids');
+
 var Board = function (gridChoice)
 {
   this.grid = [];
@@ -59,7 +60,7 @@ var Board = function (gridChoice)
 
 //////////////////////////////////////////////////
 
-Board.prototype.render = function ()
+Board.prototype.render = function (players)
 {
   $('#board').empty();
   var lettersOnBoard = [];
@@ -73,7 +74,7 @@ Board.prototype.render = function ()
     {
       var theSquare = this.grid[y][x];
       el += squareTemplate(theSquare);
-      if(theSquare.letter)
+      if(theSquare.letter && theSquare.letter.justPlaced)
       {
         ys.push(y);
         xs.push(x);
@@ -83,50 +84,74 @@ Board.prototype.render = function ()
     el += '</tr>';
     $('table').append(el);
   }
-  this.renderLetters(lettersOnBoard, ys, xs);
+  this.renderLetters(lettersOnBoard, ys, xs, players);
 };
 
 //////////////////////////////////////////////////
 
-Board.prototype.renderLetters = function (lettersOnBoard, ys, xs)
+Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
 {
-  var el = '';
+  var boardRef = this;
   while(lettersOnBoard.length>0)
   {
-    var theLetter = $(letterTemplate(lettersOnBoard.pop()));
+    (function(){
+      // var letterHtml = ;
+      var theLetter = $(letterTemplate(lettersOnBoard.pop()));
+      var letID = theLetter.attr('id');
+      var players = playerRef;
+      $('#board').append(theLetter);  // put the div in the board
+      // var that = this;
+      var y = ys.pop();
+      var x = xs.pop();
+      // var clone;
+      theLetter.position (  // move the div to the square
+      {
+        my: 'top left',
+        at: 'top left',
+        of: '#square-' + y + '-' + x //destination
+      });
 
-    $('#board').append(theLetter);  // put the div in the board
-
-    var y = ys.pop();
-    var x = xs.pop();
-
-    theLetter.position (  // move the div to the square
-    {
-      my: 'top left',
-      at: 'top left',
-      of: '#square-' + y + '-' + x //destination
-    });
-
-    theLetter.draggable( // this code is duplicated in tray
-    {
-      zIndex: 100,
-      revert: 'invalid'
-    });
+      theLetter.draggable( // this code is duplicated in tray
+      {
+        zIndex: 100,
+        revert: 'invalid',
+        containment: '#game',
+        helper: function()
+        {
+          var clone = theLetter.clone().attr('id', letID);
+          return clone;
+        },
+        start: function(event, ui)
+        {
+          $(this).css('opacity', 0);
+        },
+        stop: function(event, ui)
+        {
+          $(this).remove();
+          console.log('stop event');
+          boardRef.render();
+          console.dir(players);
+          boardRef.addListeners(players);
+        }
+      });
+    })();
   }
  };
 
 //////////////////////////////////////////////////
 
-Board.prototype.addListeners = function(players)
+Board.prototype.addListeners = function(playersRef)
 {
   var boardRef = this;
-
+  var players = playersRef;
   $('#board').find('td:not(.XX):not(.has-letter)').droppable(
   {
     drop: function (event, ui)
     {
       // get id of dropped letter
       var letterID = ui.helper[0].id;
+      boardRef.render(players);
+      boardRef.addListeners(players); //new !!!
       boardRef.addDropListener(this, letterID, players);
     },
 
@@ -147,6 +172,7 @@ Board.prototype.addListeners = function(players)
 Board.prototype.addDropListener = function(square, letterID, players)
 {
   var boardRef = this;
+
   // get the square object using the square div's id
   var dropSquare = this.getSquareObject (square.id);
   //search the player's tray and the board for the letter & take it
@@ -175,7 +201,7 @@ Board.prototype.addDropListener = function(square, letterID, players)
   }
   function rerender()
   {
-    boardRef.render ();  // redraw the board to stick the new letter to it visually
+    boardRef.render (players);  // redraw the board to stick the new letter to it visually
     boardRef.addListeners (players);
     for (var p = 0; p < players.length; p += 1)
     {
