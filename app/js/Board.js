@@ -217,6 +217,32 @@ Board.prototype.printGrid = function ()
     console.log (row);
   }
 };
+
+/////////////////////////////////////////////////
+
+// prints all the letters' justPlaced property on the board's grid[y][x] to console
+Board.prototype.printPlaced = function ()
+{
+  var x, y;
+  var row;
+
+  for (y = 0; y < this.maxY; y += 1)
+  {
+    row = '';
+
+    for (x = 0; x < this.maxX; x += 1)
+    {
+      if (this.grid[y][x].letter)
+        {
+        if (this.grid[y][x].letter.justPlaced === true) row += 'T';
+        else row += 'F';
+        }
+      else { row += '.'; }
+    }
+    console.log (row);
+  }
+};
+
 /////////////////////////////////////////////////
 //this can be given a tray OR the players array
 Board.prototype.retrieveLetter = function(letterID, input)
