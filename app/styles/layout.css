@@ -1,9 +1,17 @@
+
+
+
+
+
+
+
 #main {
    background-image:
     linear-gradient(#000033, #29293D);
     color: white;
     height: 43em;
-
+    display: flex; /* or inline-flex */
+    flex-direction: row | row-reverse | column | column-reverse;
 }
 header {
   width: 88%;
