@@ -1,12 +1,30 @@
-#main {
+body {
+  background-image:
+    linear-gradient(#000033, #29293D);
+}
+
+header {
+  border: 2px black;
+  text-align: center;
+}
+
+
+/*#main {
    background-image:
     linear-gradient(#000033, #29293D);
     color: white;
     height: 43em;
+    border: 2px solid black;
+    text-align: center;
+}
+
+header {
+border: 2px solid green;
+
 }
 
 .signin {
-  border: 2px solid white;
+  border: 2px solid black;
   height: 8em;
   width:33%;
   left: 33%;
@@ -27,3 +45,4 @@
   background: rgb(150, 200, 150);
   border: 1px solid black;
 }
+*/
