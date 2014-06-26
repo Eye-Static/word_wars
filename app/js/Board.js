@@ -94,16 +94,12 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
   var boardRef = this;
   while(lettersOnBoard.length>0)
   {
-    (function(){
-      // var letterHtml = ;
       var theLetter = $(letterTemplate(lettersOnBoard.pop()));
       var letID = theLetter.attr('id');
       var players = playerRef;
       $('#board').append(theLetter);  // put the div in the board
-      // var that = this;
       var y = ys.pop();
       var x = xs.pop();
-      // var clone;
       theLetter.position (  // move the div to the square
       {
         my: 'top left',
@@ -128,13 +124,10 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
         stop: function(event, ui)
         {
           $(this).remove();
-          console.log('stop event');
-          boardRef.render();
-          console.dir(players);
+          boardRef.render(players);
           boardRef.addListeners(players);
         }
       });
-    })();
   }
  };
 
