@@ -1,38 +1,8 @@
-/*<<<<<<< HEAD
-=======
-html, body, div, span, applet, object, iframe,h1,
-h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym,
-address, big, cite, code,del, dfn, em, img, ins, kbd, q, s,
-samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl,
-dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption,
-tbody, tfoot, thead, tr, th, td,article, aside, canvas, details,
-embed, figure, figcaption, footer, header, hgroup, menu, nav,
-output, ruby, section, summary,time, mark, audio, video
-{
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align:
-  baseline;
-}
-article, aside, details, figcaption, figureF,
-footer, header, hgroup, menu, nav, section
-{
-  display: block;
-}
-ol, ul
-{
-  list-style: none;
-}
 table
 {
   border-collapse: collapse;
   border-spacing: 0;
-
 }
-/*the above is CSS reset junk
 
 body
 {
@@ -44,80 +14,22 @@ body
   -ms-user-select: none;
 }
 
-#board
-{
-  background-color: rgb(0, 0, 0);
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-  width: 850px;
-  height: 450px;
-  overflow: scroll;/*if we remove this, dragging tile -> tray works again
-  z-index: 10;
-}
 td
 {
   width:  42px;
   height: 42px;
 }
-.square
-{
-  color: black;
-  width:  42px;
-  height: 42px;
-  font-family: arial;
-  font-weight: bold;
-  font-size: 12pt;
-  text-align: center;
-  border-style: solid;
-  border-width: 1px;
-  border-color: gray;
-  background-color: rgb(96, 96, 96);
-  z-index: 10;
-}
 
 .blank
 {
   color: rgb(224, 224, 224);
-  background-color: rgb(224, 224, 224);
 }
 
-.start
-{
-  background-color: rgb(255, 128, 128);
-}
-
-.DL
-{
-  background-color: rgb(128, 128, 255);
-}
-
-.TL
-{
-  background-color: rgb(64, 64, 255);
-}
-
-.DW
-{
-  background-color: rgb(255, 128, 128);
-}
-
-.TW
-{
-  background-color: rgb(255, 64, 64);
-}
-
-.XX
-{
-  background-color: rgb(0, 0, 0);
-  border-color: black;
-}
-
->>>>>>> master*/
 .letter
 {
   background-color: rgb(232, 148, 66);
-  border: 1px solid rgb(90, 60, 30);
+  border: 1px solid rgb(151, 84, 19);
+  color: black;
   font-family: arial;
   font-size: 18pt;
   width: 40px;
@@ -128,6 +40,7 @@ td
   float: left;
   user-select: none;
   padding: 0;
+  box-shadow: 2px 2px 0px rgb(151, 84, 19);
   z-index: 20;
 }
 
@@ -156,82 +69,23 @@ td
 
 .letter-score
 {
+  position: relative;
   font-size: 10pt;
-  left: 15px;
-  color: rgb(90, 60, 30);
+  left: 10px;
+  color: rgb(151, 84, 19);
   z-index: 20;
 }
-
-/*
-.tray
-{
-  background-color: white;
-  border: 2px solid gray;
-
 
 .tray
 {
   display: none;
-  border: solid 2px rgb(128, 128, 128);
-
+  border: solid 2px navy;
   border-radius: 5px;
+  background-color: #ADADFF;
   text-align: center;
-  width: 80%;
-  height: 10%;
-  z-index: 1000;
-  margin-top: 72%;
-  margin-left: 10%;
-}
-*/
-#player-0-tray {
-border: 2px solid navy;
-border-radius: 5px;
-background-color: #ADADFF;
-margin-top: 1%;
-margin-left: 4%;
-margin-right: 0;
-width: 45%;
-height: 4em;
-display: inline-block;
-box-shadow: 15px 15px 15px 9px #0A0A0F;
-}
+  box-shadow: 15px 15px 15px 9px #0A0A0F;
 
-#player-1-tray {
-border: 2px solid navy;
-border-radius: 5px;
-background-color: #ADADFF;
-margin-top: 1%;
-margin-right: 0;
-width: 45%;
-height: 4em;
-display: inline-block;
-box-shadow: 15px 15px 15px 9px #0A0A0F;
-}
 
-#test-1
-{
-  background-color: rgb(0, 255, 0);
-  color: blue;
-  font-family: arial;
-  font-size: 10pt;
-  text-align: center;
-  border: solid 1px black;
-  width: 60px;
-  height: 60px;
-  z-index: 1;
-}
-
-#score
-{
-  border: solid 1px gray;
-  border-radius: 5px;
-  font-family: arial;
-  font-size: 14pt;
-  color: blue;
-  padding: 10px;
-  margin: 10px;
-  line-height: 1.5;
-  width: 350px;
 }
 
 #letter-select
@@ -268,4 +122,8 @@ box-shadow: 15px 15px 15px 9px #0A0A0F;
 .letter-button
 {
   width: 25px;
+}
+.game-button
+{
+  display: none;
 }

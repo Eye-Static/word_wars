@@ -6,7 +6,7 @@ $(document).ready(function ()
 {
   var userName;
   var game;
-  game = new Game("scrabble", 2); //this is just for testing, in the final version
+  game = new Game('scrabble', 2); //this is just for testing, in the final version
                          //games are only started with the button
   var connection = new Connection();
 
@@ -17,7 +17,7 @@ $(document).ready(function ()
     userName  = $('#user-name').val();
     $('#user-name').empty();
     $('#login-box').text('Logged in as ' + userName);
-    connection.sendUserName(userName); //func from connect
+    connection.sendUserName(userName); //func from Connection.js
   });
 
   //////////////////////////////////////////////////
@@ -42,52 +42,9 @@ $(document).ready(function ()
 
   //////////////////////////////////////////////////
 
-  $('#game-lobby').on('click','.game-listing', function(e)
+  $('#game-lobby').on('click','.game-listing', function()
   {
     var gameID = $(this).context.id;
-    connection.joinGame(gameID);//parse e
+    connection.joinGame(gameID);
   });
-
-  //////////////////////////////////////////////////
-
-  $('#print-tray-button').click (function ()
-  {
-    for(var i = 0; i < game.players.length; i ++)
-    {
-      game.players[i].tray.print();
-    }
-  });
-
-  //////////////////////////////////////////////////
-
-  $('#shuffle-tray-button').click (function ()
-  {
-    game.players[0].tray.shuffle();
-    game.players[0].tray.render();
-    //game.board.render (game.players[game.turn]);
-    game.board.addListeners (game.players);
-  });
-
-  //////////////////////////////////////////////////
-
-  $('#print-grid-button').click (function ()
-  {
-    game.board.printGrid();
-  });
-
-  //////////////////////////////////////////////////
-
-  $('#done-button').on('click', function()
-  {
-    if (game.isLine() == null)
-    {
-      alert ("Letters must be placed in a straight line.");
-    } 
-    else 
-    {
-      game.finishTurn();
-      game.nextTurn();
-    }
-  })
-
 });

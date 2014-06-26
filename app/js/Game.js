@@ -2,19 +2,21 @@
 var Board  = require('./Board');
 var Bag    = require('./Bag');
 var Player = require('./Player');
+var dictionary = require('./dictionary');
+var GameButtons = require('./gameButtons');
 
 var Game = function (boardType, numOfPlayers)
 {
   console.log('starting new game with board type: ' + (boardType || 'not set'));
   console.log('and players: ' + (numOfPlayers || 'not set'));
 
+  new GameButtons(this);
   this.board = new Board(boardType);
   this.bag   = new Bag();
   this.turn  = {turnNum: 1, message: ''};
   this.players = [];
   this.whoseTurn = 0; // refers to which player in players array
                       // so 0 means the first player
-
   this.bag.fill();               // add letters to bag
   this.bag.shake();              // randomize bag
 
@@ -48,7 +50,6 @@ Game.prototype.finishTurn = function ()
   justFinishedPlayer.refillTiles(this.bag);
   if(this.bag.letters.length === 0)
   { //no more letters
-    console.log('No more letters in the bag, last turn');
     this.turn.message = 'LAST TURN';
   }
   justFinishedPlayer.tray.render();
@@ -71,11 +72,22 @@ Game.prototype.printGameStatus = function ()
   '\'s turn. Turn: ' + (this.turn.message || this.turn.turnNum));
 };
 
-Game.prototype.cleanGameSpace = function ()
+Game.prototype.checkWords = function()
 {
-  $('#player-1-tray').empty();
-  $('#player-2-tray').empty();
+  //input goes in as an array
+  dictionary.lookup(['tyler', 'is', 'a', 'mensch'], function(returnData){
+    console.dir(returnData);
+    //returnData comes out as an array of objects like the following:
+    //{word : 'the word', definition: 'definition' (or null if word not found)}
+    //returnData is in SAME order as input, woohoo!
+  });
 };
+
+// Game.prototype.cleanGameSpace = function ()
+// {
+//   $('#player-1-tray').empty();
+//   $('#player-2-tray').empty();
+// };
 
 //////////////////////////////////////////////////
 
@@ -95,37 +107,90 @@ Game.prototype.wordScore = function()
     this.board.grid[y][x].letter.justPlaced = false;  // clear the justPlaced flag
   }
 
-  console.log("Score: " + score);
+  console.log('Score: ' + score);
   return score;
+};
+
+//////////////////////////////////////////////////
+
+// check if the new word has valid placement (straight line and connected)
+Game.prototype.isValid = function ()
+{
+  // get an array of all the new letter coordinates
+  var newletters = this.getNewLetters();
+  var orientation = this.isLine (newletters);
+
+  console.log ("Orientation: " + orientation);
+
+  if (orientation == null) return false;  // not a line
+  else if (!this.isConnected (newletters, orientation)) return false;  // has a break
+  else return true;
 }
 
 //////////////////////////////////////////////////
 
+// take an array of grid coordinates for the new letters.
 // check if placed letters are in a straight line
 // returns "horizontal", "vertical", or null
-Game.prototype.isLine = function ()
+Game.prototype.isLine = function (newletters)
 {
- // get an array of all the new letter coordinates
-  var newletters = this.getNewLetters();
-  var l;
-
   // check x and y in the new array for straight lines
   var isHorizontal = true;
   var isVertical = true;
-  for (l = 1; l < newletters.length; l += 1)
+  for (var l = 1; l < newletters.length; l += 1)
   {
     if (newletters[l][0] != newletters[0][0])  // y coordinates do not match
     {
-      isVertical = false;
+      isHorizontal = false;
     }
     if (newletters[l][1] != newletters[0][1])  // x coordinates do not match
     {
-      isHorizontal = false;
+      isVertical = false;
     }
   }
-  if (isVertical == true) return "vertical";
-  else if (isHorizontal == true) return "horizontal";
+  if (isHorizontal == true) return "horizontal";
+  else if (isVertical == true) return "vertical";
   else return null;
+};
+
+//////////////////////////////////////////////////
+
+// take an array of grid coordinates for the new letters.
+// check if the new word has any broken spaces, and return false if it does
+Game.prototype.isConnected = function (newletters, orientation)
+{
+  var x, y;
+
+  if (orientation === "horizontal")
+  {
+    y = newletters[0][0];
+
+    // check every square from the left-most to right-most for letters
+    for (x = newletters[0][1]; x < newletters[newletters.length - 1][1]; x += 1)
+    {
+      if (this.board.grid[y][x].letter == null) return false;  // empty space
+    }
+  }
+  else  // vertical
+  {
+    x = newletters[0][1];
+
+    // check every square from the top-most to bottom-most for letters
+    for (y = newletters[0][0]; y < newletters[newletters.length - 1][0]; y += 1)
+    {
+      if (this.board.grid[y][x].letter == null) return false;  // empty space
+    }
+  }
+  return true;
+
+  // var x1, y1, x2, y2;  // the first and last letters in the word
+
+  // if (orientation === "horizontal"
+  // {
+  //   x1 = newletters[0][1];
+  //   y1 = newletters[0][0];
+  //   x2 = newletters[newletters
+  // }
 }
 
 //////////////////////////////////////////////////
@@ -140,24 +205,24 @@ Game.prototype.getNewLetters = function ()
   {
     for (var x = 0; x < this.board.grid[y].length; x += 1)
     {
-      if (this.board.grid[y][x].letter && this.board.grid[y][x].letter.justPlaced == true)
+      if (this.board.grid[y][x].letter && this.board.grid[y][x].letter.justPlaced === true)
       {
         newletters.push ([y, x]);
       }
     }
   }
   return newletters;
-}
+};
 
 //////////////////////////////////////////////////
 
-Game.prototype.renderScore = function (recentScore) 
+Game.prototype.renderScore = function (recentScore)
 {
-  $("#score").empty();
+  $('#score').empty();
 
-  for (var p = 0; p < this.players.length; p ++) 
+  for (var p = 0; p < this.players.length; p ++)
   {
-    $("#score").append("Player " + (p+1) + " Points: " + this.players[p].score + "<br>");
+    $('#score').append('Player ' + (p+1) + ' Points: ' + this.players[p].score + '<br>');
   }
   $('#score').append('Player ' + (this.whoseTurn+1) +
     ' just played a word for ' + recentScore + ' points!');
@@ -171,6 +236,6 @@ Game.prototype.clearGameArea = function (recentScore)
   {
     player.tray.hideTray();
   });
-}
+};
 
 module.exports = Game;

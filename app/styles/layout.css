@@ -1,11 +1,6 @@
 
-
-
-
-
-
-
-#main {
+#main
+{
    background-image:
     linear-gradient(#000033, #29293D);
     color: white;
@@ -13,7 +8,9 @@
     display: flex; /* or inline-flex */
     flex-direction: row | row-reverse | column | column-reverse;
 }
-header {
+
+header
+{
   width: 88%;
   height: 2.4em;
   text-align: center;
@@ -45,46 +42,53 @@ header {
 }
 
 #container {
-border: 10px solid  #666699;
-float: left;
-text-align: center;
-/*z-index: 999;*/
-overflow-y:hidden;overflow-x:scroll;
-box-shadow: 15px 15px 15px 9px #0A0A0F;
-width: 95%;
-margin-top: 2em;
+  border: 10px solid  #666699;
+  float: left;
+  text-align: center;
+  /*z-index: 999;*/
+  overflow-y:hidden;
+  overflow-x:scroll;
+  box-shadow: 15px 15px 15px 9px #0A0A0F;
+  width: 95%;
+  height:480px;
+  /*margin-top: 2em;*/
+  z-index: 10;
 }
 
-#tilebox {
+#tilebox
+{
   border: 2px solid white;
-  width: 40%;
-  height: 10em;
+  color: black;
+  width: 75%;
+  padding: 10px;
+  /*height: 10em;*/
   z-index: 400;
-  text-align: center;
-  margin-left: 30%;
+  /*text-align: center;*/
+  margin-left: 10%;
   background-color: #ADADFF;
   box-shadow: 15px 15px 15px 9px black;
-  line-height: 3;
+  line-height: 1.5;
   margin-bottom: .5em;
 }
 
-.scorebox {
-  border: 2px solid white;
-  width: 40%;
-  height: 11%;
-  margin-left: 30%;
+#score
+{
+  border: solid 2px white;
+  color: black;
+  width: 55%;
+  padding: 10px;
+  margin-left: 20%;
   margin-top: 7.5%;
-  margin-bottom: 15%;
-  text-align: left;
-  line-height: 2;
-  padding-top: 9px;
+  margin-bottom: 7.5%;
+  line-height: 1.5;
   background-color: #ADADFF;
   box-shadow: 15px 15px 15px 9px #0A0A0F;
-}
-#board-type {
-float: right;
+  line-height: 1.5;
 }
 
+#board-type {
+/*float: right;*/
+}
 
 td
 {
@@ -102,6 +106,7 @@ td
   font-size: 12pt;
   text-align: center;
   background-color: none;
+  z-index: 10;
 }
 
 .blank
@@ -137,6 +142,7 @@ td
 
 .XX
 {
+  color: black;
   background-color: rgb(0, 0, 0);
   border-color: black;
 }
