@@ -47,7 +47,4 @@ $(document).ready(function ()
     var gameID = $(this).context.id;
     connection.joinGame(gameID);
   });
-
-  //////////////////////////////////////////////////
-
 });

@@ -113,32 +113,85 @@ Game.prototype.wordScore = function()
 
 //////////////////////////////////////////////////
 
-// check if placed letters are in a straight line
-// returns 'horizontal', 'vertical', or null
-Game.prototype.isLine = function ()
+// check if the new word has valid placement (straight line and connected)
+Game.prototype.isValid = function ()
 {
- // get an array of all the new letter coordinates
+  // get an array of all the new letter coordinates
   var newletters = this.getNewLetters();
-  var l;
+  var orientation = this.isLine (newletters);
 
+  console.log ("Orientation: " + orientation);
+
+  if (orientation == null) return false;  // not a line
+  else if (!this.isConnected (newletters, orientation)) return false;  // has a break
+  else return true;
+}
+
+//////////////////////////////////////////////////
+
+// take an array of grid coordinates for the new letters.
+// check if placed letters are in a straight line
+// returns "horizontal", "vertical", or null
+Game.prototype.isLine = function (newletters)
+{
   // check x and y in the new array for straight lines
   var isHorizontal = true;
   var isVertical = true;
-  for (l = 1; l < newletters.length; l += 1)
+  for (var l = 1; l < newletters.length; l += 1)
   {
     if (newletters[l][0] != newletters[0][0])  // y coordinates do not match
     {
-      isVertical = false;
+      isHorizontal = false;
     }
     if (newletters[l][1] != newletters[0][1])  // x coordinates do not match
     {
-      isHorizontal = false;
+      isVertical = false;
     }
   }
-  if (isVertical === true) return 'vertical';
-  else if (isHorizontal === true) return 'horizontal';
+  if (isHorizontal == true) return "horizontal";
+  else if (isVertical == true) return "vertical";
   else return null;
 };
+
+//////////////////////////////////////////////////
+
+// take an array of grid coordinates for the new letters.
+// check if the new word has any broken spaces, and return false if it does
+Game.prototype.isConnected = function (newletters, orientation)
+{
+  var x, y;
+
+  if (orientation === "horizontal")
+  {
+    y = newletters[0][0];
+
+    // check every square from the left-most to right-most for letters
+    for (x = newletters[0][1]; x < newletters[newletters.length - 1][1]; x += 1)
+    {
+      if (this.board.grid[y][x].letter == null) return false;  // empty space
+    }
+  }
+  else  // vertical
+  {
+    x = newletters[0][1];
+
+    // check every square from the top-most to bottom-most for letters
+    for (y = newletters[0][0]; y < newletters[newletters.length - 1][0]; y += 1)
+    {
+      if (this.board.grid[y][x].letter == null) return false;  // empty space
+    }
+  }
+  return true;
+
+  // var x1, y1, x2, y2;  // the first and last letters in the word
+
+  // if (orientation === "horizontal"
+  // {
+  //   x1 = newletters[0][1];
+  //   y1 = newletters[0][0];
+  //   x2 = newletters[newletters
+  // }
+}
 
 //////////////////////////////////////////////////
 
