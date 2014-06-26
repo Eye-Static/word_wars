@@ -125,12 +125,12 @@ module.exports = function Tray (board, playerNum)
   this.shuffle = function ()
   {
     var temp;  // for storing a letter to do the swap
-    var y;     // the random letter
+    var j;     // the random letter
 
     for (var i = 0; i < this.letters.length; i += 1)
     {
       temp = this.letters[i];
-      y = Math.floor (Math.random() * this.letters.length);
+      j = Math.floor (Math.random() * this.letters.length);
       this.letters[i] = this.letters[j];
       this.letters[j] = temp;
     }
