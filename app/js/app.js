@@ -79,15 +79,14 @@ $(document).ready(function ()
 
   $('#done-button').on('click', function()
   {
-    if (game.isLine() == null)
-    {
-      alert ("Letters must be placed in a straight line.");
-    } 
-    else 
+    if (game.isValid())
     {
       game.finishTurn();
       game.nextTurn();
     }
+    else 
+    {
+      alert ("Words must be placed in a solid straight line.");
+    } 
   })
-
 });
