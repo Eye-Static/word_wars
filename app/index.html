@@ -4,6 +4,9 @@
   <title>Word Wars</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
     <link rel="stylesheet" type="text/css" href="./index.css">
     <link rel="stylesheet" type="text/css" href="./base.css">
     <link rel="stylesheet" type="text/css" href="./layout.css">
@@ -13,44 +16,51 @@
     <link rel="stylesheet" type="text/css" href="./state.css">
 </head>
 
-<body id = "main">
+<!--<body id = "main">-->
+<body>
   <div id = "left-column">
-    <header><h1 class="hello-world"></h1><strong>Word Wars</strong></h1></header>
-      <div id= "score"></div>
+    <header><h1 class="reflected"><strong>Word Wars!</strong></h1></header>
+      <p id= "score"></p>
         <div id = "tilebox">
-          <p>There are x number of tiles left</p>
+          <p id="tilecount">There are x number of tiles left</p>
+
+        <!--
         <div id = "login-box">
           Username <input type = "text" id = "user-name">
           <input type = "button" value = "Log in" id = "login-button">
 
-        </div>
-            Board type:
-      <select id="board-type">
-        <option value="scrabble" selected>Scrabble</option>
-        <option value="wordsWithFriends">Words with Friends</option>
-        <option value="diamond" >Diamond</option>
-        <option value="donut" >Donut</option>
-      </select>
+        </div>-->
 
-    Game type:
-    <select id="game-type">
-        <option value="local 1">Practice game</option>
-        <option value="local 2" selected>2 Player local game</option>
-        <option value="local 3">3 Player local game</option>
-        <option value="local 4">4 Player local game</option>
-        <option value="network 2">2 Player network game</option>
-    </select>
+        <strong>Board type:</strong>
+          <select>
+            <option value="scrabble" selected>Scrabble</option>
+            <option value="wordsWithFriends">Words with Friends</option>
+            <option value="diamond" >Diamond</option>
+            <option value="donut" >Donut</option>
+          </select>
+        <p></p>
+        <strong>Game type:</strong>
+          <select id="game-type">
+            <option value="local 1">Practice game</option>
+            <option value="local 2" selected>2 Player local game</option>
+            <option value="local 3">3 Player local game</option>
+            <option value="local 4">4 Player local game</option>
+            <option value="network 2">2 Player network game</option>
+          </select>
+            <p></p>
 
-      <input type = "button" value = "New Game" id = "new-game-button">
+            <input type = "button" id = "new-game-button" value = "New Game">
+
+
+      <!--
       <input type = "button" value = "Print Tray" id = "print-tray-button">
       <input type = "button" value = "Print Grid" id = "print-grid-button">
-
       <input type = "button" value = "Print Placed" id = "print-placed-button">
+      -->
 
-
-      <div id = "game-info"></div>
+      <!--<div id = "game-info"></div>
       <div id = "connection-info">Connection info: </div>
-     <div id = "game-lobby">Game Lobby: </div>
+     <div id = "game-lobby"><Game Lobby: </div>-->
     </div>
   </div>
 
@@ -67,7 +77,7 @@
       </section>
       <section>
         <ul>
-          <li><input type = "button" class = "blue-input game-button" id = "done-button" value = "Play Word"></li></li>
+          <li><input type = "button" class = "blue-input game-button" id = "done-button" value = "Play Word"></li>
           <li><input type = "button" class = "blue-input game-button" id = "shuffle-tray-button" value = "Shuffle Tray"></li>
           <li><input type = "button" class = "blue-input game-button" id = "return-letters-button" value = "Return Letters"></li>
           <li><div id = "whose-turn"></div></li>
@@ -111,6 +121,7 @@
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
     <script src = "app.js"></script>
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 </body>
 </html>
 
