@@ -45,7 +45,6 @@ module.exports = function Tray (boardRef, playerNum)
   };
 
   //////////////////////////////////////////////////
-
   // remove one letter from the tray by id
   this.remove = function (id)
   {
@@ -92,35 +91,36 @@ module.exports = function Tray (boardRef, playerNum)
       letterHtml.draggable(
       {
         zIndex: 100,
-        revert: 'invalid', // will revert when placed on invalid area
+        revert: 'invalid',
         containment: 'body',
-        // helper: function()
-        // {
-        //   var clone = letterHtml.clone().attr('id', letID);
-        //   return clone;
-        // },
-        // start: function(event, ui) {
-        //   $(this).css('opacity', 0);
-        // },
-        // stop: function(event, ui) {
-        //   $(this).remove();
-        // }
+        scope: 'tray'
       });
     }
     trayObject.droppable(
     {
       drop: function (event, ui)
       {
+        event.preventDefault();
+        console.log('dropped');
+        var letterID = ui.helper[0].id;
         $('.ui-draggable-dragging').offset(
         {
           top: $(this).offset().top +12,
           //set height to sit in middle of tray
         });
-        var letterID = ui.helper[0].id;
         var letter = boardRef.retrieveLetter(letterID, that);
         that.add(letter);
-      }
-    });
+      },
+      scope: 'tray',
+      over: function(event, ui){
+        $( '.letter' ).draggable('option', 'scope', 'tray');
+      },
+      out: function(event, ui){
+       $( '.letter' ).draggable('option', 'scope', 'board');
+     },
+     greedy: true,
+     tolerance: 'touch'
+   });
   };
 
   //////////////////////////////////////////////////

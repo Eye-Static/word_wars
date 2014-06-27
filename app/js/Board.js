@@ -63,6 +63,7 @@ var Board = function (gridChoice)
 Board.prototype.render = function (players)
 {
   $('#board').empty();
+
   var lettersOnBoard = [];
   var ys = [];
   var xs = [];
@@ -91,6 +92,7 @@ Board.prototype.render = function (players)
 
 Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
 {
+
   var boardRef = this;
   while(lettersOnBoard.length>0)
   {
@@ -128,7 +130,8 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
             $(this).remove();
             boardRef.render(players);
             boardRef.addListeners(players);
-          }
+          },
+          scope: 'board'
         });
       })();
     }
@@ -140,7 +143,18 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
 Board.prototype.addListeners = function(playersRef)
 {
   var boardRef = this;
-  var players = playersRef; //!!!
+  var players = playersRef;
+  // $('#board').on('mouseover', function()
+  // {
+  //   console.log('mouseover board');
+  //   $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'board');
+  // });
+  // $('.tray').on('mouseover', function()
+  // {
+  //   console.log('mouseover tray');
+  //   $( '.ui-draggable-dragging'  ).draggable('option', 'scope', 'tray');
+  // });
+
   $('#board').find('td:not(.XX):not(.has-letter)').droppable(
   {
     drop: function (event, ui)
@@ -160,7 +174,9 @@ Board.prototype.addListeners = function(playersRef)
     out: function (event, ui)
     {
       $(this).css('box-shadow', 'none');
-    }
+    },
+    scope: 'board',
+    greedy: true
 
   });
 };
