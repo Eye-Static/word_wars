@@ -38,6 +38,7 @@ Game.prototype.start = function()
   this.printGameStatus();
   this.players[0].tray.showTray();
   this.renderScore();
+  this.board.printBonus();
 };
 
 Game.prototype.finishTurn = function ()
@@ -85,21 +86,69 @@ Game.prototype.wordScore = function()
   var letterMultiplyer
   var wordMultiplyer = 1;
   var wordPoints = 0;
+  var firstLetter, lastLetter;
+
+  var orientation = validator.isLine (newletters);
+  if (orientation === "horizontal")
+  {
+    firstLetter = validator.findFirstHorizontal (newletters[0]);
+    lastLetter  = validator.findLastHorizontal  (newletters[0]);
+
+    y = firstLetter[0];
+    for (x = firstLetter[1]; x <= lastLetter[1]; x += 1)
+    {
+      letterMultiplyer = 1;
+
+      if (this.board.grid[y][x].letter.justPlaced === true)
+      {
+             if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
+        else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
+        else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
+        else if (this.board.grid[y][x].bonus === '*')  wordMultiplyer += 1;
+        else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
+      }
+
+      wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
+    }
+  }
+
+  else  // vertical
+  {
+    firstLetter = validator.findFirstVertical (newletters[0]);
+    lastLetter  = validator.findLastVertical  (newletters[0]);
+
+    x = firstLetter[1];
+    for (y = firstLetter[0]; y <= lastLetter[0]; y += 1)
+    {
+      letterMultiplyer = 1;
+
+      if (this.board.grid[y][x].letter.justPlaced === true)
+      {
+             if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
+        else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
+        else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
+        else if (this.board.grid[y][x].bonus === '*')  wordMultiplyer += 1;
+        else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
+      }
+
+      wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
+    }
+  }
 
   for (l = 0; l < newletters.length; l += 1)
   {
-    y = newletters[l][0];
-    x = newletters[l][1];
-    letterMultiplyer = 1;
+     y = newletters[l][0];
+     x = newletters[l][1];
+  //   letterMultiplyer = 1;
 
-         if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
-    else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
-    else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
-    else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
+  //        if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
+  //   else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
+  //   else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
+  //   else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
 
-    wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
-    this.board.grid[y][x].letter.justPlaced = false;  // clear the justPlaced flag
-  }
+  //   wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
+     this.board.grid[y][x].letter.justPlaced = false;  // clear the justPlaced flag
+   }
   score += (wordPoints * wordMultiplyer);
 
   console.log('Score: ' + score);

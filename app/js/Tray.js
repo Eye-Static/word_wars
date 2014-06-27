@@ -92,8 +92,8 @@ module.exports = function Tray (boardRef, playerNum)
       {
         zIndex: 100,
         revert: 'invalid',
-        containment: 'body',
-        scope: 'tray'
+        containment: 'body'//,
+        //scope: 'tray'
       });
     }
     trayObject.droppable(
@@ -111,13 +111,13 @@ module.exports = function Tray (boardRef, playerNum)
         var letter = boardRef.retrieveLetter(letterID, that);
         that.add(letter);
       },
-      scope: 'tray',
-      over: function(event, ui){
-        $( '.letter' ).draggable('option', 'scope', 'tray');
-      },
-      out: function(event, ui){
-       $( '.letter' ).draggable('option', 'scope', 'board');
-     },
+      // scope: 'tray',
+      // over: function(event, ui){
+      //   $( '.letter' ).draggable('option', 'scope', 'tray');
+      // },
+      // out: function(event, ui){
+      //  $( '.letter' ).draggable('option', 'scope', 'board');
+      // },
      greedy: true,
      tolerance: 'touch'
    });

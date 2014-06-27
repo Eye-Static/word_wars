@@ -131,7 +131,7 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
             boardRef.render(players);
             boardRef.addListeners(players);
           },
-          scope: 'board'
+          //scope: 'board'
         });
       })();
     }
@@ -175,7 +175,7 @@ Board.prototype.addListeners = function(playersRef)
     {
       $(this).css('box-shadow', 'none');
     },
-    scope: 'board',
+    //scope: 'board',
     greedy: true
 
   });
@@ -277,6 +277,26 @@ Board.prototype.printPlaced = function ()
         else row += 'F';
       }
       else { row += '.'; }
+    }
+    console.log (row);
+  }
+};
+
+/////////////////////////////////////////////////
+
+// prints all the letters' justPlaced property on the board's grid[y][x] to console
+Board.prototype.printBonus = function ()
+{
+  var x, y;
+  var row;
+
+  for (y = 0; y < this.maxY; y += 1)
+  {
+    row = '';
+
+    for (x = 0; x < this.maxX; x += 1)
+    {
+      row += this.grid[y][x].bonus;
     }
     console.log (row);
   }
