@@ -95,21 +95,20 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
   var boardRef = this;
   while(lettersOnBoard.length>0)
   {
-    var letterOnBoard = lettersOnBoard.pop();
-    var theLetter = $(letterTemplate(letterOnBoard));
-    $('#board').append(theLetter);  // put the div in the board
-    theLetter.position (  // move the div to the square
-    {
-      my: 'top left',
-      at: 'top left',
-      of: '#square-' + ys.pop() + '-' + xs.pop() //destination
-    });
-
-    if(letterOnBoard.justPlaced)
-    {
-      (function(){
-        var letID = theLetter.attr('id');
-        var players = playerRef;
+    (function(){
+      var letterOnBoard = lettersOnBoard.pop();
+      var theLetter = $(letterTemplate(letterOnBoard));
+      $('#board').append(theLetter);  // put the div in the board
+      theLetter.position (  // move the div to the square
+      {
+        my: 'top left',
+        at: 'top left',
+        of: '#square-' + ys.pop() + '-' + xs.pop() //destination
+      });
+      var letID = theLetter.attr('id');
+      var players = playerRef;
+      if(letterOnBoard.justPlaced)
+      {
         theLetter.draggable( // this code is duplicated in tray
         {
           zIndex: 100,
@@ -130,18 +129,18 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
             boardRef.render(players);
             boardRef.addListeners(players);
           },
-          //scope: 'board'
         });
-      })();
-    }
-    if(letterOnBoard.definition)
-    {
-      theLetter.tooltip({
-        show: { effect: 'fade', duration: 0 },
-        hide: { effect: 'fade', duration: 0 },
-      content: 'content'//letterOnBoard.definition
-    });
-    }
+      }
+      if(lettersOnBoard.definition)
+      {
+        theLetter.tooltip(
+        {
+          show: { effect: 'fade', duration: 0 },
+          hide: { effect: 'fade', duration: 0 },
+          content: 'content'//letterOnBoard.definition
+        });
+      }
+    })();
   }
 };
 
@@ -189,7 +188,7 @@ Board.prototype.addListeners = function(playersRef)
     {
       $(this).css('box-shadow', 'none');
     },
-    //scope: 'board',
+    // scope: 'board',
     greedy: true
   });
   };

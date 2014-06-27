@@ -135,21 +135,14 @@ Game.prototype.wordScore = function()
     }
   }
 
+  score += (wordPoints * wordMultiplyer);
+
   for (l = 0; l < newletters.length; l += 1)
   {
      y = newletters[l][0];
      x = newletters[l][1];
-  //   letterMultiplyer = 1;
-
-  //        if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
-  //   else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
-  //   else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
-  //   else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
-
-  //   wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
      this.board.grid[y][x].letter.justPlaced = false;  // clear the justPlaced flag
    }
-  score += (wordPoints * wordMultiplyer);
 
   console.log('Score: ' + score);
   return score;
