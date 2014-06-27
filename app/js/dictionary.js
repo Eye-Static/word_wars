@@ -1,13 +1,13 @@
 var key = 'd2d65dc2900f714cfa1e3670e3400bb6bd38c0f4e9f9cb374';
 var dictionary = {};
-var results = [];
+dictionary.results = [];
 
 dictionary.lookup = function(wordList, callback)
 {
-  if(wordList.length === 0){return callback(results);}
+  if(wordList.length === 0){return callback(dictionary.results);}
   this.lookupOne(wordList[0], function(data)
   {
-    results.push(data);
+    dictionary.results.push(data);
     dictionary.lookup(wordList.slice(1), callback);
   });
 };
