@@ -137,7 +137,6 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
         {
           show: { effect: 'fade', duration: 0 },
           hide: { effect: 'fade', duration: 0 },
-          content: 'content'//letterOnBoard.definition
         });
       }
     })();
