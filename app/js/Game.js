@@ -81,7 +81,7 @@ Game.prototype.wordScore = function()
 {
   // get an array of all the new letter coordinates
   var newletters = validator.getNewLetters();
-  var score = 0;
+  var score = 0, wordScore = 0;
   var y, x, l;
   var letterMultiplyer;
   var wordMultiplyer = 1;
@@ -89,53 +89,23 @@ Game.prototype.wordScore = function()
   var firstLetter, lastLetter;
 
   var orientation = validator.isLine (newletters);
+
   if (orientation === "horizontal")
   {
-    firstLetter = validator.findFirstHorizontal (newletters[0]);
-    lastLetter  = validator.findLastHorizontal  (newletters[0]);
+    score += this.scoreWordHorizontal (newletters[0]);
 
-    y = firstLetter[0];
-    for (x = firstLetter[1]; x <= lastLetter[1]; x += 1)
+    if (validator.findWordVertical (newletters[0]).length > 1)
     {
-      letterMultiplyer = 1;
-
-      if (this.board.grid[y][x].letter.justPlaced === true)
-      {
-             if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
-        else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
-        else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
-        else if (this.board.grid[y][x].bonus === '*')  wordMultiplyer += 1;
-        else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
-      }
-
-      wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
+      score += this.scoreWordVertical (newletters[0]);
     }
   }
 
   else  // vertical
   {
-    firstLetter = validator.findFirstVertical (newletters[0]);
-    lastLetter  = validator.findLastVertical  (newletters[0]);
-
-    x = firstLetter[1];
-    for (y = firstLetter[0]; y <= lastLetter[0]; y += 1)
-    {
-      letterMultiplyer = 1;
-
-      if (this.board.grid[y][x].letter.justPlaced === true)
-      {
-             if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
-        else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
-        else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
-        else if (this.board.grid[y][x].bonus === '*')  wordMultiplyer += 1;
-        else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
-      }
-
-      wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
-    }
+    score += this.scoreWordVertical (newletters[0]);
   }
 
-  score += (wordPoints * wordMultiplyer);
+  //score += (wordPoints * wordMultiplyer);
 
   for (l = 0; l < newletters.length; l += 1)
   {
@@ -176,7 +146,38 @@ Game.prototype.scoreWordHorizontal = function (gridyx)
 
     wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
   }
-  return wordPoints;
+  return wordPoints * wordMultiplyer;
+};
+
+//////////////////////////////////////////////////
+
+Game.prototype.scoreWordVertical = function (gridyx)
+{
+  var y, x;
+  var letterMultiplyer;
+  var wordMultiplyer = 1;
+  var wordPoints = 0;
+
+  var firstLetter = validator.findFirstVertical (gridyx);
+  var lastLetter  = validator.findLastVertical  (gridyx);
+
+  x = firstLetter[1];
+  for (y = firstLetter[0]; y <= lastLetter[0]; y += 1)
+  {
+    letterMultiplyer = 1;
+
+    if (this.board.grid[y][x].letter.justPlaced === true)
+    {
+           if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
+      else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
+      else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
+      else if (this.board.grid[y][x].bonus === '*')  wordMultiplyer += 1;
+      else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
+    }
+
+    wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
+  }
+  return wordPoints * wordMultiplyer;
 };
 
 //////////////////////////////////////////////////
