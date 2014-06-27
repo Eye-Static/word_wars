@@ -86,7 +86,7 @@ module.exports = function Tray (boardRef, playerNum)
         zIndex: 100,
         revert: 'invalid',
         containment: 'body',
-        scope: 'tray'
+        // scope: 'tray'
       });
     }
     trayObject.droppable(
@@ -104,12 +104,12 @@ module.exports = function Tray (boardRef, playerNum)
         var letter = boardRef.retrieveLetter(letterID, that);
         that.add(letter);
       },
-      scope: 'tray',
+     //  scope: 'tray',
      //  over: function(event, ui){
      //    $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'tray');
      //  },
      //  out: function(event, ui){
-     //   $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'board');
+     //    $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'default');
      // },
      greedy: true,
      tolerance: 'touch'
