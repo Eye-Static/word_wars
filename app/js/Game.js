@@ -25,7 +25,7 @@ var Game = function (boardType, numOfPlayers)
     this.players[i] = new Player(this.board, i);//pass board & the player number
     this.players[i].refillTiles (this.bag);
   }
-
+  this.postNumTiles();
   this.board.render(); // tray is passed for binding reasons
   this.board.addListeners(this.players); //now this must be called manually
   this.start();
@@ -48,11 +48,10 @@ Game.prototype.finishTurn = function ()
   this.renderScore(recentScore);
 
   justFinishedPlayer.refillTiles(this.bag);
-  if(this.bag.letters.length === 0)
-  { //no more letters
-    this.turn.message = 'LAST TURN';
-  }
+  this.postNumTiles();
   justFinishedPlayer.tray.render();
+  this.board.render(this.players);
+  this.board.addListeners(this.players);
 };
 
 Game.prototype.nextTurn = function()
@@ -95,6 +94,25 @@ Game.prototype.wordScore = function()
 };
 
 //////////////////////////////////////////////////
+Game.prototype.postNumTiles = function ()
+{
+  var numTiles = this.bag.letters.length;
+  var tilesMessage = '';
+  if (numTiles > 1)
+  {
+    tilesMessage = 'There are ' + numTiles + ' tiles left';
+  } else if (numTiles === 1 ){
+    tilesMessage = 'There is 1 tile left';
+  } else {
+    tilesMessage = 'There are no tiles left!';
+  }
+  $('#tilenums').text(tilesMessage);
+
+  if(numTiles === 0)
+  {
+    this.turn.message = 'LAST TURN';
+  }
+};
 
 Game.prototype.renderScore = function (recentScore)
 {
@@ -104,8 +122,11 @@ Game.prototype.renderScore = function (recentScore)
   {
     $('#score').append('Player ' + (p+1) + ' Points: ' + this.players[p].score + '<br>');
   }
+  if(recentScore)
+  {
   $('#score').append('Player ' + (this.whoseTurn+1) +
     ' just played a word for ' + recentScore + ' points!');
+  }
 };
 
 Game.prototype.clearGameArea = function (recentScore)

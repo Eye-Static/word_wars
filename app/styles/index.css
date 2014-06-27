@@ -84,29 +84,10 @@ td
   border-radius: 5px;
   background-color: #ADADFF;
   text-align: center;
-  width: 300px;
-  height: 42px;  /*4em;*/
-  z-index: 1000;
-  margin-top: 6%;
-  margin-left: 10%;
-  display: inline-block;
   box-shadow: 15px 15px 15px 9px #0A0A0F;
-  padding: 5px;
-}
 
-/*
-#player-1-tray {
-border: 2px solid navy;
-border-radius: 5px;
-background-color: #ADADFF;
-margin-top: 1%;
-margin-right: 0;
-width: 45%;
-height: 4em;
-display: inline-block;
-box-shadow: 15px 15px 15px 9px #0A0A0F;
+
 }
-*/
 
 #letter-select
 {
