@@ -85,6 +85,7 @@ module.exports = function Tray (boardRef, playerNum)
     trayObject.empty();
     for(var i=0; i<this.letters.length; i++)
     {
+
       var letterHtml = $(letterTemplate(that.letters[i]));
       var letID = letterHtml.attr('id');
       trayObject.append(letterHtml);
@@ -93,17 +94,17 @@ module.exports = function Tray (boardRef, playerNum)
         zIndex: 100,
         revert: 'invalid', // will revert when placed on invalid area
         containment: 'body',
-        helper: function()
-        {
-          var clone = letterHtml.clone().attr('id', letID);
-          return clone;
-        },
-        start: function(event, ui) {
-          $(this).css('opacity', 0);
-        },
-        stop: function(event, ui) {
-          $(this).remove();
-        }
+        // helper: function()
+        // {
+        //   var clone = letterHtml.clone().attr('id', letID);
+        //   return clone;
+        // },
+        // start: function(event, ui) {
+        //   $(this).css('opacity', 0);
+        // },
+        // stop: function(event, ui) {
+        //   $(this).remove();
+        // }
       });
     }
     trayObject.droppable(

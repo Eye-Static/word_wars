@@ -94,6 +94,7 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
   var boardRef = this;
   while(lettersOnBoard.length>0)
   {
+    (function(){
       var theLetter = $(letterTemplate(lettersOnBoard.pop()));
       var letID = theLetter.attr('id');
       var players = playerRef; // !!!
@@ -128,6 +129,7 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
           boardRef.addListeners(players);
         }
       });
+    })();
   }
  };
 
