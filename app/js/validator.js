@@ -17,16 +17,16 @@ validator.isValid = function (gameRef)
   console.log ('Orientation: ' + orientation);
 
   // check for no letters being played (turn skip)
-  if (newletters.length == 0) return true;
+  if (newletters.length ===0) return true;
 
   // check for star
-  else if (game.turn.turnNum == 1 && !this.onStar (newletters))
+  else if (game.turn.turnNum ===1 && !this.onStar (newletters))
   {
     alert ('The first word must be placed on the STAR tile.');
     return false;
   }
   // check for lines
-  else if (orientation == null)
+  else if (orientation ===null)
   {
     alert ('Words must be placed in a straight lines.');
     return false;
@@ -59,7 +59,7 @@ validator.isValid = function (gameRef)
 
     gibberish = false;
 
-    for (w = 0; w < returnData.length; w += 1)
+    for (var w = 0; w < returnData.length; w += 1)
     {
       if (returnData[w].definition === null)
       {
@@ -69,16 +69,22 @@ validator.isValid = function (gameRef)
     }
     if (gibberish === false)
     {
-      for (var w = 0; w < returnData.length; w += 1)
+      $('#spelled-word').empty();
+      for (w = 0; w < returnData.length; w += 1)
       {
-        console.log ('Word: ' + returnData[w].word + ' - ' + returnData[w].definition);
+        $('#spelled-word').append('<span>'+returnData[w].word.toUpperCase() + ' - ' + returnData[w].definition+'</span>');
       }
-
-      game.finishTurn();
-      game.nextTurn();
+      $('#spelled-word').fadeIn('slow');
+      $('body').on('click', function()
+      {
+        $('#spelled-word').fadeOut('slow');
+        $('body').off();
+        game.finishTurn();
+        game.nextTurn();
+      });
     }
   });
-}
+};
 
 //////////////////////////////////////////////////
 
@@ -115,7 +121,7 @@ validator.onStar = function (newletters)
     y = newletters[l][0];
     x = newletters[l][1];
 
-    if (game.board.grid[y][x].bonus == '*') return true;
+    if (game.board.grid[y][x].bonus ==='*') return true;
   }
   return false;
 };
@@ -163,11 +169,11 @@ validator.isLine = function (newletters)
   var isVertical = true;
   for (var l = 1; l < newletters.length; l += 1)
   {
-    if (newletters[l][0] != newletters[0][0])  // y coordinates do not match
+    if (newletters[l][0] !== newletters[0][0])  // y coordinates do not match
     {
       isHorizontal = false;
     }
-    if (newletters[l][1] != newletters[0][1])  // x coordinates do not match
+    if (newletters[l][1] !== newletters[0][1])  // x coordinates do not match
     {
       isVertical = false;
     }
@@ -191,17 +197,17 @@ validator.isTouching = function (newletters)
     y = newletters[l][0];
     x = newletters[l][1];
 
-    if (x > 0 && game.board.grid[y][x - 1].letter != null
-        && game.board.grid[y][x - 1].letter.justPlaced == false) return true;
+    if (x > 0 && game.board.grid[y][x - 1].letter !== null
+        && game.board.grid[y][x - 1].letter.justPlaced ===false) return true;
 
-    else if (x < game.board.maxX - 1 && game.board.grid[y][x + 1].letter != null
-        && game.board.grid[y][x + 1].letter.justPlaced == false) return true;
+    else if (x < game.board.maxX - 1 && game.board.grid[y][x + 1].letter !== null
+        && game.board.grid[y][x + 1].letter.justPlaced ===false) return true;
 
-    else if (y > 0 && game.board.grid[y - 1][x].letter != null
-        && game.board.grid[y - 1][x].letter.justPlaced == false) return true;
+    else if (y > 0 && game.board.grid[y - 1][x].letter !== null
+        && game.board.grid[y - 1][x].letter.justPlaced ===false) return true;
 
-    else if (y < 0 && game.board.grid[y + 1][x].letter != null
-        && game.board.grid[y + 1][x].letter.justPlaced == false) return true;
+    else if (y < 0 && game.board.grid[y + 1][x].letter !== null
+        && game.board.grid[y + 1][x].letter.justPlaced ===false) return true;
   }
   return false;
 };
@@ -212,12 +218,12 @@ validator.isTouching = function (newletters)
 // create a string for each new word spelled and return them in an array.
 validator.spellWords = function (newletters, orientation)
 {
-  var firstLetter, lastLetter, x, y;
+  var x, y;
   var word = '';
   var wordArray = [];
   var l;
 
-  if (orientation == "horizontal")
+  if (orientation === 'horizontal')
   {
     wordArray.push (this.findWordHorizontal (newletters[0]));
 
@@ -253,12 +259,12 @@ validator.findWordHorizontal = function (gridyx)
   var firstLetter = this.findFirstHorizontal (gridyx);
   var lastLetter =  this.findLastHorizontal  (gridyx);
   var y = firstLetter[0];
-  
+
   for (var x = firstLetter[1]; x <= lastLetter[1]; x += 1)
    {
    word = word.concat(game.board.grid[y][x].letter.character);
    }
-  return word.toLowerCase();  
+  return word.toLowerCase();
 };
 
 //////////////////////////////////////////////////
@@ -271,12 +277,12 @@ validator.findWordVertical = function (gridyx)
   var firstLetter = this.findFirstVertical (gridyx);
   var lastLetter =  this.findLastVertical  (gridyx);
   var x = firstLetter[1];
-  
+
   for (var y = firstLetter[0]; y <= lastLetter[0]; y += 1)
    {
    word = word.concat(game.board.grid[y][x].letter.character);
    }
-  return word.toLowerCase();  
+  return word.toLowerCase();
 };
 
 //////////////////////////////////////////////////
@@ -288,11 +294,11 @@ validator.findFirstHorizontal = function (gridyx)
 {
   var x = gridyx[1];
   var y = gridyx[0];
-  
+
   while (x > 0 && game.board.grid[y][x].letter !== null)
   {
     x --;
-  } 
+  }
   return [y, x + 1];
 };
 
@@ -305,13 +311,13 @@ validator.findLastHorizontal = function (gridyx)
 {
   var x = gridyx[1];
   var y = gridyx[0];
-  
+
   while (x < game.board.maxX && game.board.grid[y][x].letter !== null)
   {
     x ++;
-  } 
+  }
   return [y, x - 1];
-}
+};
 
 //////////////////////////////////////////////////
 
@@ -322,13 +328,13 @@ validator.findFirstVertical = function (gridyx)
 {
   var x = gridyx[1];
   var y = gridyx[0];
-  
+
   while (y > 0 && game.board.grid[y][x].letter !== null)
   {
     y --;
-  } 
+  }
   return [y + 1, x];
-}
+};
 
 //////////////////////////////////////////////////
 
@@ -339,12 +345,12 @@ validator.findLastVertical = function (gridyx)
 {
   var x = gridyx[1];
   var y = gridyx[0];
-  
+
   while (y < game.board.maxY && game.board.grid[y][x].letter !== null)
   {
     y ++;
-  } 
+  }
   return [y - 1, x];
-}
+};
 
 module.exports = validator;
