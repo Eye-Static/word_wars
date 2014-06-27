@@ -4,10 +4,18 @@ table
   border-spacing: 0;
 }
 
+#game {
+  width:
+}
+
 body
 {
   line-height: 1;
   cursor: default;
+     background-image:
+    linear-gradient(#000033, #29293D);
+    color: white;
+    /*height: 50em;*/
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -16,8 +24,8 @@ body
 
 td
 {
-  width:  42px;
-  height: 42px;
+  width:  52px;
+  height: 52px;
 }
 
 .blank
@@ -84,10 +92,7 @@ td
   border-radius: 5px;
   background-color: #ADADFF;
   text-align: center;
-  box-shadow: 15px 15px 15px 9px #0A0A0F;
-
-
-}
+  }
 
 #letter-select
 {
