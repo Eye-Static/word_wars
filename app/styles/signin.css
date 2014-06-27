@@ -9,7 +9,7 @@ header {
 }
 
 
-/*#main {
+#main {
    background-image:
     linear-gradient(#000033, #29293D);
     color: white;
@@ -45,4 +45,4 @@ border: 2px solid green;
   background: rgb(150, 200, 150);
   border: 1px solid black;
 }
-*/
+
