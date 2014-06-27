@@ -347,12 +347,4 @@ validator.findLastVertical = function (gridyx)
   return [y - 1, x];
 }
 
-/////////////////////////////////////////////////
-
-// validator.checkWords = function(spelledWords)
-// {
-//   //input goes in as an array
-//   return
-// };
-
 module.exports = validator;
