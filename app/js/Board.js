@@ -74,7 +74,7 @@ Board.prototype.render = function (players)
     {
       var theSquare = this.grid[y][x];
       el += squareTemplate(theSquare);
-      if(theSquare.letter && theSquare.letter.justPlaced)
+      if(theSquare.letter)
       {
         ys.push(y);
         xs.push(x);
@@ -94,44 +94,46 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
   var boardRef = this;
   while(lettersOnBoard.length>0)
   {
-    (function(){
-      var theLetter = $(letterTemplate(lettersOnBoard.pop()));
-      var letID = theLetter.attr('id');
-      var players = playerRef; // !!!
-      $('#board').append(theLetter);  // put the div in the board
-      var y = ys.pop();
-      var x = xs.pop();
-      theLetter.position (  // move the div to the square
-      {
-        my: 'top left',
-        at: 'top left',
-        of: '#square-' + y + '-' + x //destination
-      });
+    var letterOnBoard = lettersOnBoard.pop();
+    var theLetter = $(letterTemplate(letterOnBoard));
+    $('#board').append(theLetter);  // put the div in the board
+    theLetter.position (  // move the div to the square
+    {
+      my: 'top left',
+      at: 'top left',
+      of: '#square-' + ys.pop() + '-' + xs.pop() //destination
+    });
 
-      theLetter.draggable( // this code is duplicated in tray
-      {
-        zIndex: 100,
-        revert: 'invalid',
-        containment: 'body',
-        helper: function()
+    if(letterOnBoard.justPlaced)
+    {
+      (function(){
+        var letID = theLetter.attr('id');
+        var players = playerRef;
+        theLetter.draggable( // this code is duplicated in tray
         {
-          var clone = theLetter.clone().attr('id', letID);
-          return clone;
-        },
-        start: function(event, ui)
-        {
-          $(this).css('opacity', 0);
-        },
-        stop: function(event, ui)
-        {
-          $(this).remove();
-          boardRef.render(players);
-          boardRef.addListeners(players);
-        }
-      });
-    })();
+          zIndex: 100,
+          revert: 'invalid',
+          containment: 'body',
+          helper: function()
+          {
+            var clone = theLetter.clone().attr('id', letID);
+            return clone;
+          },
+          start: function(event, ui)
+          {
+            $(this).css('opacity', 0);
+          },
+          stop: function(event, ui)
+          {
+            $(this).remove();
+            boardRef.render(players);
+            boardRef.addListeners(players);
+          }
+        });
+      })();
+    }
   }
- };
+};
 
 //////////////////////////////////////////////////
 
@@ -254,10 +256,10 @@ Board.prototype.printPlaced = function ()
     for (x = 0; x < this.maxX; x += 1)
     {
       if (this.grid[y][x].letter)
-        {
+      {
         if (this.grid[y][x].letter.justPlaced === true) row += 'T';
         else row += 'F';
-        }
+      }
       else { row += '.'; }
     }
     console.log (row);
@@ -268,7 +270,7 @@ Board.prototype.printPlaced = function ()
 //this can be given a tray OR the players array
 Board.prototype.retrieveLetter = function(letterID, input)
 {
-    var letter;
+  var letter;
     if(Array.isArray(input)) //players array, search ALL THE TRAYS!
     {
       for(var i = 0; i < input.length; i ++)
@@ -291,7 +293,7 @@ Board.prototype.retrieveLetter = function(letterID, input)
     //if tray didn't have the letter, find/remove letter from board
     letter = this.retrieveBoardLetter(letterID);
     return letter;
-};
+  };
 
 /////////////////////////////////////////////////
 
@@ -303,10 +305,10 @@ Board.prototype.retrieveBoardLetter = function (letterID)
     for (x = 0; x < this.maxX; x += 1)
     {
       if (this.grid[y][x].letter && this.grid[y][x].letter.id === letterID)
-        {
-          console.log('letter', this.grid[y][x].letter.character, 'retrieved from x', x, 'y', y);
-          return this.removeLetter(y,x);
-        }
+      {
+        console.log('letter', this.grid[y][x].letter.character, 'retrieved from x', x, 'y', y);
+        return this.removeLetter(y,x);
+      }
     }
   }
 };
