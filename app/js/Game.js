@@ -103,7 +103,7 @@ Game.prototype.postNumTiles = function ()
     tilesMessage = 'There are ' + numTiles + ' tiles left';
   } else if (numTiles === 1 ){
     tilesMessage = 'There is 1 tile left';
-  } else {
+  } else{
     tilesMessage = 'There are no tiles left!';
   }
   $('#tilenums').text(tilesMessage);
