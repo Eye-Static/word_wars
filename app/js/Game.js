@@ -123,7 +123,7 @@ Game.prototype.renderScore = function (recentScore)
     $('#score').append('Player ' + (p+1) + ' Points: ' + this.players[p].score + '<br>');
   }
 
-  if(recentScore) {
+  if(recentScore)
 
   {
 
