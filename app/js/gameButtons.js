@@ -16,15 +16,7 @@ module.exports = function(game)
   $('#done-button').show();
   $('#done-button').on('click', function()
   {
-    if (validator.isValid(game))
-    {
-      game.finishTurn();
-      game.nextTurn();
-    }
-    // else
-    // {
-    //   alert ("Words must be placed in a solid straight line.");
-    // } 
+    validator.isValid(game);
   })
 
   //////////////////////////////////////////////////

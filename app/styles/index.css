@@ -37,12 +37,11 @@ td
 {
   background-color: rgb(232, 148, 66);
   border: 1px solid rgb(151, 84, 19);
-  color: black;
+  /*color: black;*/
   font-family: arial;
   font-size: 18pt;
   width: 40px;
   height: 40px;
-  font-weight: bold;
   border-radius: 5px;
   text-align: center;
   float: left;
@@ -73,6 +72,8 @@ td
   position: relative;
   top: 7px;
   z-index: 20;
+  color: black;
+  text-shadow: -1px -1px 0px rgb(151, 84, 19);
 }
 
 .letter-score

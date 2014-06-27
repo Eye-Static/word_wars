@@ -2,11 +2,12 @@
 var Letter = require('./Letter');
 var Bag = require('./Bag');
 var letterTemplate = require('./templates/letterTemplate.hbs');
+var board;
 
-module.exports = function Tray (board, playerNum)
+module.exports = function Tray (boardRef, playerNum)
 {
   this.letters = [];  // array of letter objects (max 7)
-  this.board = board;
+  // this.board = board;
   this.playerNum = playerNum;
   var trayObject = $('#player-' + playerNum + '-tray');
 
@@ -40,10 +41,10 @@ module.exports = function Tray (board, playerNum)
   this.add = function (letterObj)
   {
     this.letters.push(letterObj);
+    this.render();
   };
 
   //////////////////////////////////////////////////
-
   // remove one letter from the tray by id
   this.remove = function (id)
   {
@@ -53,14 +54,14 @@ module.exports = function Tray (board, playerNum)
     if (returnVal > 1) {console.error('ERROR: tray found', returnVal.length, 'letters with same id');}
     return returnVal[0];
   };
-  /////////////////////////////////////////////////
+  // /////////////////////////////////////////////////
 
-  this.retrieveLetter = function(letterID)
-  {
-    //this is the sloppy part, but hey, it works
-    var letter = this.board.retrieveLetter(letterID, this);
-    return letter;
-  };
+  // this.retrieveLetter = function(letterID)
+  // {
+  //   //this is the sloppy part, but hey, it works
+  //   var letter = board.retrieveLetter(letterID, this);
+  //   return letter;
+  // };
 
   //////////////////////////////////////////////////
 
@@ -83,28 +84,43 @@ module.exports = function Tray (board, playerNum)
     trayObject.empty();
     for(var i=0; i<this.letters.length; i++)
     {
-      var letterHtml = $(letterTemplate(this.letters[i]));
+
+      var letterHtml = $(letterTemplate(that.letters[i]));
+      var letID = letterHtml.attr('id');
       trayObject.append(letterHtml);
       letterHtml.draggable(
       {
         zIndex: 100,
-        revert: 'invalid', // will revert when placed on invalid area
+        revert: 'invalid',
+        containment: 'body',
+        scope: 'tray'
       });
     }
     trayObject.droppable(
     {
       drop: function (event, ui)
       {
+        event.preventDefault();
+        console.log('dropped');
+        var letterID = ui.helper[0].id;
         $('.ui-draggable-dragging').offset(
         {
           top: $(this).offset().top +12,
           //set height to sit in middle of tray
         });
-        var letterID = ui.helper[0].id;
-        var letter = that.retrieveLetter(letterID);
+        var letter = boardRef.retrieveLetter(letterID, that);
         that.add(letter);
-      }
-    });
+      },
+      scope: 'tray',
+      over: function(event, ui){
+        $( '.letter' ).draggable('option', 'scope', 'tray');
+      },
+      out: function(event, ui){
+       $( '.letter' ).draggable('option', 'scope', 'board');
+     },
+     greedy: true,
+     tolerance: 'touch'
+   });
   };
 
   //////////////////////////////////////////////////
