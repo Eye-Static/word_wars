@@ -96,7 +96,7 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
   {
       var theLetter = $(letterTemplate(lettersOnBoard.pop()));
       var letID = theLetter.attr('id');
-      var players = playerRef;
+      var players = playerRef; // !!!
       $('#board').append(theLetter);  // put the div in the board
       var y = ys.pop();
       var x = xs.pop();
@@ -111,7 +111,7 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
       {
         zIndex: 100,
         revert: 'invalid',
-        containment: '#game',
+        containment: 'body',
         helper: function()
         {
           var clone = theLetter.clone().attr('id', letID);
@@ -136,7 +136,7 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
 Board.prototype.addListeners = function(playersRef)
 {
   var boardRef = this;
-  var players = playersRef;
+  var players = playersRef; //!!!
   $('#board').find('td:not(.XX):not(.has-letter)').droppable(
   {
     drop: function (event, ui)

@@ -92,7 +92,7 @@ module.exports = function Tray (boardRef, playerNum)
       {
         zIndex: 100,
         revert: 'invalid', // will revert when placed on invalid area
-        containment: '#game',
+        containment: 'body',
         helper: function()
         {
           var clone = letterHtml.clone().attr('id', letID);
