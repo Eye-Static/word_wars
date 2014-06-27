@@ -54,14 +54,6 @@ module.exports = function Tray (boardRef, playerNum)
     if (returnVal > 1) {console.error('ERROR: tray found', returnVal.length, 'letters with same id');}
     return returnVal[0];
   };
-  // /////////////////////////////////////////////////
-
-  // this.retrieveLetter = function(letterID)
-  // {
-  //   //this is the sloppy part, but hey, it works
-  //   var letter = board.retrieveLetter(letterID, this);
-  //   return letter;
-  // };
 
   //////////////////////////////////////////////////
 
@@ -69,6 +61,7 @@ module.exports = function Tray (boardRef, playerNum)
   {
     trayObject.show();
     $('#whose-turn').text('Player ' + (this.playerNum+1) + '\'s turn');
+    this.render();
   };
   this.hideTray = function ()
   {
@@ -111,13 +104,13 @@ module.exports = function Tray (boardRef, playerNum)
         var letter = boardRef.retrieveLetter(letterID, that);
         that.add(letter);
       },
-      // scope: 'tray',
-      // over: function(event, ui){
-      //   $( '.letter' ).draggable('option', 'scope', 'tray');
-      // },
-      // out: function(event, ui){
-      //  $( '.letter' ).draggable('option', 'scope', 'board');
-      // },
+     //scope: 'tray',
+     //  over: function(event, ui){
+     //    $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'tray');
+     //  },
+     //  out: function(event, ui){
+     //   $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'board');
+     // },
      greedy: true,
      tolerance: 'touch'
    });

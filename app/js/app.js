@@ -47,4 +47,37 @@ $(document).ready(function ()
     var gameID = $(this).context.id;
     connection.joinGame(gameID);
   });
+
+  //////WARNING///VERY HACKY CODE////
+
+  window.onmousemove = handleMouseMove;
+  setInterval(getMousePosition, 300); // setInterval repeats every X ms
+  var mousePos;
+  function handleMouseMove(event)
+  {
+    event = event || window.event; // IE-ism
+    mousePos = {
+      x: event.clientX,
+      y: event.clientY
+    };
+  }
+  function getMousePosition()
+  {
+    var pos = mousePos;
+    if (!pos) {
+      // We haven't seen any movement yet
+    }
+    else {
+      if(pos.y < 450)
+      {
+        // console.log(' y is' + pos.y);
+        $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'board');
+      }
+      else
+      {
+        // console.log('y is ' + pos.y);
+        $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'tray');
+      }
+    }
+  }
 });

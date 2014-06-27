@@ -83,7 +83,7 @@ Game.prototype.wordScore = function()
   var newletters = validator.getNewLetters();
   var score = 0;
   var y, x, l;
-  var letterMultiplyer
+  var letterMultiplyer;
   var wordMultiplyer = 1;
   var wordPoints = 0;
   var firstLetter, lastLetter;
@@ -156,6 +156,38 @@ Game.prototype.wordScore = function()
 };
 
 //////////////////////////////////////////////////
+
+Game.prototype.scoreWordHorizontal = function (gridyx)
+{
+  var y, x;
+  var letterMultiplyer;
+  var wordMultiplyer = 1;
+  var wordPoints = 0;
+
+  var firstLetter = validator.findFirstHorizontal (gridyx);
+  var lastLetter  = validator.findLastHorizontal  (gridyx);
+
+  y = firstLetter[0];
+  for (x = firstLetter[1]; x <= lastLetter[1]; x += 1)
+  {
+    letterMultiplyer = 1;
+
+    if (this.board.grid[y][x].letter.justPlaced === true)
+    {
+           if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
+      else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
+      else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
+      else if (this.board.grid[y][x].bonus === '*')  wordMultiplyer += 1;
+      else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
+    }
+
+    wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
+  }
+  return wordPoints;
+};
+
+//////////////////////////////////////////////////
+
 Game.prototype.postNumTiles = function ()
 {
   var numTiles = this.bag.letters.length;
@@ -165,7 +197,7 @@ Game.prototype.postNumTiles = function ()
     tilesMessage = 'There are ' + numTiles + ' tiles left';
   } else if (numTiles === 1 ){
     tilesMessage = 'There is 1 tile left';
-  } else {
+  } else{
     tilesMessage = 'There are no tiles left!';
   }
   $('#tilenums').text(tilesMessage);

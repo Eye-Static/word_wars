@@ -63,7 +63,6 @@ var Board = function (gridChoice)
 Board.prototype.render = function (players)
 {
   $('#board').empty();
-
   var lettersOnBoard = [];
   var ys = [];
   var xs = [];
@@ -135,6 +134,14 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
         });
       })();
     }
+    if(letterOnBoard.definition)
+    {
+      theLetter.tooltip({
+        show: { effect: 'fade', duration: 0 },
+        hide: { effect: 'fade', duration: 0 },
+      content: 'content'//letterOnBoard.definition
+    });
+    }
   }
 };
 
@@ -144,25 +151,32 @@ Board.prototype.addListeners = function(playersRef)
 {
   var boardRef = this;
   var players = playersRef;
-  // $('#board').on('mouseover', function()
+  // $('#board').hover( function()
   // {
-  //   console.log('mouseover board');
+  //   console.log('hover');
   //   $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'board');
-  // });
-  // $('.tray').on('mouseover', function()
-  // {
-  //   console.log('mouseover tray');
-  //   $( '.ui-draggable-dragging'  ).draggable('option', 'scope', 'tray');
-  // });
+  // })
 
-  $('#board').find('td:not(.XX):not(.has-letter)').droppable(
-  {
-    drop: function (event, ui)
+    // $('#board').on('mouseenter', function()
+    // {
+    //   console.log('mouseenter board');
+    //   $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'board');
+    // });
+
+    // $('.tray').on('mouseenter', ':not(.letter)', function()
+    // {
+    //   console.log('tray enter');
+    //   $( '.ui-draggable-dragging'  ).draggable('option', 'scope', 'tray');
+    // });
+
+    $('#board').find('td:not(.XX):not(.has-letter)').droppable(
     {
+      drop: function (event, ui)
+      {
       // get id of dropped letter
       var letterID = ui.helper[0].id;
       boardRef.render(players);
-      boardRef.addListeners(players); //new !!!
+      boardRef.addListeners(players);
       boardRef.addDropListener(this, letterID, players);
     },
 
@@ -177,9 +191,8 @@ Board.prototype.addListeners = function(playersRef)
     },
     //scope: 'board',
     greedy: true
-
   });
-};
+  };
 
 //////////////////////////////////////////////////
 Board.prototype.addDropListener = function(square, letterID, players)
