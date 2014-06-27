@@ -59,12 +59,12 @@ header
   border: 2px solid white;
   width: 55%;
   padding: 0 10px  40px 10px;
-  height: 11em;
+  height: 14em;
 
   margin-left: 20%;
   background-color: #ADADFF;
   text-shadow: rgba(0,0,0,.4) 0 1px 0;
-  line-height: 1.5;
+  line-height: 0.5;
   margin-bottom: .5em;
   -moz-box-shadow:    inset 0 0 10px #000000;
    -webkit-box-shadow: inset 0 0 10px #000000;
