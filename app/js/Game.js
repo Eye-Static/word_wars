@@ -53,6 +53,8 @@ Game.prototype.finishTurn = function ()
     this.turn.message = 'LAST TURN';
   }
   justFinishedPlayer.tray.render();
+  this.board.render(this.players);
+  this.board.addListeners(this.players);
 };
 
 Game.prototype.nextTurn = function()
