@@ -122,12 +122,11 @@ Game.prototype.renderScore = function (recentScore)
   {
     $('#score').append('Player ' + (p+1) + ' Points: ' + this.players[p].score + '<br>');
   }
-<<<<<<< HEAD
+
   if(recentScore) {
-=======
-  if(recentScore)
+
   {
->>>>>>> master
+
   $('#score').append('Player ' + (this.whoseTurn+1) +
     ' just played a word for ' + recentScore + ' points!');
   }
