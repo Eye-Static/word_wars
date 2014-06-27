@@ -294,6 +294,26 @@ Board.prototype.printPlaced = function ()
 };
 
 /////////////////////////////////////////////////
+
+// prints all the letters' justPlaced property on the board's grid[y][x] to console
+Board.prototype.printBonus = function ()
+{
+  var x, y;
+  var row;
+
+  for (y = 0; y < this.maxY; y += 1)
+  {
+    row = '';
+
+    for (x = 0; x < this.maxX; x += 1)
+    {
+      row += this.grid[y][x].bonus;
+    }
+    console.log (row);
+  }
+};
+
+/////////////////////////////////////////////////
 //this can be given a tray OR the players array
 Board.prototype.retrieveLetter = function(letterID, input)
 {

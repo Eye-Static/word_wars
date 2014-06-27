@@ -3,7 +3,8 @@ var Board  = require('./Board');
 var Bag    = require('./Bag');
 var Player = require('./Player');
 var GameButtons = require('./gameButtons');
-var validator = require('./validator');
+var validator   = require ('./validator');
+//var scoreAdder  = require ('./scoreAdder');
 
 var Game = function (boardType, numOfPlayers)
 {
@@ -37,12 +38,14 @@ Game.prototype.start = function()
   this.printGameStatus();
   this.players[0].tray.showTray();
   this.renderScore();
+  this.board.printBonus();
 };
 
 Game.prototype.finishTurn = function ()
 {
   var justFinishedPlayer = this.players[this.whoseTurn];
 
+  //var recentScore = scoreAdder.test;//scoreAdder.wordScore (this);
   var recentScore = this.wordScore();
   justFinishedPlayer.score += recentScore;
   this.renderScore(recentScore);
@@ -76,24 +79,108 @@ Game.prototype.printGameStatus = function ()
 // returns the score of the new letters placed this turn
 Game.prototype.wordScore = function()
 {
- // get an array of all the new letter coordinates
+  // get an array of all the new letter coordinates
   var newletters = validator.getNewLetters();
   var score = 0;
   var y, x, l;
+  var letterMultiplyer;
+  var wordMultiplyer = 1;
+  var wordPoints = 0;
+  var firstLetter, lastLetter;
+
+  var orientation = validator.isLine (newletters);
+  if (orientation === "horizontal")
+  {
+    firstLetter = validator.findFirstHorizontal (newletters[0]);
+    lastLetter  = validator.findLastHorizontal  (newletters[0]);
+
+    y = firstLetter[0];
+    for (x = firstLetter[1]; x <= lastLetter[1]; x += 1)
+    {
+      letterMultiplyer = 1;
+
+      if (this.board.grid[y][x].letter.justPlaced === true)
+      {
+             if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
+        else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
+        else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
+        else if (this.board.grid[y][x].bonus === '*')  wordMultiplyer += 1;
+        else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
+      }
+
+      wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
+    }
+  }
+
+  else  // vertical
+  {
+    firstLetter = validator.findFirstVertical (newletters[0]);
+    lastLetter  = validator.findLastVertical  (newletters[0]);
+
+    x = firstLetter[1];
+    for (y = firstLetter[0]; y <= lastLetter[0]; y += 1)
+    {
+      letterMultiplyer = 1;
+
+      if (this.board.grid[y][x].letter.justPlaced === true)
+      {
+             if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
+        else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
+        else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
+        else if (this.board.grid[y][x].bonus === '*')  wordMultiplyer += 1;
+        else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
+      }
+
+      wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
+    }
+  }
+
+  score += (wordPoints * wordMultiplyer);
 
   for (l = 0; l < newletters.length; l += 1)
   {
-    y = newletters[l][0];
-    x = newletters[l][1];
-    score += this.board.grid[y][x].letter.score;      // add the points
-    this.board.grid[y][x].letter.justPlaced = false;  // clear the justPlaced flag
-  }
+     y = newletters[l][0];
+     x = newletters[l][1];
+     this.board.grid[y][x].letter.justPlaced = false;  // clear the justPlaced flag
+   }
 
   console.log('Score: ' + score);
   return score;
 };
 
 //////////////////////////////////////////////////
+
+Game.prototype.scoreWordHorizontal = function (gridyx)
+{
+  var y, x;
+  var letterMultiplyer;
+  var wordMultiplyer = 1;
+  var wordPoints = 0;
+
+  var firstLetter = validator.findFirstHorizontal (gridyx);
+  var lastLetter  = validator.findLastHorizontal  (gridyx);
+
+  y = firstLetter[0];
+  for (x = firstLetter[1]; x <= lastLetter[1]; x += 1)
+  {
+    letterMultiplyer = 1;
+
+    if (this.board.grid[y][x].letter.justPlaced === true)
+    {
+           if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
+      else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
+      else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
+      else if (this.board.grid[y][x].bonus === '*')  wordMultiplyer += 1;
+      else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
+    }
+
+    wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
+  }
+  return wordPoints;
+};
+
+//////////////////////////////////////////////////
+
 Game.prototype.postNumTiles = function ()
 {
   var numTiles = this.bag.letters.length;
