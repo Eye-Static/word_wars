@@ -6,5 +6,5 @@ module.exports = function Letter (character, score, id)
   // this.locked = false;         // letter is immobile
   // this.player = null;          // which player played this letter?
   this.id = id;                // a unique identifier (string) - id21, id22, etc.
-  this.definition = 'hello';
+  this.definition = null;
 };
