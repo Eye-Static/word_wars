@@ -138,9 +138,12 @@ Game.prototype.wordScore = function()
   else if (orientation === 'vertical')
   {
     score += this.scoreWordVertical (newletters[0]);
-  }
 
-  //score += (wordPoints * wordMultiplyer);
+    if (validator.findWordHorizontal (newletters[0]).length > 1)
+    {
+      score += this.scoreWordHorizontal (newletters[0]);
+    }
+  }
 
   for (l = 0; l < newletters.length; l += 1)
   {
