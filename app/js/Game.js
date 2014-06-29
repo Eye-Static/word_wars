@@ -18,7 +18,7 @@ var Game = function (boardType, numOfPlayers)
   this.players = [];
   this.whoseTurn = 0; // refers to which player in players array
                       // so 0 means the first player
-  this.recentScore = 0;
+  this.recentScore = null; //null is for the first turn only
   this.bag.fill();               // add letters to bag
   this.bag.shake();              // randomize bag
 
@@ -60,6 +60,7 @@ Game.prototype.finishTurn = function ()
 
 Game.prototype.nextTurn = function()
 {
+  $('#done-button').val('Pass');
   this.turn.turnNum ++;
   this.players[this.whoseTurn].tray.hideTray();
   // set whoseTurn to the next player
@@ -87,7 +88,6 @@ Game.prototype.turnTransition = function(wordsData)
       $('#transition-dialogue').append('<div>'+wordsData[w].word.toUpperCase() + ' - ' + wordsData[w].definition+'</div>');
     }
   }
-
   $('#transition-dialogue').fadeIn('slow');
   //timeout fixes a display bug and prevent users from accidentally clicking though it
   setTimeout(function(){
@@ -284,10 +284,12 @@ Game.prototype.renderScore = function (recentScore)
   {
     $('#score').append('Player ' + (this.whoseTurn+1) +
       ' just played a word for ' + this.recentScore + ' points!');
-  } else
+  }
+  else if (this.recentScore === 0)
   {
     $('#score').append('Player ' + (this.whoseTurn+1) + ' passed');
   }
+  // if null, it's first turn so skip this
 };
 
 Game.prototype.clearGameArea = function ()
