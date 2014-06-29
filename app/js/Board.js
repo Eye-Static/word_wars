@@ -202,7 +202,7 @@ Board.prototype.addDropListener = function(square, letterID, players)
   //search the player's tray and the board for the letter & take it
   var letter = this.retrieveLetter(letterID, players);
   letter.justPlaced = true;
-
+  $('#done-button').val('Play Word'); //change button from 'pass' to 'play word'
   if(letter.score === 0)
   {
     $('#overlay').fadeIn('slow');
