@@ -18,6 +18,7 @@ var Game = function (boardType, numOfPlayers)
   this.players = [];
   this.whoseTurn = 0; // refers to which player in players array
                       // so 0 means the first player
+  this.recentScore = 0;
   this.bag.fill();               // add letters to bag
   this.bag.shake();              // randomize bag
 
@@ -46,9 +47,10 @@ Game.prototype.finishTurn = function ()
   var justFinishedPlayer = this.players[this.whoseTurn];
 
   //var recentScore = scoreAdder.test;//scoreAdder.wordScore (this);
-  var recentScore = this.wordScore();
-  justFinishedPlayer.score += recentScore;
-  this.renderScore(recentScore);
+  console.log('enter word score');
+  this.recentScore = this.wordScore();
+  justFinishedPlayer.score += this.recentScore;
+  this.renderScore(this.recentScore);
 
   justFinishedPlayer.refillTiles(this.bag);
   this.postNumTiles();
@@ -67,6 +69,35 @@ Game.prototype.nextTurn = function()
   this.printGameStatus();
 };
 
+Game.prototype.turnTransition = function(wordsData)
+{
+  var gameRef = this;
+  this.finishTurn(); //sets recent score
+  $('#spelled-word').empty();
+  if(wordsData === null )
+  {
+    $('#spelled-word').append('<div>Player ' + (this.whoseTurn+1) + ' passed</div>');
+  }
+  else
+  {
+    $('#spelled-word').append('<div>Player ' + (this.whoseTurn+1) +
+                            ' got ' + this.recentScore +
+                            ' points for playing:</div><br>');
+    for (var w = 0; w < wordsData.length; w ++)
+    {
+      $('#spelled-word').append('<div>'+wordsData[w].word.toUpperCase() + ' - ' + wordsData[w].definition+'</div>');
+    }
+  }
+
+  $('#spelled-word').fadeIn('slow');
+  $('html').on('click', function()
+  {
+    $('#spelled-word').fadeOut('slow');
+    $('html').off('click');
+    gameRef.nextTurn();
+  });
+};
+
 Game.prototype.printGameStatus = function ()
 {
   //change what this is connected to on the DOM
@@ -81,6 +112,7 @@ Game.prototype.wordScore = function()
 {
   // get an array of all the new letter coordinates
   var newletters = validator.getNewLetters();
+  if(newletters.length === 0){return 0;}
   var score = 0, wordScore = 0;
   var y, x, l;
   var letterMultiplyer;
@@ -90,7 +122,7 @@ Game.prototype.wordScore = function()
 
   var orientation = validator.isLine (newletters);
 
-  if (orientation === "horizontal")
+  if (orientation === 'horizontal')
   {
     score += this.scoreWordHorizontal (newletters[0]);
 
@@ -100,7 +132,7 @@ Game.prototype.wordScore = function()
     }
   }
 
-  else  // vertical
+  else if (orientation === 'vertical')
   {
     score += this.scoreWordVertical (newletters[0]);
   }
@@ -170,9 +202,9 @@ Game.prototype.scoreWordVertical = function (gridyx)
     {
            if (this.board.grid[y][x].bonus === 'DL') letterMultiplyer = 2;
       else if (this.board.grid[y][x].bonus === 'TL') letterMultiplyer = 3;
-      else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer += 1;
-      else if (this.board.grid[y][x].bonus === '*')  wordMultiplyer += 1;
-      else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer += 2;
+      else if (this.board.grid[y][x].bonus === 'DW') wordMultiplyer *= 2;
+      else if (this.board.grid[y][x].bonus === '*')  wordMultiplyer *= 2;
+      else if (this.board.grid[y][x].bonus === 'TW') wordMultiplyer *= 3;
     }
 
     wordPoints += (this.board.grid[y][x].letter.score * letterMultiplyer);      // add the points
@@ -195,7 +227,7 @@ Game.prototype.getFirstLetters = function (newletters, orientation)
     {
       if (validator.findWordVertical (newletters[l]).length > 1)
       {
-      firstLetters.push (validator.findFirstVertical (newletters[l]));        
+      firstLetters.push (validator.findFirstVertical (newletters[l]));
       }
     }
   }
@@ -245,16 +277,17 @@ Game.prototype.renderScore = function (recentScore)
     $('#score').append('Player ' + (p+1) + ' Points: ' + this.players[p].score + '<br>');
   }
 
-  if(recentScore)
-
+  if(this.recentScore)
   {
-
-  $('#score').append('Player ' + (this.whoseTurn+1) +
-    ' just played a word for ' + recentScore + ' points!');
+    $('#score').append('Player ' + (this.whoseTurn+1) +
+      ' just played a word for ' + this.recentScore + ' points!');
+  } else
+  {
+    $('#score').append('Player ' + (this.whoseTurn+1) + ' passed');
   }
 };
 
-Game.prototype.clearGameArea = function (recentScore)
+Game.prototype.clearGameArea = function ()
 {
   $('#score').empty();
   $('#game-info').empty();
