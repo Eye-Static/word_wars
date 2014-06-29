@@ -47,7 +47,6 @@ Game.prototype.finishTurn = function ()
   var justFinishedPlayer = this.players[this.whoseTurn];
 
   //var recentScore = scoreAdder.test;//scoreAdder.wordScore (this);
-  console.log('enter word score');
   this.recentScore = this.wordScore();
   justFinishedPlayer.score += this.recentScore;
   this.renderScore(this.recentScore);
@@ -73,29 +72,33 @@ Game.prototype.turnTransition = function(wordsData)
 {
   var gameRef = this;
   this.finishTurn(); //sets recent score
-  $('#spelled-word').empty();
-  if(wordsData === null )
+  $('#transition-dialogue').empty();
+  if(wordsData.length === 0 )
   {
-    $('#spelled-word').append('<div>Player ' + (this.whoseTurn+1) + ' passed</div>');
+    $('#transition-dialogue').append('<div>Player ' + (this.whoseTurn+1) + ' passed</div>');
   }
   else
   {
-    $('#spelled-word').append('<div>Player ' + (this.whoseTurn+1) +
+    $('#transition-dialogue').append('<div>Player ' + (this.whoseTurn+1) +
                             ' got ' + this.recentScore +
                             ' points for playing:</div><br>');
     for (var w = 0; w < wordsData.length; w ++)
     {
-      $('#spelled-word').append('<div>'+wordsData[w].word.toUpperCase() + ' - ' + wordsData[w].definition+'</div>');
+      $('#transition-dialogue').append('<div>'+wordsData[w].word.toUpperCase() + ' - ' + wordsData[w].definition+'</div>');
     }
   }
 
-  $('#spelled-word').fadeIn('slow');
-  $('html').on('click', function()
-  {
-    $('#spelled-word').fadeOut('slow');
-    $('html').off('click');
-    gameRef.nextTurn();
-  });
+  $('#transition-dialogue').fadeIn('slow');
+  //timeout fixes a display bug and prevent users from accidentally clicking though it
+  setTimeout(function(){
+    $('html').on('click', function()  //async
+    {
+      console.log('transition dialogue exiting');
+      $('#transition-dialogue').fadeOut('slow');
+      $('html').off('click');
+      gameRef.nextTurn();
+    });
+  }, 300);
 };
 
 Game.prototype.printGameStatus = function ()
@@ -112,7 +115,7 @@ Game.prototype.wordScore = function()
 {
   // get an array of all the new letter coordinates
   var newletters = validator.getNewLetters();
-  if(newletters.length === 0){return 0;}
+  if(newletters.length === 0){return 0;} //must exit if player passed on turn
   var score = 0, wordScore = 0;
   var y, x, l;
   var letterMultiplyer;

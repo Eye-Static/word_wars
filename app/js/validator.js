@@ -11,43 +11,41 @@ validator.isValid = function (gameRef)
 
   // get an array of all the new letter coordinates
   var newletters = this.getNewLetters();
-
-  if(newletters.length === 0 ) //pass scenario
-  {
-    game.turnTransition(null); //
-    return; // don't execute rest of code
-  }
-
-  var orientation  = this.isLine (newletters);
+  var wordsData = []; //the words made in the turn
   var spelledWords = [];
-  console.log ('Orientation: ' + orientation);
 
-  // check for star
-  if (!firstWordPlayed && !this.onStar (newletters) )
+  if(newletters.length > 0 ) //player didn't pass
   {
-    alert ('The first word must be placed on the STAR tile.');
-    return;
-  }
-  // check for lines
-  else if (orientation === null)
-  {
-    alert ('Words must be placed in a straight lines.');
-    return;
-  }
-  // check for breaks
-  else if (!this.isConnected (newletters, orientation))
-  {
-    alert ('Words may not contain spaces.');
-    return;
-  }
-  // check for... touching?
-  else if (firstWordPlayed && !this.isTouching (newletters, orientation))
-  {
-    alert ('New words must touch an existing word.');
-    return;
+    var orientation  = this.isLine (newletters);
+    console.log ('Orientation: ' + orientation);
+
+    // check for star
+    if (!firstWordPlayed && !this.onStar (newletters) )
+    {
+      alert ('The first word must be placed on the STAR tile.');
+      return;
+    }
+    // check for lines
+    else if (orientation === null)
+    {
+      alert ('Words must be placed in a straight line.');
+      return;
+    }
+    // check for breaks
+    else if (!this.isConnected (newletters, orientation))
+    {
+      alert ('Words may not contain spaces.');
+      return;
+    }
+    // check for... touching?
+    else if (firstWordPlayed && !this.isTouching (newletters, orientation))
+    {
+      alert ('New words must touch an existing word.');
+      return;
+    }
+    spelledWords = this.spellWords(newletters, orientation);
   }
 
-  spelledWords = this.spellWords(newletters, orientation);
   dictionary.results = []; //reset results, currently not done in dictionary, whoops
   dictionary.lookup (spelledWords, function (returnData)
   {
@@ -63,8 +61,9 @@ validator.isValid = function (gameRef)
         return;
       }
     }
-    firstWordPlayed = true;
-    game.turnTransition(returnData);
+    if(spelledWords.length > 0) {firstWordPlayed = true;} // at least one word has now been played
+
+    game.turnTransition(returnData); //return words, or [] for a pass turn
   });
 };
 
