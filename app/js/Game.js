@@ -185,40 +185,6 @@ Game.prototype.scoreWordVertical = function (gridyx)
 
 //////////////////////////////////////////////////
 
-Game.prototype.getFirstLetters = function (newletters, orientation)
-{
-  var firstLetters = [];
-  var l;
-
-  if (orientation === 'vertical')
-  {
-    firstLetters.push (validator.findFirstHorizontal (newletters[0]));
-
-    for (l = 0; l < newletters.length; l += 1)
-    {
-      if (validator.findWordVertical (newletters[l]).length > 1)
-      {
-      firstLetters.push (validator.findFirstVertical (newletters[l]));        
-      }
-    }
-  }
-  else  // vertical
-  {
-    firstLetters.push (validator.findFirstVertical (newletters[0]));
-
-    for (l = 0; l < newletters.length; l += 1)
-    {
-      if (validator.findWordHorizontal (newletters[l]).length > 1)
-      {
-      firstLetters.push (validator.findFirstHorizontal (newletters[l]));
-      }
-    }
-  }
-  return firstLetters;
-};
-
-//////////////////////////////////////////////////
-
 Game.prototype.postNumTiles = function ()
 {
   var numTiles = this.bag.letters.length;

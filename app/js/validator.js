@@ -13,6 +13,7 @@ validator.isValid = function (gameRef)
   var orientation = this.isLine (newletters);
   var spelledWords = [];
   var gibberish, w;
+  var firstLetters = [];
 
   console.log ('Orientation: ' + orientation);
 
@@ -45,7 +46,8 @@ validator.isValid = function (gameRef)
   }
 
   spelledWords = this.spellWords(newletters, orientation);
-  //this.checkWords(spelledWords);
+
+  firstLetters = this.getFirstLetters (newletters, orientation);
 
   dictionary.results = [];
   dictionary.lookup (spelledWords, function (returnData)
@@ -72,7 +74,8 @@ validator.isValid = function (gameRef)
       $('#spelled-word').empty();
       for (w = 0; w < returnData.length; w += 1)
       {
-        $('#spelled-word').append('<span>'+returnData[w].word.toUpperCase() + ' - ' + returnData[w].definition+'</span>');
+        $('#spelled-word').append('<span>'+returnData[w].word.toUpperCase() + ' - ' + returnData[w].definition+'</span><br>');
+        
       }
       $('#spelled-word').fadeIn('slow');
       $('body').on('click', function()
@@ -206,7 +209,7 @@ validator.isTouching = function (newletters)
     else if (y > 0 && game.board.grid[y - 1][x].letter !== null
         && game.board.grid[y - 1][x].letter.justPlaced ===false) return true;
 
-    else if (y < 0 && game.board.grid[y + 1][x].letter !== null
+    else if (y < game.board.maxY - 1 && game.board.grid[y + 1][x].letter !== null
         && game.board.grid[y + 1][x].letter.justPlaced ===false) return true;
   }
   return false;
@@ -351,6 +354,40 @@ validator.findLastVertical = function (gridyx)
     y ++;
   }
   return [y - 1, x];
+};
+
+//////////////////////////////////////////////////
+
+validator.getFirstLetters = function (newletters, orientation)
+{
+  var firstLetters = [];
+  var l;
+
+  if (orientation === 'vertical')
+  {
+    firstLetters.push (this.findFirstHorizontal (newletters[0]));
+
+    for (l = 0; l < newletters.length; l += 1)
+    {
+      if (this.findWordVertical (newletters[l]).length > 1)
+      {
+      firstLetters.push (this.findFirstVertical (newletters[l]));        
+      }
+    }
+  }
+  else  // vertical
+  {
+    firstLetters.push (this.findFirstVertical (newletters[0]));
+
+    for (l = 0; l < newletters.length; l += 1)
+    {
+      if (this.findWordHorizontal (newletters[l]).length > 1)
+      {
+      firstLetters.push (this.findFirstHorizontal (newletters[l]));
+      }
+    }
+  }
+  return firstLetters;
 };
 
 module.exports = validator;
