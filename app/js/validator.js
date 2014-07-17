@@ -3,6 +3,7 @@ var game;
 var grid;
 var validator = {};
 var firstWordPlayed = false;
+
 // check if the new word has valid placement (straight line and connected)
 validator.isValid = function (gameRef)
 {
@@ -13,11 +14,15 @@ validator.isValid = function (gameRef)
   var newletters = this.getNewLetters();
   var wordsData = []; //the words made in the turn
   var spelledWords = [];
+  var gibberish, w;
+  var firstLetters = [];
 
   if(newletters.length > 0 ) //player didn't pass
   {
     var orientation  = this.isLine (newletters);
     console.log ('Orientation: ' + orientation);
+
+    firstLetters = this.getFirstLetters (newletters, orientation);
 
     // check for star
     if (!firstWordPlayed && !this.onStar (newletters) )
@@ -61,6 +66,25 @@ validator.isValid = function (gameRef)
         return;
       }
     }
+
+    if (gibberish === false)
+    {
+      $('#spelled-word').empty();
+      for (w = 0; w < returnData.length; w += 1)
+      {
+        $('#spelled-word').append('<span>'+returnData[w].word.toUpperCase() + ' - ' + returnData[w].definition+'</span><br>');
+        
+      }
+      $('#spelled-word').fadeIn('slow');
+      $('body').on('click', function()
+      {
+        $('#spelled-word').fadeOut('slow');
+        $('body').off();
+        game.finishTurn();
+        game.nextTurn();
+      });
+    }
+
     if(spelledWords.length > 0) {firstWordPlayed = true;} // at least one word has now been played
 
     game.turnTransition(returnData); //return words, or [] for a pass turn
@@ -180,23 +204,19 @@ validator.isTouching = function (newletters)
 
     if      ( x > 0 &&
               grid[y][x - 1].letter !== null &&
-              grid[y][x - 1].letter.justPlaced === false)
-      return true;
+              grid[y][x - 1].letter.justPlaced === false) return true;
 
     else if ( x < game.board.maxX - 1 &&
               grid[y][x + 1].letter !== null &&
-              grid[y][x + 1].letter.justPlaced === false)
-      return true;
+              grid[y][x + 1].letter.justPlaced === false) return true;
 
     else if ( y > 0 &&
               grid[y - 1][x].letter !== null &&
-              grid[y - 1][x].letter.justPlaced === false)
-      return true;
+              grid[y - 1][x].letter.justPlaced === false) return true;
 
-    else if ( y < 0 &&
+    else if ( y < game.board.maxY &&
               grid[y + 1][x].letter !== null &&
-              grid[y + 1][x].letter.justPlaced === false)
-      return true;
+              grid[y + 1][x].letter.justPlaced === false) return true;
   }
   return false;
 };
@@ -342,6 +362,40 @@ validator.findLastVertical = function (gridyx)
     y ++;
   }
   return [y - 1, x];
+};
+
+//////////////////////////////////////////////////
+
+validator.getFirstLetters = function (newletters, orientation)
+{
+  var firstLetters = [];
+  var l;
+
+  if (orientation === 'vertical')
+  {
+    firstLetters.push (this.findFirstHorizontal (newletters[0]));
+
+    for (l = 0; l < newletters.length; l += 1)
+    {
+      if (this.findWordVertical (newletters[l]).length > 1)
+      {
+      firstLetters.push (this.findFirstVertical (newletters[l]));        
+      }
+    }
+  }
+  else  // vertical
+  {
+    firstLetters.push (this.findFirstVertical (newletters[0]));
+
+    for (l = 0; l < newletters.length; l += 1)
+    {
+      if (this.findWordHorizontal (newletters[l]).length > 1)
+      {
+      firstLetters.push (this.findFirstHorizontal (newletters[l]));
+      }
+    }
+  }
+  return firstLetters;
 };
 
 module.exports = validator;
