@@ -94,7 +94,6 @@ module.exports = function Tray (boardRef, playerNum)
       drop: function (event, ui)
       {
         event.preventDefault();
-        console.log('dropped');
         var letterID = ui.helper[0].id;
         $('.ui-draggable-dragging').offset(
         {
@@ -103,6 +102,7 @@ module.exports = function Tray (boardRef, playerNum)
         });
         var letter = boardRef.retrieveLetter(letterID, that);
         that.add(letter);
+        if(that.letters.length === 7){console.log('enter drop');$('#done-button').val('Pass');}
       },
      //  scope: 'tray',
      //  over: function(event, ui){
