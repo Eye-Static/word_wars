@@ -8,22 +8,24 @@ header
 
   background-image:
   linear-gradient(#3333CC, #29293D);
-    border: 7px solid #3333CC;
-    -moz-box-shadow:    inset 0 0 10px #000000;
-   -webkit-box-shadow: inset 0 0 10px #000000;
-   box-shadow:         inset 0 0 10px #000000;
-   text-shadow: rgba(0,0,0,.4) 0 1px 0;
-   box-shadow: 10px 10px 10px 5px #0A0A0F;
+  border: 7px solid #3333CC;
+  -moz-box-shadow:    inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #000000;
+  box-shadow:         inset 0 0 10px #000000;
+  text-shadow: rgba(0,0,0,.4) 0 1px 0;
+  box-shadow: 10px 10px 10px 5px #0A0A0F;
 }
 
-#left-column {
+#left-column
+{
   height: 100%;
   width: 40%;
   float: left;
   margin-top: 1%;
 }
 
-#right-column {
+#right-column
+{
   width: 55%;
   height: 100%;
   float: right;
@@ -31,62 +33,50 @@ header
   margin-top: 1%;
 }
 
-#container {
+#container
+{
   border: 10px solid  #666699;
   float: left;
   text-align: center;
-  /*z-index: 999;*/
   overflow-y:hidden;
   overflow-x:scroll;
   box-shadow: 15px 15px 15px 9px #0A0A0F;
   width: 95%;
   height:480px;
-  /*margin-top: 2em;*/
+}
 
+.left-box
+{
+  height: 7em;
+  border: solid 2px white;
+  color: #000099;
+  width: 75%;
+  text-align: center;
+  padding: .5em;
+  margin-left: 10%;
+  margin-top: 7.5%;
+  background-color: #ADADFF;
+  line-height: 1.5;
+  -moz-box-shadow:    inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #000000;
+  box-shadow:         inset 0 0 10px #000000;
 }
 
 #tilebox
 {
-  border: 2px solid white;
-  width: 75%;
-  padding: 0 10px  40px 10px;
-  height: 12.7em;
-
-  margin-left: 10%;
-  background-color: #ADADFF;
-  text-shadow: rgba(0,0,0,.4) 0 1px 0;
-  line-height: 0.5;
+  text-align: left;
+  height: auto;
   margin-bottom: .5em;
-  -moz-box-shadow:    inset 0 0 10px #000000;
-   -webkit-box-shadow: inset 0 0 10px #000000;
-   box-shadow:         inset 0 0 10px #000000;
 }
-
-#score
+#new-game-button
 {
-  border: solid 2px white;
-  color: black;
-  width: 75%;
-  padding: 10px;
-  margin-left: 10%;
-  margin-top: 7.5%;
-  margin-bottom: 7.5%;
-  line-height: 1.5;
-  background-color: #ADADFF;
-  line-height: 1.5;
-    -moz-box-shadow:    inset 0 0 10px #000000;
-   -webkit-box-shadow: inset 0 0 10px #000000;
-   box-shadow:         inset 0 0 10px #000000;
-}
-
-#board-type {
-/*float: right;*/
+  margin-left: 30%;
 }
 
 td
 {
-  width:  42px;
-  height: 42px;
+  width:  2em;
+  height: 2em;
 }
 
 .square

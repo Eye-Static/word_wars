@@ -11,51 +11,43 @@
 <body>
   <div id = "left-column">
     <header><h1 class="reflected"><strong>Word Wars!</strong></h1></header>
+    <div class="left-box">
       <p id= "score"></p>
-        <div id = "tilebox">
+    </div>
+    <div class = "left-box" id = "tilebox">
+      <p id = "tilecount"></p>
+      <p id = "tilenums"></p>
+      <form id = "login-box">
+        <p>
+          <strong>Username</strong> <input type = "text" id = "user-name" required>
+          <button type = "submit" id = "login-button">Log in</button>
+        </p>
+      </form>
 
-          <p id="tilecount"></p>
-
-
-
-          <p id = "tilenums"></p>
-
-        <form id = "login-box">
-          Username <input type = "text" id = "user-name" required>
-
-          <button type = "submit" id = "login-button">Log in</button>         <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-type="button"></div>
-          <div id="fb-root"></div>
-
-          <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=591234984329193&version=v2.0";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, 'script', 'facebook-jssdk'));</script>
-
-
-        </form>
-
+      <p>
         <strong>Board type:</strong>
-          <select id ="board-type">
-            <option value="scrabble" selected>Scrabble</option>
-            <option value="wordsWithFriends">Words with Friends</option>
-            <option value="diamond" >Diamond</option>
-            <option value="donut" >Donut</option>
-          </select>
-        <p></p>
+        <select id ="board-type">
+          <option value="scrabble" selected>Scrabble</option>
+          <option value="wordsWithFriends">Words with Friends</option>
+          <option value="diamond" >Diamond</option>
+          <option value="donut" >Donut</option>
+        </select>
+      </p>
+      <p>
         <strong>Game type:</strong>
-          <select id="game-type">
-            <option value="local 1">Practice game</option>
-            <option value="local 2" selected>2 Player local game</option>
-            <option value="local 3">3 Player local game</option>
-            <option value="local 4">4 Player local game</option>
-            <option value="network 2">2 Player network game</option>
-          </select>
-            <p></p>
-
-            <input type = "button" id = "new-game-button" class = "blue-input" value = "New Game">
+        <select id="game-type">
+          <option value="local 1">Practice game</option>
+          <option value="local 2" selected>2 Player local game</option>
+          <option value="local 3">3 Player local game</option>
+          <option value="local 4">4 Player local game</option>
+          <option value="network 2">2 Player network game</option>
+        </select>
+      </p>
+      <p>
+        <input type = "button" id = "new-game-button" class = "blue-input" value = "New Game">
+        <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-type="button"></div>
+        <div id="fb-root"></div>
+      </p>
 
 
       <!--
@@ -132,6 +124,14 @@
     <script src= "https://cdn.socket.io/socket.io-1.0.6.js"></script>
     <script src= "app.js"></script>
     <!--<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.min.js"></script>-->
+    <!--Facebook script stuff-->
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=591234984329193&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>
 
