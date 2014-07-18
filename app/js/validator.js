@@ -16,7 +16,7 @@ validator.isValid = function (gameRef)
   var wordsData = []; //the words made in the turn
   var spelledWords = [];
   var firstLetters = [];
-  var errorMessage = '';
+  var errorMessage = '';uglifyify
 
   var errorDialog = function()
   {
@@ -31,7 +31,6 @@ validator.isValid = function (gameRef)
       {
         console.log('in click');
         $('#overlay').fadeOut('slow');
-        //$('#bad-move-dialogue').fadeOut('slow');
         $('body').off('click');
       });
     }, 200);

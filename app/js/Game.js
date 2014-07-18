@@ -106,7 +106,6 @@ Game.prototype.turnTransition = function(wordsData)
     $('body').on('click', function()  //async
     {
       $('#overlay').fadeOut('slow');
-      //$('#transition-dialogue').fadeOut('slow');
       $('body').off('click');
       gameRef.nextTurn();
     });

@@ -33,11 +33,18 @@ module.exports = function(grunt) {
 
     clean: ['dist'],
 
+    concat: {
+      dist: {
+        src: ['app/styles/*.css'],
+        dest: 'dist/style.css',
+      },
+    },
+
     copy: {
       all: {
         expand: true,
         cwd: 'app/',
-        src: ['*.html', 'images/**/*', 'styles/*.css'],
+        src: ['*.html', 'images/**/*'],
         dest: 'dist/',
         flatten: true,
         filter: 'isFile'
@@ -50,7 +57,9 @@ module.exports = function(grunt) {
         dest: 'dist/app.js'
       },
       options: {
-        transform: ['debowerify', 'hbsfy'],
+        transform:[
+          'debowerify', 'hbsfy', //'uglifyify' //this makes the page load faster but harder to debug
+        ],
         debug: true,
         external: 'jquery',
       }
@@ -81,21 +90,17 @@ module.exports = function(grunt) {
       //   tasks: 'build'
       // },
       htmlcss: {
-        files:
-
-        ['app/images/**/*', 'app/styles/**/*.css', 'app/index.html', 'app/signin.html'],
+        files:[
+          'app/images/**/*', 'app/styles/**/*.css', 'app/index.html', 'app/signin.html'
+        ],
         tasks: ['build']
-
-        //['app/images/**/*', 'app/styles/**/*', 'app/index.html'],
-        //tasks: ['copy']
-
       }
     }
   });
 
   grunt.registerTask('serve', ['build', 'express:dev','watch']);
   grunt.registerTask('server', 'serve');
-  grunt.registerTask('build', ['clean', 'browserify', 'copy']);
+  grunt.registerTask('build', ['clean', 'browserify', 'concat', 'copy']);
   grunt.registerTask('test:acceptance',['express:dev','casper']);
   grunt.registerTask('test:api','simplemocha');
   grunt.registerTask('test', ['test:acceptance','test:api']);
