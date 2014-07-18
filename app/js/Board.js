@@ -66,10 +66,11 @@ Board.prototype.render = function (players)
   var lettersOnBoard = [];
   var ys = [];
   var xs = [];
-  $('#board').append ('<table>');
+  var el = '';
+  $('#board').append ('<table id = "board-grid">');
   for (var y = 0; y < this.grid.length; y++) // one iteration is a whole row
   {
-    var el = '<tr>';
+    el += '<tr>';
     for (var x = 0; x < this.grid[y].length; x++) //one iteration is one cell
     {
       var theSquare = this.grid[y][x];
@@ -82,8 +83,8 @@ Board.prototype.render = function (players)
       }
     }
     el += '</tr>';
-    $('table').append(el);
   }
+  $('#board-grid').append(el);
   this.renderLetters(lettersOnBoard, ys, xs, players);
 };
 
@@ -149,23 +150,6 @@ Board.prototype.addListeners = function(playersRef)
 {
   var boardRef = this;
   var players = playersRef;
-  // $('#board').hover( function()
-  // {
-  //   console.log('hover');
-  //   $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'board');
-  // })
-
-    // $('#board').on('mouseenter', function()
-    // {
-    //   console.log('mouseenter board');
-    //   $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'board');
-    // });
-
-    // $('.tray').on('mouseenter', ':not(.letter)', function()
-    // {
-    //   console.log('tray enter');
-    //   $( '.ui-draggable-dragging'  ).draggable('option', 'scope', 'tray');
-    // });
 
     $('#board').find('td:not(.XX):not(.has-letter)').droppable(
     {
@@ -321,28 +305,28 @@ Board.prototype.printBonus = function ()
 Board.prototype.retrieveLetter = function(letterID, input)
 {
   var letter;
-    if(Array.isArray(input)) //players array, search ALL THE TRAYS!
+  if(Array.isArray(input)) //players array, search ALL THE TRAYS!
+  {
+    for(var i = 0; i < input.length; i ++)
     {
-      for(var i = 0; i < input.length; i ++)
-      {
-        letter = input[i].tray.remove(letterID);
-        if(letter)
-        {
-          return letter;
-        }
-      }
-    }
-    else //tray was given instead of players array
-    {
-      letter = input.remove(letterID);
+      letter = input[i].tray.remove(letterID);
       if(letter)
       {
         return letter;
       }
     }
-    //if tray didn't have the letter, find/remove letter from board
-    letter = this.retrieveBoardLetter(letterID);
-    return letter;
+  }
+  else //tray was given instead of players array
+  {
+    letter = input.remove(letterID);
+    if(letter)
+    {
+      return letter;
+    }
+  }
+  //if tray didn't have the letter, find/remove letter from board
+  letter = this.retrieveBoardLetter(letterID);
+  return letter;
   };
 
 /////////////////////////////////////////////////
