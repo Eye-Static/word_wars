@@ -7,7 +7,6 @@ var board;
 module.exports = function Tray (boardRef, playerNum)
 {
   this.letters = [];  // array of letter objects (max 7)
-  // this.board = board;
   this.playerNum = playerNum;
   var trayObject = $('#player-' + playerNum + '-tray');
 
@@ -104,15 +103,8 @@ module.exports = function Tray (boardRef, playerNum)
         that.add(letter);
         if(that.letters.length === 7){console.log('enter drop');$('#done-button').val('Pass');}
       },
-     //  scope: 'tray',
-     //  over: function(event, ui){
-     //    $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'tray');
-     //  },
-     //  out: function(event, ui){
-     //    $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'default');
-     // },
-     greedy: true,
-     tolerance: 'touch'
+      greedy: true,
+      tolerance: 'touch'
    });
   };
 
