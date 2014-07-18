@@ -2,17 +2,16 @@
 <html>
 <head>
   <title>Word Wars</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta property="og:image" content="/facebook.jpg"/>
-    <link rel="stylesheet" type="text/css" href="./index.css">
-    <link rel="stylesheet" type="text/css" href="./base.css">
-    <link rel="stylesheet" type="text/css" href="./layout.css">
-    <link rel="stylesheet" type="text/css" href="./typography.css">
-    <link rel="stylesheet" type="text/css" href="./module.css">
+  <meta content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta property="og:image" content="/facebook.jpg"/>
+  <link rel="stylesheet" type="text/css" href="./index.css">
+  <link rel="stylesheet" type="text/css" href="./base.css">
+  <link rel="stylesheet" type="text/css" href="./layout.css">
+  <link rel="stylesheet" type="text/css" href="./typography.css">
+  <link rel="stylesheet" type="text/css" href="./module.css">
 </head>
 
-<!--<body id = "main">-->
 <body>
   <div id = "left-column">
     <header><h1 class="reflected"><strong>Word Wars!</strong></h1></header>
@@ -25,10 +24,10 @@
 
           <p id = "tilenums"></p>
 
-        <div id = "login-box">
-          Username <input type = "text" id = "user-name">
+        <form id = "login-box">
+          Username <input type = "text" id = "user-name" required>
 
-          <input type = "button" value = "Log in" id = "login-button">          <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-type="button"></div>
+          <button type = "submit" id = "login-button">Log in</button>         <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-type="button"></div>
           <div id="fb-root"></div>
 
           <script>(function(d, s, id) {
@@ -40,7 +39,7 @@
           }(document, 'script', 'facebook-jssdk'));</script>
 
 
-        </div>
+        </form>
 
         <strong>Board type:</strong>
           <select id ="board-type">

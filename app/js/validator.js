@@ -34,7 +34,7 @@ validator.isValid = function (gameRef)
         //$('#bad-move-dialogue').fadeOut('slow');
         $('body').off('click');
       });
-    }, 300);
+    }, 200);
   };
 
   if(newletters.length > 0 ) //player didn't pass

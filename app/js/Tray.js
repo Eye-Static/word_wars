@@ -60,9 +60,9 @@ module.exports = function Tray (boardRef, playerNum)
   this.showTray = function ()
   {
     trayObject.show();
-    $('#whose-turn').text('Player ' + (this.playerNum+1) + '\'s turn');
     this.render();
   };
+
   this.hideTray = function ()
   {
     trayObject.hide();

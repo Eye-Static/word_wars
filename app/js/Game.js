@@ -11,7 +11,6 @@ var Game = function (boardType, numOfPlayers)
   console.log('starting new game with board type: ' + (boardType || 'not set'));
   console.log('and players: ' + (numOfPlayers || 'not set'));
 
-  new GameButtons(this);
   this.board = new Board(boardType);
   this.bag   = new Bag();
   this.turn  = {turnNum: 1, message: ''};
@@ -30,15 +29,22 @@ var Game = function (boardType, numOfPlayers)
   this.postNumTiles();
   this.board.render();
   this.board.addListeners(this.players); //now this must be called manually
+
   this.start();
 };
 
 Game.prototype.start = function()
 {
-  this.clearGameArea();
+  $('#score').empty();
+  $('#game-info').empty();
+  this.players.forEach(function(player)
+  {
+    player.tray.hideTray();
+  });
   this.printGameStatus();
   this.players[0].tray.showTray();
   this.renderScore();
+  $('#whose-turn').text('Player ' + (this.whoseTurn+1) + '\'s turn');
   //this.board.printBonus();
 };
 
@@ -65,6 +71,7 @@ Game.prototype.nextTurn = function()
   this.players[this.whoseTurn].tray.hideTray();
   // set whoseTurn to the next player
   this.whoseTurn = this.players[this.whoseTurn +1] ? this.whoseTurn + 1 : 0;
+  $('#whose-turn').text('Player ' + (this.whoseTurn+1) + '\'s turn');
   this.players[this.whoseTurn].tray.showTray();
   this.printGameStatus();
 };
@@ -103,12 +110,12 @@ Game.prototype.turnTransition = function(wordsData)
       $('body').off('click');
       gameRef.nextTurn();
     });
-  }, 300);
+  }, 200);
 };
 
 Game.prototype.printGameStatus = function ()
 {
-  //change what this is connected to on the DOM
+  // !!! not connected to anything currently
   $('#game-info').text('player ' + (this.whoseTurn+1) +
   '\'s turn. Turn: ' + (this.turn.message || this.turn.turnNum));
 };
@@ -297,17 +304,6 @@ Game.prototype.renderScore = function (recentScore)
   {
     $('#score').append('Player ' + (this.whoseTurn+1) + ' passed');
   }
-  // if null, it's first turn so skip this
-};
-
-Game.prototype.clearGameArea = function ()
-{
-  $('#score').empty();
-  $('#game-info').empty();
-  this.players.forEach(function(player)
-  {
-    player.tray.hideTray();
-  });
 };
 
 module.exports = Game;

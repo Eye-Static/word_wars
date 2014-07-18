@@ -1,28 +1,32 @@
 'use strict';
 var Game    = require('./Game');
 var Connection = require('./Connection');
+var GameButtons = require('./gameButtons');
 
 $(document).ready(function ()
 {
   var userName;
   var game;
-  game = new Game('scrabble', 2); //this is just for testing, in the final version
-                         //games are only started with the button
+  setTimeout(function(){$('#new-game-button').trigger('click')}, 10);
+  //this is just for testing, in the final version
+  //games are only started with the button
+
   var connection = new Connection();
 
   //////////////////////////////////////////////////
 
-  $('#login-button').on('click', function ()
+  $('#login-button').on('click', function (e)
   {
+    e.preventDefault();
     userName  = $('#user-name').val();
     $('#user-name').empty();
     $('#login-box').text('Logged in as ' + userName);
-    connection.sendUserName(userName); //func from Connection.js
+    connection.sendUserName(userName);
   });
 
   //////////////////////////////////////////////////
 
-  $('#new-game-button').on('click', function(event)
+  $('#new-game-button').on('click', function()
   {
     var boardType = $('#board-type').val();
     var gameData  = $('#game-type').val().split(' '); //such as 'local 2'
@@ -32,6 +36,7 @@ $(document).ready(function ()
     if(gameType === 'local')
     {
       game = new Game(boardType, playerNum);
+      new GameButtons(game);
     }
     else
     {
