@@ -206,12 +206,15 @@ Board.prototype.addDropListener = function(square, letterID, players)
   if(letter.score === 0)
   {
     $('#overlay').fadeIn('slow');
-    $('#'+letterID).position({of: square});
+    $('.popup').hide();
+    $('#letter-select').show();
+    $('#'+letterID).position({of: square}); //not working for some reason
     $('.letter-button').on('click', function(e)
     {
       e.preventDefault();
       $('.letter-button').off('click');
       $('#overlay').fadeOut('slow');
+      $('#letter-select').fadeOut('slow');
       letter.character = $(this).val();
       dropSquare.letter = letter;
       rerender();

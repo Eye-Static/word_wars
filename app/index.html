@@ -9,9 +9,7 @@
     <link rel="stylesheet" type="text/css" href="./base.css">
     <link rel="stylesheet" type="text/css" href="./layout.css">
     <link rel="stylesheet" type="text/css" href="./typography.css">
-    <link rel="stylesheet" type="text/css" href="./theme.css">
     <link rel="stylesheet" type="text/css" href="./module.css">
-    <link rel="stylesheet" type="text/css" href="./state.css">
 </head>
 
 <!--<body id = "main">-->
@@ -102,8 +100,10 @@
   </div>
 
   <div id="overlay">
-    <div>
-      <p>Set to what letter?</p>
+    <div id = "transition-dialogue" class="popup"> </div>
+    <div id = "bad-move-dialogue" class="popup"> </div>
+    <div id = "letter-select" class="popup">
+      Set to what letter?<br>
       <button class="letter-button" value="A">A</button>
       <button class="letter-button" value="B">B</button>
       <button class="letter-button" value="C">C</button>
@@ -132,7 +132,6 @@
       <button class="letter-button" value="Z">Z</button>
     </div>
   </div>
-  <div id = "transition-dialogue"></div>
     <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>

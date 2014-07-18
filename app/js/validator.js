@@ -5,6 +5,7 @@ var validator = {};
 var firstWordPlayed = false;
 
 // check if the new word has valid placement (straight line and connected)
+// add something to errorMessage to create popup and stop turn progression
 validator.isValid = function (gameRef)
 {
   game = gameRef;
@@ -14,8 +15,27 @@ validator.isValid = function (gameRef)
   var newletters = this.getNewLetters();
   var wordsData = []; //the words made in the turn
   var spelledWords = [];
-  var gibberish, w;
   var firstLetters = [];
+  var errorMessage = '';
+
+  var errorDialog = function()
+  {
+    $('#bad-move-dialogue').empty();
+    $('#bad-move-dialogue').append(errorMessage);
+    $('#overlay').fadeIn('slow');
+    $('.popup').hide();    //make sure unwanted dialogs are hidden
+    $('#bad-move-dialogue').show();
+    setTimeout(function()
+    {
+      $('body').on('click', function()  //async
+      {
+        console.log('in click');
+        $('#overlay').fadeOut('slow');
+        //$('#bad-move-dialogue').fadeOut('slow');
+        $('body').off('click');
+      });
+    }, 300);
+  };
 
   if(newletters.length > 0 ) //player didn't pass
   {
@@ -27,72 +47,60 @@ validator.isValid = function (gameRef)
     // check for star
     if (!firstWordPlayed && !this.onStar (newletters) )
     {
-      alert ('The first word must be placed on the STAR tile.');
-      return;
+      errorMessage = 'The first word must be placed on the STAR tile.';
     }
     // check for lines
     else if (orientation === null)
     {
-      alert ('Words must be placed in a straight line.');
-      return;
+      errorMessage = 'Words must be placed in a straight line.';
     }
     // check for breaks
     else if (!this.isConnected (newletters, orientation))
     {
-      alert ('Words may not contain spaces.');
-      return;
+      errorMessage = 'Words may not contain spaces.';
     }
     // check for... touching?
     else if (firstWordPlayed && !this.isTouching (newletters, orientation))
     {
-      alert ('New words must touch an existing word.');
-      return;
+      errorMessage = 'New words must touch an existing word.';
     }
     spelledWords = this.spellWords(newletters, orientation);
   }
 
-  dictionary.results = []; //reset results, currently not done in dictionary, whoops
-  dictionary.lookup (spelledWords, function (returnData)
+  if(errorMessage)
   {
-    //returnData comes out as an array of objects like the following:
-    //{word : 'the word', definition: 'definition' (or null if word not found)}
-    //returnData is in SAME order as input, woohoo!
-
-    for (var w = 0; w < returnData.length; w += 1)
+    errorDialog();
+  }
+  else
+  {
+    dictionary.results = []; //reset results, currently not done in dictionary, whoops
+    dictionary.lookup (spelledWords, function (returnData)
     {
-      if (returnData[w].definition === null)
+      //returnData comes out as an array of objects like the following:
+      //{word : 'the word', definition: 'definition' (or null if word not found)}
+
+      for (var w = 0; w < returnData.length; w += 1)
       {
-        alert (returnData[w].word + ' is not a word.');
-        return;
+        if (returnData[w].definition === null)
+        {
+          errorMessage = returnData[w].word.toUpperCase() + ' is not a word.';
+        }
       }
-    }
 
-    if (gibberish === false)
-    {
-      $('#spelled-word').empty();
-      for (w = 0; w < returnData.length; w += 1)
+      if(errorMessage)
       {
-        $('#spelled-word').append('<span>'+returnData[w].word.toUpperCase() + ' - ' + returnData[w].definition+'</span><br>');
-        
+        errorDialog();
       }
-      $('#spelled-word').fadeIn('slow');
-      $('body').on('click', function()
+      else
       {
-        $('#spelled-word').fadeOut('slow');
-        $('body').off();
-        game.finishTurn();
-        game.nextTurn();
-      });
-    }
-
-    if(spelledWords.length > 0) {firstWordPlayed = true;} // at least one word has now been played
-
-    game.turnTransition(returnData); //return words, or [] for a pass turn
-  });
+        if(spelledWords.length > 0) {firstWordPlayed = true;} // at least one word has now been played
+        game.turnTransition(returnData); //return words, or [] for a pass turn
+      }
+    });
+  }
 };
 
-//////////////////////////////////////////////////
-
+///////////////////////////////////////////////////
 // returns a 2D array of grid coordinates [y, x] for all new letters on the board
 validator.getNewLetters = function ()
 {
@@ -203,23 +211,23 @@ validator.isTouching = function (newletters)
     x = newletters[l][1];
 
     if      ( x > 0 &&
-              grid[y][x - 1].letter !== null &&
-              grid[y][x - 1].letter.justPlaced === false) return true;
+      grid[y][x - 1].letter !== null &&
+      grid[y][x - 1].letter.justPlaced === false) return true;
 
-    else if ( x < game.board.maxX - 1 &&
-              grid[y][x + 1].letter !== null &&
-              grid[y][x + 1].letter.justPlaced === false) return true;
+      else if ( x < game.board.maxX - 1 &&
+        grid[y][x + 1].letter !== null &&
+        grid[y][x + 1].letter.justPlaced === false) return true;
 
-    else if ( y > 0 &&
-              grid[y - 1][x].letter !== null &&
-              grid[y - 1][x].letter.justPlaced === false) return true;
+        else if ( y > 0 &&
+          grid[y - 1][x].letter !== null &&
+          grid[y - 1][x].letter.justPlaced === false) return true;
 
-    else if ( y < game.board.maxY &&
-              grid[y + 1][x].letter !== null &&
-              grid[y + 1][x].letter.justPlaced === false) return true;
-  }
-  return false;
-};
+          else if ( y < game.board.maxY &&
+            grid[y + 1][x].letter !== null &&
+            grid[y + 1][x].letter.justPlaced === false) return true;
+        }
+      return false;
+    };
 
 //////////////////////////////////////////////////
 
@@ -379,7 +387,7 @@ validator.getFirstLetters = function (newletters, orientation)
     {
       if (this.findWordVertical (newletters[l]).length > 1)
       {
-      firstLetters.push (this.findFirstVertical (newletters[l]));        
+        firstLetters.push (this.findFirstVertical (newletters[l]));
       }
     }
   }
@@ -391,7 +399,7 @@ validator.getFirstLetters = function (newletters, orientation)
     {
       if (this.findWordHorizontal (newletters[l]).length > 1)
       {
-      firstLetters.push (this.findFirstHorizontal (newletters[l]));
+        firstLetters.push (this.findFirstHorizontal (newletters[l]));
       }
     }
   }

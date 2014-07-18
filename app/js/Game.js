@@ -28,7 +28,7 @@ var Game = function (boardType, numOfPlayers)
     this.players[i].refillTiles (this.bag);
   }
   this.postNumTiles();
-  this.board.render(); // tray is passed for binding reasons
+  this.board.render();
   this.board.addListeners(this.players); //now this must be called manually
   this.start();
 };
@@ -39,7 +39,7 @@ Game.prototype.start = function()
   this.printGameStatus();
   this.players[0].tray.showTray();
   this.renderScore();
-  this.board.printBonus();
+  //this.board.printBonus();
 };
 
 Game.prototype.finishTurn = function ()
@@ -74,28 +74,33 @@ Game.prototype.turnTransition = function(wordsData)
   var gameRef = this;
   this.finishTurn(); //sets recent score
   $('#transition-dialogue').empty();
+  var el = '';
   if(wordsData.length === 0 )
   {
-    $('#transition-dialogue').append('<div>Player ' + (this.whoseTurn+1) + ' passed</div>');
+    el += '<div>Player ' + (this.whoseTurn+1) + ' passed</div>';
   }
   else
   {
-    $('#transition-dialogue').append('<div>Player ' + (this.whoseTurn+1) +
+    el += '<div>Player ' + (this.whoseTurn+1) +
                             ' got ' + this.recentScore +
-                            ' points for playing:</div><br>');
+                            ' points for playing:</div><br>';
     for (var w = 0; w < wordsData.length; w ++)
     {
-      $('#transition-dialogue').append('<div>'+wordsData[w].word.toUpperCase() + ' - ' + wordsData[w].definition+'</div>');
+      el += '<div>'+wordsData[w].word.toUpperCase() + ' - ' + wordsData[w].definition+'</div>';
     }
   }
-  $('#transition-dialogue').fadeIn('slow');
+  $('#transition-dialogue').append(el);
+  $('#overlay').fadeIn('slow');
+  $('.popup').hide();
+  $('#transition-dialogue').show();
   //timeout fixes a display bug and prevent users from accidentally clicking though it
-  setTimeout(function(){
-    $('html').on('click', function()  //async
+  setTimeout(function()
+  {
+    $('body').on('click', function()  //async
     {
-      console.log('transition dialogue exiting');
-      $('#transition-dialogue').fadeOut('slow');
-      $('html').off('click');
+      $('#overlay').fadeOut('slow');
+      //$('#transition-dialogue').fadeOut('slow');
+      $('body').off('click');
       gameRef.nextTurn();
     });
   }, 300);
