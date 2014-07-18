@@ -9,7 +9,7 @@ var Board = function (gridChoice)
 {
   this.grid = [];
   var stringGrid;
-  if(!gridChoice || !grids.hasOwnProperty(gridChoice))
+  if(!gridChoice || grids.gridChoice)
   {
     console.log('board layout not found, defaulting to scrabble');
     gridChoice = 'scrabble';
@@ -131,7 +131,7 @@ Board.prototype.renderLetters = function (lettersOnBoard, ys, xs, playerRef)
           },
         });
       }
-      if(lettersOnBoard.definition)
+      if(letterOnBoard.definition)
       {
         theLetter.tooltip(
         {

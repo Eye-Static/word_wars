@@ -55,7 +55,7 @@
           </select>
             <p></p>
 
-            <input type = "button" id = "new-game-button" value = "New Game">
+            <input type = "button" id = "new-game-button" class = "blue-input" value = "New Game">
 
 
       <!--
@@ -75,7 +75,7 @@
       <div id = "container">
         <div id = "board"></div>
       </div>
-      <section>
+      <section id = "tray-container">
 
       <div id = "player-0-tray" class="tray"></div>
       <div id = "player-1-tray" class="tray"></div>
@@ -88,7 +88,7 @@
           <li><input type = "button" class = "blue-input game-button" id = "done-button" value = "Pass"></li>
           <li><input type = "button" class = "blue-input game-button" id = "shuffle-tray-button" value = "Shuffle Tray"></li>
           <li><input type = "button" class = "blue-input game-button" id = "return-letters-button" value = "Return Letters"></li>
-          <li><div id = "whose-turn"></div></li>
+          <li><div id = "whose-turn" class = "blue-input"></div></li>
         </ul>
       </section>
     </div>
@@ -127,10 +127,10 @@
       <button class="letter-button" value="Z">Z</button>
     </div>
   </div>
-    <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
-    <script src = "app.js"></script>
+    <script src= "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src= "http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src= "https://cdn.socket.io/socket.io-1.0.6.js"></script>
+    <script src= "app.js"></script>
     <!--<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.min.js"></script>-->
 </body>
 </html>

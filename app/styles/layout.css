@@ -1,11 +1,3 @@
-
-/*#main
-{
-
-    /*display: flex; /* or inline-flex */
-    /*flex-direction: row | row-reverse | column | column-reverse;
-}
-*/
 header
 {
   width: 88%;
@@ -25,15 +17,14 @@ header
 }
 
 #left-column {
-  width: 40%;
   height: 100%;
+  width: 40%;
   float: left;
-  margin-left: 3%;
   margin-top: 1%;
 }
 
 #right-column {
-  width: 50%;
+  width: 55%;
   height: 100%;
   float: right;
   margin-right: 3em;
@@ -57,11 +48,11 @@ header
 #tilebox
 {
   border: 2px solid white;
-  width: 55%;
+  width: 75%;
   padding: 0 10px  40px 10px;
   height: 12.7em;
 
-  margin-left: 20%;
+  margin-left: 10%;
   background-color: #ADADFF;
   text-shadow: rgba(0,0,0,.4) 0 1px 0;
   line-height: 0.5;
@@ -75,9 +66,9 @@ header
 {
   border: solid 2px white;
   color: black;
-  width: 55%;
+  width: 75%;
   padding: 10px;
-  margin-left: 20%;
+  margin-left: 10%;
   margin-top: 7.5%;
   margin-bottom: 7.5%;
   line-height: 1.5;

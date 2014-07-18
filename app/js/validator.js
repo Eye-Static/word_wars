@@ -16,7 +16,7 @@ validator.isValid = function (gameRef)
   var wordsData = []; //the words made in the turn
   var spelledWords = [];
   var firstLetters = [];
-  var errorMessage = '';uglifyify
+  var errorMessage = '';
 
   var errorDialog = function()
   {

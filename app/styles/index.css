@@ -5,7 +5,6 @@ table
 }
 
 #game {
-  width:
 }
 
 body
@@ -17,7 +16,7 @@ body
    background-image:
   linear-gradient(#000033, #29293D);
   color: white;
-  /*height: 50em;*/
+  height: 41em;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -86,16 +85,6 @@ td
   color: rgb(151, 84, 19);
   z-index: 20;
 }
-
-.tray
-{
-  display: none;
-  border: solid 2px navy;
-  border-radius: 5px;
-  background-color: #ADADFF;
-  text-align: center;
-}
-
 
 #overlay
 {

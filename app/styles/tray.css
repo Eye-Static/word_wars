@@ -1,0 +1,36 @@
+#tray-container
+{
+  width: 21em;
+  height: auto;
+  float: right;
+  padding: 1em;
+  margin-right: 30%;
+  margin-top: 2%;
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+  -moz-box-shadow:    inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #000000;
+  box-shadow:         inset 0 0 10px #000000;
+  border: 3px solid white;
+  border-radius: 5px;
+  background-color: #ADADFF;
+  text-align: center;
+}
+
+ul
+{
+  float: left;
+  padding-right: 20px;
+  margin-top: .5em;
+}
+
+li
+{
+  list-style: none;
+  display: inline-block;
+  float: right;
+  margin-left: -10px;
+}
+
+
