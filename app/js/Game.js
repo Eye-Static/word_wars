@@ -34,7 +34,7 @@ var Game = function (boardType, numOfPlayers)
   //   this.players[i].tray = new Tray(this.board, i);
   // }
   this.postNumTiles();
-  this.board.render();
+  this.board.renderAll();
   this.board.addListeners(); //now this must be called manually
 
   this.start();
@@ -67,7 +67,7 @@ Game.prototype.finishTurn = function ()
   justFinishedPlayer.refillTiles(this.bag);
   this.postNumTiles();
   justFinishedPlayer.tray.render();
-  this.board.render();
+  this.board.renderAll();
   this.board.addListeners();
 };
 

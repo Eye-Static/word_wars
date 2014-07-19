@@ -84,7 +84,6 @@ module.exports = function Tray (boardRef, playerNum)
         zIndex: 100,
         revert: 'invalid',
         containment: 'body',
-        // scope: 'tray'
       });
     }
     trayObject.droppable(
@@ -98,9 +97,10 @@ module.exports = function Tray (boardRef, playerNum)
           top: $(this).offset().top +12,
           //set height to sit in middle of tray
         });
-        var foundLetter = boardRef.retrieveLetter(letterID, that);
+        var foundLetter = boardRef.retrieveLetter(letterID);
         foundLetter.x = null;
         foundLetter.y = null;
+        foundLetter.justPlace = false;
         that.add(foundLetter);
         if(that.letters.length === 7){$('#done-button').val('Pass');}
       },

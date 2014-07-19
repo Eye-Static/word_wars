@@ -38,9 +38,9 @@ module.exports = function(game)
         }
       }
     }
-    game.board.render();
+    game.board.renderAll();  //use the slow version for now
+    game.board.addListeners();
     player.tray.render();
-    game.board.addListeners(game.players);
   });
 
   //////////////////////////////////////////////////
