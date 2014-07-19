@@ -2,7 +2,6 @@
 var Letter = require('./Letter');
 var Bag = require('./Bag');
 var letterTemplate = require('./templates/letterTemplate.hbs');
-var board;
 
 module.exports = function Tray (boardRef, playerNum)
 {
@@ -99,9 +98,11 @@ module.exports = function Tray (boardRef, playerNum)
           top: $(this).offset().top +12,
           //set height to sit in middle of tray
         });
-        var letter = boardRef.retrieveLetter(letterID, that);
-        that.add(letter);
-        if(that.letters.length === 7){console.log('enter drop');$('#done-button').val('Pass');}
+        var foundLetter = boardRef.retrieveLetter(letterID, that);
+        foundLetter.x = null;
+        foundLetter.y = null;
+        that.add(foundLetter);
+        if(that.letters.length === 7){$('#done-button').val('Pass');}
       },
       greedy: true,
       tolerance: 'touch'
