@@ -98,7 +98,6 @@ Board.prototype.renderLetters = function (lettersOnBoard)
 Board.prototype.renderOneLetter = function(letterObj)
 {
   var boardRef = this;
-  console.log('I\'m rendering a ' + letterObj.character);
   var htmlLetter = $(letterTemplate(letterObj));
 
   $('#board').append(htmlLetter);  // put the div in the board
@@ -113,13 +112,36 @@ Board.prototype.renderOneLetter = function(letterObj)
   var clone;
   if(letterObj.justPlaced)
   {
-    htmlLetter.draggable( // this code is partially duplicated in tray
+    htmlLetter.draggable(
     {
       zIndex: 100,
-      revert: 'invalid',
+      revert: function(droppableObj)
+      {
+        if(droppableObj === false) //is reverting
+        {
+          // Reset id which also removes 'dead' id.
+          // Takes clone 500ms to revert so
+          // make 'dead' letter visible again after 500ms
+          htmlLetter.attr('id', letID);
+          var that = this;
+          setTimeout(function()
+          {
+            $(that).css('opacity', 1);
+          }, 500)
+
+          return true;
+        }
+        else  //not reverting
+        {
+          return false;
+        }
+      },
       containment: 'body',
       helper: function()
       {
+        // Drag clone helper instead of real letter
+        // because clone can escape bounds of the board.
+        // Set real letter.id to dead.
         clone = htmlLetter.clone();
         htmlLetter.attr('id', 'dead');
         clone.attr('id', letID);
@@ -127,11 +149,8 @@ Board.prototype.renderOneLetter = function(letterObj)
       },
       start: function(event, ui)
       {
+        // Make the letter invisible so only clone can be seen.
         $(this).css('opacity', 0);
-      },
-      stop: function(event, ui)
-      {
-        $(clone).remove(); //this fixes the horrible tile shifting bug
       },
     });
   }
@@ -156,9 +175,8 @@ Board.prototype.addListeners = function(htmlSquare)
       var letterID    = ui.helper[0].id;   // get id of dropped letter
       var foundLetter = boardRef.retrieveLetter(letterID);
 
-      $('#dead').empty().removeClass('ui-draggable').removeAttr('id');
-      //removing dead letters shifts new ones, empty it instead
-      //removing draggable class so no way to interact with it
+      $('#dead').removeClass('ui-draggable').removeAttr('id');
+      //removing draggable class so no way to interact with dead letter
       //dead letters are removed on every full rerender
 
       if(foundLetter.y !== null)
@@ -191,14 +209,13 @@ Board.prototype.addListeners = function(htmlSquare)
 
   if(htmlSquare)
   {
-    console.log('Reactivating listener on square ');
-    console.dir(htmlSquare);
+    console.log('Reactivating listener on ' + htmlSquare.selector);
     $(htmlSquare).droppable(droppableOptions);
     $(htmlSquare).removeClass('has-letter');
   }
   else
   {
-    console.log('no argument so adding all listeners again');
+    console.log('adding all listeners again');
     $('#board').find('td:not(.XX):not(.has-letter)').droppable(droppableOptions);
   }
 };
@@ -221,7 +238,7 @@ Board.prototype.onTileDrop = function(letterObj)
   }
   else
   {
-    dropSquare.letter = letterObj; //! maybe move this?
+    dropSquare.letter = letterObj;
     this.renderOneLetter(letterObj); // draw the letter
   }
 
@@ -230,7 +247,7 @@ Board.prototype.onTileDrop = function(letterObj)
     $('#overlay').fadeIn('slow');
     $('.popup').hide();
     $('#letter-select').show();
-    $('#id'+letterObj.id).position({of: $('#square-'+letterObj.y+'-'+letterObj.x)}); //! check this
+    $('#id'+letterObj.id).position({of: $('#square-'+letterObj.y+'-'+letterObj.x)}); //! not working
     $('.letter-button').on('click', function(e)
     {
       e.preventDefault();
@@ -257,7 +274,7 @@ Board.prototype.retrieveLetter = function(letterID)
       return foundLetter;
     }
   }
-  //if tray didn't have the letter, find/remove letter from board
+  // Could not find letter on trays, find/remove letter from board
   foundLetter = this.findAndRemove(letterID);
   return foundLetter;
 };
@@ -275,7 +292,7 @@ Board.prototype.findAndRemove = function (letterID)
       {
         console.log('letter', this.grid[y][x].letter.character, 'located at x', x, 'y', y);
         var foundLetter = this.grid[y][x].letter;
-        this.grid[y][x].letter = null; //remove from square
+        this.grid[y][x].letter = null;
         return foundLetter;
       }
     }
@@ -283,7 +300,7 @@ Board.prototype.findAndRemove = function (letterID)
 };
 
 //////////////////////////////////////////////////
-// a printer for the grid, pass in a function for what to print
+// A printer function for the grid, pass in a function for what to print from a square
 
 Board.prototype.printer = function(func)
 {
@@ -301,6 +318,7 @@ Board.prototype.printer = function(func)
 
 //////////////////////////////////////////////////
 // prints all the letters stored on the board's grid[y][x] to console
+
 Board.prototype.printGrid = function ()
 {
   this.printer(function(square)
@@ -311,8 +329,8 @@ Board.prototype.printGrid = function ()
 };
 
 /////////////////////////////////////////////////
-
 // prints all the letters' justPlaced property on the board's grid[y][x] to console
+
 Board.prototype.printPlaced = function ()
 {
   this.printer(function(square)
@@ -326,8 +344,8 @@ Board.prototype.printPlaced = function ()
 };
 
 /////////////////////////////////////////////////
-
 // prints all the letters' justPlaced property on the board's grid[y][x] to console
+
 Board.prototype.printBonus = function ()
 {
   this.printer(function(square)

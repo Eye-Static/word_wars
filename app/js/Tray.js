@@ -77,8 +77,8 @@ module.exports = function Tray (boardRef, playerNum)
     {
 
       var letterHtml = $(letterTemplate(that.letters[i]));
-      //var letID = letterHtml.attr('id');
       trayObject.append(letterHtml);
+      // These 'draggable' options are much simpler than those in board.
       letterHtml.draggable(
       {
         zIndex: 100,
