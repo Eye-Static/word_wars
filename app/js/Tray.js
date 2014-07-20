@@ -91,6 +91,7 @@ module.exports = function Tray (boardRef, playerNum)
       drop: function (event, ui)
       {
         event.preventDefault();
+        $('#dead').empty().removeClass('ui-draggable').removeAttr('id');
         var letterID = ui.helper[0].id;
         $('.ui-draggable-dragging').offset(
         {

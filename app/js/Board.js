@@ -121,8 +121,7 @@ Board.prototype.renderOneLetter = function(letterObj)
       helper: function()
       {
         clone = htmlLetter.clone();
-        htmlLetter.removeAttr('id'); //cannot let two things have same id
-        htmlLetter.addClass('dead');
+        htmlLetter.attr('id', 'dead');
         clone.attr('id', letID);
         return clone;
       },
@@ -155,12 +154,13 @@ Board.prototype.addListeners = function(htmlSquare)
     drop: function (event, ui)
     {
       var letterID    = ui.helper[0].id;   // get id of dropped letter
-
       var foundLetter = boardRef.retrieveLetter(letterID);
-      console.log('trying to remove old letter');
-      $('.dead').empty().removeClass('ui-draggable');
-      console.dir($('.dead'))
-      //$('.dead').draggable('destroy');
+
+      $('#dead').empty().removeClass('ui-draggable').removeAttr('id');
+      //removing dead letters shifts new ones, empty it instead
+      //removing draggable class so no way to interact with it
+      //dead letters are removed on every full rerender
+
       if(foundLetter.y !== null)
       {
         var prevSquare = $('#square-'+foundLetter.y+'-'+foundLetter.x);
