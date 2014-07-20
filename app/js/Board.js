@@ -120,7 +120,10 @@ Board.prototype.renderOneLetter = function(letterObj)
       containment: 'body',
       helper: function()
       {
-        clone = htmlLetter.clone().attr('id', letID);
+        clone = htmlLetter.clone();
+        htmlLetter.removeAttr('id'); //cannot let two things have same id
+        htmlLetter.addClass('dead');
+        clone.attr('id', letID);
         return clone;
       },
       start: function(event, ui)
@@ -152,16 +155,23 @@ Board.prototype.addListeners = function(htmlSquare)
     drop: function (event, ui)
     {
       var letterID    = ui.helper[0].id;   // get id of dropped letter
-      $('#id'+letterID).remove();
 
       var foundLetter = boardRef.retrieveLetter(letterID);
-      var prevSquare  = $('#square-'+foundLetter.y+'-'+foundLetter.x);
-      boardRef.addListeners (prevSquare);  // add listener to where the tile left
+      console.log('trying to remove old letter');
+      $('.dead').empty().removeClass('ui-draggable');
+      console.dir($('.dead'))
+      //$('.dead').draggable('destroy');
+      if(foundLetter.y !== null)
+      {
+        var prevSquare = $('#square-'+foundLetter.y+'-'+foundLetter.x);
+        boardRef.addListeners(prevSquare);  // add listener to where the tile left
+      }
 
       var squareID    = this.id.split('-');
       foundLetter.y   = squareID[1];    //change tile's x and y to new position
       foundLetter.x   = squareID[2];
       foundLetter.justPlaced = true;
+
       $(this).addClass('has-letter');
       $(this).css('box-shadow', 'none');
       $(this).droppable('destroy');
@@ -211,7 +221,7 @@ Board.prototype.onTileDrop = function(letterObj)
   }
   else
   {
-    dropSquare.letter = letterObj;
+    dropSquare.letter = letterObj; //! maybe move this?
     this.renderOneLetter(letterObj); // draw the letter
   }
 
@@ -248,8 +258,7 @@ Board.prototype.retrieveLetter = function(letterID)
     }
   }
   //if tray didn't have the letter, find/remove letter from board
-  var coordinates = this.findAndRemove(letterID);
-  foundLetter     = this.removeLetter(coordinates.y, coordinates.x);
+  foundLetter = this.findAndRemove(letterID);
   return foundLetter;
 };
 
