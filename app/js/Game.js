@@ -5,13 +5,14 @@ var Player = require('./Player');
 var GameButtons = require('./gameButtons');
 var validator   = require ('./validator');
 //var scoreAdder  = require ('./scoreAdder');
+var Tray    = require('./Tray');
 
 var Game = function (boardType, numOfPlayers)
 {
   console.log('starting new game with board type: ' + (boardType || 'not set'));
   console.log('and players: ' + (numOfPlayers || 'not set'));
 
-  this.board = new Board(boardType);
+  this.board = null;
   this.bag   = new Bag();
   this.turn  = {turnNum: 1, message: ''};
   this.players = [];
@@ -20,15 +21,21 @@ var Game = function (boardType, numOfPlayers)
   this.recentScore = null; //null is for the first turn only
   this.bag.fill();               // add letters to bag
   this.bag.shake();              // randomize bag
+  this.board = new Board(boardType);
 
   for (var i = 0; i < (numOfPlayers || 1); i++)
   {
     this.players[i] = new Player(this.board, i);//pass board & the player number
     this.players[i].refillTiles (this.bag);
   }
+  this.board.players = this.players;
+  // for (var i = 0; i < (numOfPlayers || 1); i++) //this is a hack, should be pulled out eventually
+  // {
+  //   this.players[i].tray = new Tray(this.board, i);
+  // }
   this.postNumTiles();
-  this.board.render();
-  this.board.addListeners(this.players); //now this must be called manually
+  this.board.renderAll();
+  this.board.addListeners(); //now this must be called manually
 
   this.start();
 };
@@ -60,8 +67,8 @@ Game.prototype.finishTurn = function ()
   justFinishedPlayer.refillTiles(this.bag);
   this.postNumTiles();
   justFinishedPlayer.tray.render();
-  this.board.render(this.players);
-  this.board.addListeners(this.players);
+  this.board.renderAll();
+  this.board.addListeners();
 };
 
 Game.prototype.nextTurn = function()

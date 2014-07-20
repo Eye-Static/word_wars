@@ -1,9 +1,10 @@
-#tray-container
+.tray
 {
   width: 21em;
-  height: auto;
+  height: 5em;
   float: right;
   padding: 1em;
+  display: none;
   margin-right: 30%;
   margin-top: 2%;
   -moz-box-sizing:    border-box;

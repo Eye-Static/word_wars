@@ -2,12 +2,10 @@
 var Letter = require('./Letter');
 var Bag = require('./Bag');
 var letterTemplate = require('./templates/letterTemplate.hbs');
-var board;
 
 module.exports = function Tray (boardRef, playerNum)
 {
   this.letters = [];  // array of letter objects (max 7)
-  // this.board = board;
   this.playerNum = playerNum;
   var trayObject = $('#player-' + playerNum + '-tray');
 
@@ -79,14 +77,13 @@ module.exports = function Tray (boardRef, playerNum)
     {
 
       var letterHtml = $(letterTemplate(that.letters[i]));
-      var letID = letterHtml.attr('id');
       trayObject.append(letterHtml);
+      // These 'draggable' options are much simpler than those in board.
       letterHtml.draggable(
       {
         zIndex: 100,
         revert: 'invalid',
         containment: 'body',
-        // scope: 'tray'
       });
     }
     trayObject.droppable(
@@ -94,25 +91,22 @@ module.exports = function Tray (boardRef, playerNum)
       drop: function (event, ui)
       {
         event.preventDefault();
+        $('#dead').empty().removeClass('ui-draggable').removeAttr('id');
         var letterID = ui.helper[0].id;
         $('.ui-draggable-dragging').offset(
         {
           top: $(this).offset().top +12,
           //set height to sit in middle of tray
         });
-        var letter = boardRef.retrieveLetter(letterID, that);
-        that.add(letter);
-        if(that.letters.length === 7){console.log('enter drop');$('#done-button').val('Pass');}
+        var foundLetter = boardRef.retrieveLetter(letterID);
+        foundLetter.x = null;
+        foundLetter.y = null;
+        foundLetter.justPlace = false;
+        that.add(foundLetter);
+        if(that.letters.length === 7){$('#done-button').val('Pass');}
       },
-     //  scope: 'tray',
-     //  over: function(event, ui){
-     //    $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'tray');
-     //  },
-     //  out: function(event, ui){
-     //    $( '.ui-draggable-dragging' ).draggable('option', 'scope', 'default');
-     // },
-     greedy: true,
-     tolerance: 'touch'
+      greedy: true,
+      tolerance: 'touch'
    });
   };
 
