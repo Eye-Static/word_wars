@@ -92,7 +92,7 @@ module.exports = function(grunt) {
       // },
       htmlcss: {
         files:[
-          'app/images/**/*', 'app/styles/**/*.css', 'app/index.html', 'app/signin.html'
+          'app/images/**/*', 'app/styles/**/*.css', 'app/index.html'
         ],
         tasks: ['build']
       }

@@ -1,14 +1,14 @@
 #board {  /*eric*/
   background-color: none;
   border: 6px solid #33334C;
-  width: 700px;
+  width: 850px;
   height: 480px;  /*455px;*/
   overflow: scroll;
-  z-index: 10;
+  z-index: 100;
   background-image:
     radial-gradient(
       circle,
-      #3385FF,
+     #FFCC00,
       #0A0A33
     );
 }
