@@ -31,7 +31,7 @@ $(document).ready(function ()
     var boardType = $('#board-type').val();
     var gameData  = $('#game-type').val().split(' '); //such as 'local 2'
     var gameType  = gameData[0];
-    var playerNum = Number.parseInt(gameData[1]);
+    var playerNum = parseInt (gameData[1]);//Number.parseInt(gameData[1]);
 
     if(gameType === 'local')
     {
