@@ -190,8 +190,20 @@ validator.isLine = function (newletters)
       isVertical = false;
     }
   }
-  if    (isHorizontal === true) return 'horizontal';
-  else if (isVertical === true) return 'vertical';
+  // this check fixes the single-letter error
+  if (isHorizontal === true && isVertical === true)  // only one letter placed
+  {
+    // we must determine orientation a different way
+    var y, x;
+    y = newletters[0][0];
+    x = newletters[0][1];
+
+    if (x > 0 && grid[y][x - 1].letter != null) return 'horizontal';
+    else if (x < game.board.maxX - 1 && grid[y][x + 1].letter != null) return 'horizontal';
+    else return 'vertical';
+  }
+  else if (isHorizontal === true) return 'horizontal';
+  else if (isVertical   === true) return 'vertical';
   else return null;
 };
 

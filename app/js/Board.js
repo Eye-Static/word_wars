@@ -43,7 +43,7 @@ var Board = function (gridChoice)
 
     var thisSpace = squares[i];
 
-    if (thisSpace == '..') square.bonus = '•';
+    if (thisSpace == '..') square.bonus = "&bull;";//'•';
     else square.bonus = thisSpace;
 
     // the bonus field is same as the on the grid pattern
