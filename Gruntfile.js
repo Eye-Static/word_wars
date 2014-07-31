@@ -35,7 +35,7 @@ module.exports = function(grunt) {
 
     concat: {
       dist: {
-        src: ['app/styles/*.css'],
+        src: ['app/styles/*.css', '!app/styles/signin.css'],
         dest: 'dist/style.css',
       },
     },
