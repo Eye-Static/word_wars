@@ -29,7 +29,6 @@ validator.isValid = function (gameRef)
     {
       $('body').on('click', function()  //async
       {
-        console.log('in click');
         $('#overlay').fadeOut('slow');
         $('body').off('click');
       });

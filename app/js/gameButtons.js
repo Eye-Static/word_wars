@@ -24,7 +24,33 @@ module.exports = function(game, debug)
   $('#turn-in-button').on('click', function()
   {
     returnLetters();
-    //something more
+    var bagLetters = game.bag.letters;
+    var player = game.players[game.whoseTurn];
+    var playerLetters = player.tray.letters;
+
+    var length = playerLetters.length;
+    for(var i = 0; i < length; i++)
+    {
+      bagLetters.push(playerLetters.pop());
+    }
+    game.bag.shake();
+
+    // This gives letters up to 7 as long as the bag has them
+    var letter;
+    while(playerLetters.length < 7 && (letter = bagLetters.pop()))
+    {
+      playerLetters.push(letter);
+    }
+    player.tray.render();
+
+    $('#transition-dialogue').append(
+        '<div>Player ' + (game.whoseTurn+1) +
+        ' swapped out ' +
+        length + ' letters</div>'
+        );
+
+    // Move to next turn
+    validator.isValid(game);
   });
 
   //////////////////////////////////////////////////
@@ -33,31 +59,32 @@ module.exports = function(game, debug)
   $('#return-letters-button').click (function ()
   {
     returnLetters();
+    game.board.renderAll();  //use the slow version for now
+    game.board.addListeners();
   });
 
   //////////////////////////////////////////////////
 
   var returnLetters = function()
   {
-    var player    = game.players[game.whoseTurn];
-    var boardGrid = game.board.grid;
+    var player = game.players[game.whoseTurn];
+    var grid = game.board.grid;
     var letter;
 
-    for(var y = 0; y < boardGrid.length; y ++)
+    for(var y = 0; y < grid.length; y ++)
     {
-      for(var x = 0; x < boardGrid[y].length; x ++)
+      for(var x = 0; x < grid[y].length; x ++)
       {
-        letter = boardGrid[y][x].letter;
+        letter = grid[y][x].letter;
         if(letter && letter.justPlaced)
         {
           player.tray.letters.push(letter);
-          boardGrid[y][x].letter = null;
+          grid[y][x].letter = null;
         }
       }
     }
-    game.board.renderAll();  //use the slow version for now
-    game.board.addListeners();
     player.tray.render();
+    $('#done-button').text('Pass');
   };
 
   //////////////////////////////////////////////////
