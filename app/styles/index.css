@@ -1,3 +1,10 @@
+html
+{
+  /*This allows the overlay to cover the whole page even with scroll bars present*/
+  position: relative;
+  min-height: 100%;
+}
+
 table
 {
   border-collapse: collapse;
@@ -134,4 +141,8 @@ select
 #login-button
 {
   font-size: .7em;
+}
+div #transition-dialogue
+{
+  margin-bottom: 1em;
 }
