@@ -8,7 +8,6 @@ module.exports = function(game)
   {
     game.players[game.whoseTurn].tray.shuffle();
     game.players[game.whoseTurn].tray.render();
-    game.board.addListeners (game.players);
   });
 
   //////////////////////////////////////////////////
