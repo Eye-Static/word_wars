@@ -5,8 +5,6 @@
   float: right;
   padding: 1em;
   display: none;
-  margin-right: 30%;
-  margin-top: 2%;
   -moz-box-sizing:    border-box;
   -webkit-box-sizing: border-box;
   box-sizing:         border-box;
@@ -17,6 +15,13 @@
   border-radius: 5px;
   background-color: #ADADFF;
   text-align: center;
+}
+
+#tray-container
+{
+  display: inline-block;
+  margin-left: 25%;
+  margin-top: 4%;
 }
 
 ul

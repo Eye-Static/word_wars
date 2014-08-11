@@ -84,17 +84,21 @@ Game.prototype.turnTransition = function(wordsData)
 {
   var gameRef = this;
   this.finishTurn(); //sets recent score
-  $('#transition-dialogue').empty();
   var el = '';
   if(wordsData.length === 0 )
   {
-    el += '<div>Player ' + (this.whoseTurn+1) + ' passed</div>';
+    // Check if turn-in letters populated the dialogue box
+    ////and refactor this hacky crap later//
+    if(!$('#transition-dialogue').children().length)
+    {
+      el += '<div>Player ' + (this.whoseTurn+1) + ' passed</div>';
+    }
   }
   else
   {
     el += '<div>Player ' + (this.whoseTurn+1) +
                             ' got ' + this.recentScore +
-                            ' points for playing:</div><br>';
+                            ' points for playing:</div>';
     for (var w = 0; w < wordsData.length; w ++)
     {
       el += '<div>'+wordsData[w].word.toUpperCase() + ' - ' + wordsData[w].definition+'</div>';
@@ -109,7 +113,10 @@ Game.prototype.turnTransition = function(wordsData)
   {
     $('body').on('click', function()  //async
     {
-      $('#overlay').fadeOut('slow');
+      $('#overlay').fadeOut('slow', function()
+      {
+        $('#transition-dialogue').empty();
+      });
       $('body').off('click');
       gameRef.nextTurn();
     });
