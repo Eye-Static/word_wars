@@ -9,7 +9,7 @@ var Board = function (gridChoice)
 {
   this.grid = [];
   this.players = null;
-  var stringGrid;
+
   if(!gridChoice || grids.gridChoice)
   {
     console.log('board layout not found, defaulting to scrabble');
@@ -25,9 +25,8 @@ var Board = function (gridChoice)
   }
   // create a grid maxX wide and maxY deep
 
-  stringGrid = grids[gridChoice].grid;
-  var squares = stringGrid.split(/\s+/);
-  // stringGrid is split by 1+ spaces to create squares
+  var squares = grids[gridChoice].grid.split(/\s+/);
+  // grid is split by 1+ spaces to create squares
 
   var y = -1;
   var x;
@@ -43,7 +42,7 @@ var Board = function (gridChoice)
 
     var thisSpace = squares[i];
 
-    if (thisSpace == '..') square.bonus = "&bull;";//'•';
+    if (thisSpace == '..') square.bonus = '&bull;';//'•';
     else square.bonus = thisSpace;
 
     // the bonus field is same as the on the grid pattern
@@ -127,7 +126,7 @@ Board.prototype.renderOneLetter = function(letterObj)
           setTimeout(function()
           {
             $(that).css('opacity', 1);
-          }, 500)
+          }, 500);
 
           return true;
         }

@@ -7,7 +7,7 @@ $(document).ready(function ()
 {
   var userName;
   var game;
-  setTimeout(function(){$('#new-game-button').trigger('click')}, 10);
+  setTimeout(function(){$('#new-game-button').trigger('click')}, 50);
   //this is just for testing, in the final version
   //games are only started with the button
 

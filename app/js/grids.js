@@ -1,6 +1,6 @@
 module.exports =
 {
-  scrabble : {
+  biggerScrabble : {
     grid:
     'DW .. .. .. TL .. .. DW .. .. .. DW .. .. DL .. .. .. DW .. ' +
     '.. DW .. .. .. DL .. .. DW .. DW .. .. DL .. .. .. DW .. .. ' +
@@ -25,7 +25,28 @@ module.exports =
     width : 20,
     height: 20
     },
-
+  scrabble : {
+    grid:
+    'XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX ' +
+    'XX XX TW .. .. .. DL .. .. TW .. .. DL .. .. .. TW XX XX ' +
+    'XX XX .. DW .. .. .. TL .. .. .. TL .. .. .. DW .. XX XX ' +
+    'XX XX .. .. DW .. .. .. DL .. DL .. .. .. DW .. .. XX XX ' +
+    'XX XX .. .. .. DW .. .. .. DL .. .. .. DW .. .. .. XX XX ' +
+    'XX XX DL .. .. .. DW .. TL .. TL .. DW .. .. .. DL XX XX ' +
+    'XX XX .. TL .. .. .. TL .. .. .. TL .. .. .. TL .. XX XX ' +
+    'XX XX .. .. DL .. DL .. DL .. DL .. DL .. DL .. .. XX XX ' +
+    'XX XX TW .. .. DL .. .. .. *  .. .. .. DL .. .. TW XX XX ' +
+    'XX XX .. .. DL .. DL .. DL .. DL .. DL .. DL .. .. XX XX ' +
+    'XX XX .. TL .. .. .. TL .. .. .. TL .. .. .. TL .. XX XX ' +
+    'XX XX DL .. .. .. DW .. DL .. DL .. DW .. .. .. DL XX XX ' +
+    'XX XX .. .. .. DW .. .. .. DL .. .. .. DW .. .. .. XX XX ' +
+    'XX XX .. .. DW .. .. .. DL .. DL .. .. .. DW .. .. XX XX ' +
+    'XX XX .. DW .. .. .. TL .. .. .. TL .. .. .. DW .. XX XX ' +
+    'XX XX TW .. .. .. DL .. .. TW .. .. DL .. .. .. TW XX XX ' +
+    'XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX',
+    width : 19,
+    height: 17
+    },
   wordsWithFriends :{
     grid:
     'XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX ' +
