@@ -11,6 +11,7 @@ module.exports = function(game, debug)
   });
 
   //////////////////////////////////////////////////
+
   $('#done-button').show();
   $('#done-button').on('click', function()
   {
@@ -18,8 +19,25 @@ module.exports = function(game, debug)
   });
 
   //////////////////////////////////////////////////
+
+  $('#turn-in-button').show();
+  $('#turn-in-button').on('click', function()
+  {
+    returnLetters();
+    //something more
+  });
+
+  //////////////////////////////////////////////////
+
   $('#return-letters-button').show();
   $('#return-letters-button').click (function ()
+  {
+    returnLetters();
+  });
+
+  //////////////////////////////////////////////////
+
+  var returnLetters = function()
   {
     var player    = game.players[game.whoseTurn];
     var boardGrid = game.board.grid;
@@ -40,7 +58,7 @@ module.exports = function(game, debug)
     game.board.renderAll();  //use the slow version for now
     game.board.addListeners();
     player.tray.render();
-  });
+  };
 
   //////////////////////////////////////////////////
   // DEBUG BUTTONS //
@@ -54,50 +72,48 @@ module.exports = function(game, debug)
 
   var showDebugButtons = function ()
   {
-    $.each(debugButtons, function(name, DOMbutton)
+    $('.debug-button').show();
+
+    debugButtons.printGrid.click (function ()
     {
-      DOMbutton.show();
+      game.board.printGrid();
+    });
+
+    //////////////////////////////////////////////////
+
+    debugButtons.printTray.click (function ()
+    {
+      for(var i = 0; i < game.players.length; i ++)
+      {
+        game.players[i].tray.print();
+      }
+    });
+
+    //////////////////////////////////////////////////
+
+    debugButtons.printPlaced.click (function ()
+    {
+      game.board.printPlaced();
+    });
+
+    //////////////////////////////////////////////////
+
+    debugButtons.hideDebug.click (function ()
+    {
+      hideDebugButtons();
     });
   };
+
+  //////////////////////////////////////////////////
 
   var hideDebugButtons = function ()
   {
     $.each(debugButtons, function(name, DOMbutton)
     {
       DOMbutton.hide();
+      DOMbutton.off('click');
     });
   };
-
-  //////////////////////////////////////////////////
-
-  debugButtons.printGrid.click (function ()
-  {
-    game.board.printGrid();
-  });
-
-  //////////////////////////////////////////////////
-
-  debugButtons.printTray.click (function ()
-  {
-    for(var i = 0; i < game.players.length; i ++)
-    {
-      game.players[i].tray.print();
-    }
-  });
-
-  //////////////////////////////////////////////////
-
-  debugButtons.printPlaced.click (function ()
-  {
-    game.board.printPlaced();
-  });
-
-  //////////////////////////////////////////////////
-
-  debugButtons.hideDebug.click (function ()
-  {
-    hideDebugButtons();
-  });
 
   if(debug) {showDebugButtons();}
 };

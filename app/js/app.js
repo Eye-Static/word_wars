@@ -1,5 +1,5 @@
 'use strict';
-var Game    = require('./Game');
+var Game = require('./Game');
 var Connection = require('./Connection');
 var GameButtons = require('./gameButtons');
 
@@ -7,15 +7,16 @@ $(document).ready(function ()
 {
   var userName;
   var game;
-  //Change debug to remove debug buttons and game auto-start
+
+  //Change debug to true to remove debug buttons and game auto-start
   var debug = true;
 
   if(debug){
     // Clicks the new game button
+    //this is just for testing, in the final version
+    //games are only started with the button
     setTimeout(function(){$('#new-game-button').trigger('click')}, 50);
   }
-  //this is just for testing, in the final version
-  //games are only started with the button
 
   var connection = new Connection();
 
