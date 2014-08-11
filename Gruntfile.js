@@ -33,18 +33,11 @@ module.exports = function(grunt) {
 
     clean: ['dist'],
 
-    concat: {
-      dist: {
-        src: ['app/styles/*.css', '!app/styles/signin.css'],
-        dest: 'dist/style.css',
-      },
-    },
-
     copy: {
       all: {
         expand: true,
         cwd: 'app/',
-        src: ['*.html', 'images/**/*'],
+        src: ['*.html', 'images/**/*', 'styles/*'],
         dest: 'dist/',
         flatten: true,
         filter: 'isFile'
@@ -75,7 +68,7 @@ module.exports = function(grunt) {
       prod: {
         options: {
           script: 'server.js',
-          //node_env: 'production'
+          node_env: 'production'
         }
       }
     },
@@ -100,7 +93,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('serve', ['build', 'express:dev','watch']);
   grunt.registerTask('server', 'serve');
-  grunt.registerTask('build', ['clean', 'browserify', 'concat', 'copy']);
+  grunt.registerTask('build', ['clean', 'browserify', 'copy']);
   grunt.registerTask('test:acceptance',['express:dev','casper']);
   grunt.registerTask('test:api','simplemocha');
   grunt.registerTask('test', ['test:acceptance','test:api']);
