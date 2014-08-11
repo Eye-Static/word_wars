@@ -1,6 +1,6 @@
 var validator = require('./validator');
 
-module.exports = function(game)
+module.exports = function(game, debug)
 {
 
   $('#shuffle-tray-button').show();
@@ -15,7 +15,7 @@ module.exports = function(game)
   $('#done-button').on('click', function()
   {
     validator.isValid(game);
-  })
+  });
 
   //////////////////////////////////////////////////
   $('#return-letters-button').show();
@@ -44,15 +44,40 @@ module.exports = function(game)
 
   //////////////////////////////////////////////////
   // DEBUG BUTTONS //
+  var debugButtons =
+  {
+    printGrid: $('#print-grid-button'),
+    printTray: $('#print-tray-button'),
+    printPlaced: $('#print-placed-button'),
+    hideDebug: $('#hide-debug-button')
+  };
 
-  $('#print-grid-button').click (function ()
+  var showDebugButtons = function ()
+  {
+    $.each(debugButtons, function(name, DOMbutton)
+    {
+      DOMbutton.show();
+    });
+  };
+
+  var hideDebugButtons = function ()
+  {
+    $.each(debugButtons, function(name, DOMbutton)
+    {
+      DOMbutton.hide();
+    });
+  };
+
+  //////////////////////////////////////////////////
+
+  debugButtons.printGrid.click (function ()
   {
     game.board.printGrid();
   });
 
   //////////////////////////////////////////////////
 
-  $('#print-tray-button').click (function ()
+  debugButtons.printTray.click (function ()
   {
     for(var i = 0; i < game.players.length; i ++)
     {
@@ -62,8 +87,17 @@ module.exports = function(game)
 
   //////////////////////////////////////////////////
 
-  $('#print-placed-button').click (function ()
+  debugButtons.printPlaced.click (function ()
   {
     game.board.printPlaced();
   });
+
+  //////////////////////////////////////////////////
+
+  debugButtons.hideDebug.click (function ()
+  {
+    hideDebugButtons();
+  });
+
+  if(debug) {showDebugButtons();}
 };

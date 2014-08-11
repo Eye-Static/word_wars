@@ -7,7 +7,13 @@ $(document).ready(function ()
 {
   var userName;
   var game;
-  setTimeout(function(){$('#new-game-button').trigger('click')}, 50);
+  //Change debug to remove debug buttons and game auto-start
+  var debug = true;
+
+  if(debug){
+    // Clicks the new game button
+    setTimeout(function(){$('#new-game-button').trigger('click')}, 50);
+  }
   //this is just for testing, in the final version
   //games are only started with the button
 
@@ -36,7 +42,7 @@ $(document).ready(function ()
     if(gameType === 'local')
     {
       game = new Game(boardType, playerNum);
-      new GameButtons(game);
+      new GameButtons(game, debug);
     }
     else
     {

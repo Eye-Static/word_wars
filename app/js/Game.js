@@ -94,7 +94,7 @@ Game.prototype.turnTransition = function(wordsData)
   {
     el += '<div>Player ' + (this.whoseTurn+1) +
                             ' got ' + this.recentScore +
-                            ' points for playing:</div><br>';
+                            ' points for playing:</div>';
     for (var w = 0; w < wordsData.length; w ++)
     {
       el += '<div>'+wordsData[w].word.toUpperCase() + ' - ' + wordsData[w].definition+'</div>';

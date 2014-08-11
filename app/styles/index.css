@@ -125,24 +125,29 @@ td
 {
   width: 25px;
 }
-.game-button
+
+.game-button, .debug-button
 {
   display: none;
 }
+
+#login-button
+{
+  font-size: .7em;
+}
+
 #fb-share-button
 {
 }
+
 select
 {
   line-height: 1em;
   font-size: .7em;
   width: 13em;
 }
-#login-button
-{
-  font-size: .7em;
-}
-div #transition-dialogue
+
+#transition-dialogue > div
 {
   margin-bottom: 1em;
 }
