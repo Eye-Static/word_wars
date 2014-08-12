@@ -19,6 +19,14 @@
 
 #tray-container
 {
+  //display: absolute;
+  //left: 0px;
+  //right: 0px;
+  //top: 600px;
+  //bottom: 0px;
+  //height: 100px;
+  //border: solid 2px green;
+  
   display: inline-block;
   margin-left: 25%;
   margin-top: 4%;
