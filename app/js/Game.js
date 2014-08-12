@@ -151,9 +151,12 @@ Game.prototype.wordScore = function()
   {
     score += this.scoreWordHorizontal (newletters[0]);
 
-    if (validator.findWordVertical (newletters[0]).length > 1)
+    for (l = 0; l < newletters.length; l += 1)
     {
-      score += this.scoreWordVertical (newletters[0]);
+      if (validator.findWordVertical (newletters[l]).length > 1)
+      {
+        score += this.scoreWordVertical (newletters[l]);
+      }
     }
   }
 
@@ -161,9 +164,12 @@ Game.prototype.wordScore = function()
   {
     score += this.scoreWordVertical (newletters[0]);
 
-    if (validator.findWordHorizontal (newletters[0]).length > 1)
+    for (l = 0; l < newletters.length; l += 1)
     {
-      score += this.scoreWordHorizontal (newletters[0]);
+      if (validator.findWordHorizontal (newletters[l]).length > 1)
+      {
+        score += this.scoreWordHorizontal (newletters[l]);
+      }
     }
   }
 
