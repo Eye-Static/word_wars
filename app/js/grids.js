@@ -2,28 +2,27 @@ module.exports =
 {
   scrabble : {
     grid:
-    'DW .. .. .. TL .. .. DW .. .. .. DW .. .. DL .. .. .. DW .. ' +
-    '.. DW .. .. .. DL .. .. DW .. DW .. .. DL .. .. .. DW .. .. ' +
-    '.. .. TW .. .. .. DL .. .. TW .. .. DL .. .. .. TW .. .. .. ' +
-    '.. .. .. DW .. .. .. TL .. .. .. TL .. .. .. DW .. .. .. DL ' +
-    'DL .. .. .. DW .. .. .. DL .. DL .. .. .. DW .. .. .. DL .. ' +
-    '.. DL .. .. .. DW .. .. .. DL .. .. .. DW .. .. .. TL .. .. ' +
-    '.. .. DL .. .. .. DW .. TL .. TL .. DW .. .. .. DL .. .. TW ' +
-    'DW .. .. TL .. .. .. TL .. .. .. TL .. .. .. TL .. .. DW .. ' +
-    '.. DW .. .. DL .. DL .. DL .. DL .. DL .. DL .. .. DW .. .. ' +
-    '.. .. TW .. .. DL .. .. .. *  .. .. .. DL .. .. TW .. .. DW ' +
-    '.. DW .. .. DL .. DL .. DL .. DL .. DL .. DL .. .. DW .. .. ' +
-    'DW .. .. TL .. .. .. TL .. .. .. TL .. .. .. TL .. .. DW .. ' +
-    '.. .. DL .. .. .. DW .. DL .. DL .. DW .. .. .. DL .. .. TW ' +
-    '.. DL .. .. .. DW .. .. .. DL .. .. .. DW .. .. .. DL .. .. ' +
-    'TL .. .. .. DW .. .. .. DL .. DL .. .. .. DW .. .. .. TL .. ' +
-    '.. .. .. DW .. .. .. TL .. .. .. TL .. .. .. DW .. .. .. DL ' +
-    '.. .. TW .. .. .. DL .. .. TW .. .. DL .. .. .. TW .. .. .. ' +
-    '.. DW .. .. .. DL .. .. DW .. DW .. .. DL .. .. .. DW .. .. ' +
-    'DW .. .. .. DL .. .. DW .. .. .. DW .. .. DL .. .. .. DW .. ' +
-    '.. .. .. DL .. .. DW .. .. TW .. .. DW .. .. DL .. .. .. DW',
-    width : 20,
-    height: 20
+    'XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX ' +
+    'XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX ' +
+    'XX XX TW .. .. DL .. .. .. TW .. .. .. DL .. .. TW XX XX ' +
+    'XX XX .. DW .. .. .. TL .. .. .. TL .. .. .. DW .. XX XX ' +
+    'XX XX .. .. DW .. .. .. DL .. DL .. .. .. DW .. .. XX XX ' +
+    'XX XX DL .. .. DW .. .. .. DL .. .. .. DW .. .. DL XX XX ' +
+    'XX XX .. .. .. .. DW .. .. .. .. .. DW .. .. .. .. XX XX ' +
+    'XX XX .. TL .. .. .. TL .. .. .. TL .. .. .. TL .. XX XX ' +
+    'XX XX .. .. DL .. .. .. DL .. DL .. .. .. DL .. .. XX XX ' +
+    'XX XX TW .. .. DL .. .. .. *  .. .. .. DL .. .. TW XX XX ' +
+    'XX XX .. .. DL .. .. .. DL .. DL .. .. .. DL .. .. XX XX ' +
+    'XX XX .. TL .. .. .. TL .. .. .. TL .. .. .. TL .. XX XX ' +
+    'XX XX .. .. .. .. DW .. .. .. .. .. DW .. .. .. .. XX XX ' +
+    'XX XX DL .. .. DW .. .. .. DL .. .. .. DW .. .. DL XX XX ' +
+    'XX XX .. .. DL .. .. .. DL .. DL .. .. .. DW .. .. XX XX ' +
+    'XX XX .. DW .. .. .. TL .. .. .. TL .. .. .. DW .. XX XX ' +
+    'XX XX TW .. .. DL .. .. .. TW .. .. .. DL .. .. TW XX XX ' +
+    'XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX ' +
+    'XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX XX',
+    width : 19,
+    height: 19
     },
 
   wordsWithFriends :{
