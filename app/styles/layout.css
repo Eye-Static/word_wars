@@ -18,6 +18,13 @@ header
 
 #left-column
 {
+  //position: absolute;
+  //left: 0px;
+  //width: 550px;
+  //top: 0px;
+  //bottom: 0px;
+  //border: solid 2px red;
+  
   height: 100%;
   width: 40%;
   float: left;
@@ -26,6 +33,13 @@ header
 
 #right-column
 {
+  //position: absolute;
+  //left: 550px;
+  //right: 0px;
+  //top: 0px;
+  //bottom: 0px;
+  //border: solid 2px yellow;
+  
   width: 55%;
   height: 100%;
   float: right;
@@ -35,6 +49,12 @@ header
 
 #container
 {
+  //position: absolute;
+  //left: 0px;
+  //right: 0px;
+  //top: 0px;
+  //bottom: 150px;
+
   border: 10px solid  #666699;
   float: left;
   text-align: center;
@@ -43,6 +63,11 @@ header
   box-shadow: 15px 15px 15px 9px #0A0A0F;
   width: 95%;
   height:480px;
+}
+
+#button-container
+{
+  //border: solid 2px orange;
 }
 
 .left-box

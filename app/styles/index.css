@@ -1,3 +1,10 @@
+html
+{
+  /*This allows the overlay to cover the whole page even with scroll bars present*/
+  position: relative;
+  min-height: 100%;
+}
+
 table
 {
   border-collapse: collapse;
@@ -10,10 +17,10 @@ body
   cursor: default;
   cursor: -webkit-default;
   cursor: -moz-default;
-   background-image:
+  background-image:
   linear-gradient(#000033, #29293D);
   color: white;
-  height: 41em;
+  height: 100%;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -104,11 +111,12 @@ td
 .popup
 {
   width: 25em;
-  left: 33.33%;
-  margin: 12em auto;
+  margin: auto;
+  margin-top: 10%;
+  position: relative;
   background-color: #fff;
   border: 1px solid #000;
-  text-align:center;
+  text-align: center;
   padding: 15px;
   color: black;
   font-size: 1.3em;
@@ -118,20 +126,62 @@ td
 {
   width: 25px;
 }
-.game-button
+
+.game-button, .debug-button
 {
   display: none;
 }
+
+#return-letters-button
+{
+  display: inline-block;
+  margin-top: -4em;
+  height: 3em;
+  width: 3em;
+}
+
+#return-letters-button > div
+{
+  font-size: 1.5em;
+  margin: auto;
+  height: 100%;
+  width: 100%;
+  line-height: 1.7em;
+  position: relative;
+  -webkit-transition-duration: 0.8s;
+  -moz-transition-duration: 0.8s;
+  -o-transition-duration: 0.8s;
+  transition-duration: 0.8s;
+}
+
+#return-letters-button > div:hover
+{
+  transform: rotate(-360deg);
+  -webkit-transform:rotate(-360deg);
+  -moz-transform:rotate(-360deg);
+  -o-transform:rotate(-360deg);
+}
+
+#login-button
+{
+  font-size: .7em;
+}
+
 #fb-share-button
 {
 }
+
 select
 {
   line-height: 1em;
   font-size: .7em;
   width: 13em;
 }
-#login-button
+#transition-dialogue
 {
-  font-size: .7em;
+  padding: 1em;
+}
+#transition-dialogue > div
+{
+  margin: 1em 0;
 }

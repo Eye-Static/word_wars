@@ -1,6 +1,6 @@
 var validator = require('./validator');
 
-module.exports = function(game)
+module.exports = function(game, debug)
 {
 
   $('#shuffle-tray-button').show();
@@ -8,63 +8,139 @@ module.exports = function(game)
   {
     game.players[game.whoseTurn].tray.shuffle();
     game.players[game.whoseTurn].tray.render();
-    game.board.addListeners (game.players);
   });
 
   //////////////////////////////////////////////////
+
   $('#done-button').show();
   $('#done-button').on('click', function()
   {
     validator.isValid(game);
-  })
+  });
 
   //////////////////////////////////////////////////
+
+  $('#turn-in-button').show();
+  $('#turn-in-button').on('click', function()
+  {
+    returnLetters();
+    var bagLetters = game.bag.letters;
+    var player = game.players[game.whoseTurn];
+    var playerLetters = player.tray.letters;
+
+    var length = playerLetters.length;
+    for(var i = 0; i < length; i++)
+    {
+      bagLetters.push(playerLetters.pop());
+    }
+    game.bag.shake();
+
+    // This gives letters up to 7 as long as the bag has them
+    var letter;
+    while(playerLetters.length < 7 && (letter = bagLetters.pop()))
+    {
+      playerLetters.push(letter);
+    }
+    player.tray.render();
+
+    $('#transition-dialogue').append(
+        '<div>Player ' + (game.whoseTurn+1) +
+        ' swapped out ' +
+        length + ' letters</div>'
+        );
+
+    // Move to next turn
+    validator.isValid(game);
+  });
+
+  //////////////////////////////////////////////////
+
   $('#return-letters-button').show();
   $('#return-letters-button').click (function ()
   {
-    var player    = game.players[game.whoseTurn];
-    var boardGrid = game.board.grid;
+    returnLetters();
+    game.board.renderAll();  //use the slow version for now
+    game.board.addListeners();
+  });
+
+  //////////////////////////////////////////////////
+
+  var returnLetters = function()
+  {
+    var player = game.players[game.whoseTurn];
+    var grid = game.board.grid;
     var letter;
 
-    for(var y = 0; y < boardGrid.length; y ++)
+    for(var y = 0; y < grid.length; y ++)
     {
-      for(var x = 0; x < boardGrid[y].length; x ++)
+      for(var x = 0; x < grid[y].length; x ++)
       {
-        letter = boardGrid[y][x].letter;
+        letter = grid[y][x].letter;
         if(letter && letter.justPlaced)
         {
           player.tray.letters.push(letter);
-          boardGrid[y][x].letter = null;
+          grid[y][x].letter = null;
         }
       }
     }
-    game.board.renderAll();  //use the slow version for now
-    game.board.addListeners();
     player.tray.render();
-  });
+    $('#done-button').text('Pass');
+  };
 
   //////////////////////////////////////////////////
   // DEBUG BUTTONS //
-
-  $('#print-grid-button').click (function ()
+  var debugButtons =
   {
-    game.board.printGrid();
-  });
+    printGrid: $('#print-grid-button'),
+    printTray: $('#print-tray-button'),
+    printPlaced: $('#print-placed-button'),
+    hideDebug: $('#hide-debug-button')
+  };
 
-  //////////////////////////////////////////////////
-
-  $('#print-tray-button').click (function ()
+  var showDebugButtons = function ()
   {
-    for(var i = 0; i < game.players.length; i ++)
+    $('.debug-button').show();
+
+    debugButtons.printGrid.click (function ()
     {
-      game.players[i].tray.print();
-    }
-  });
+      game.board.printGrid();
+    });
+
+    //////////////////////////////////////////////////
+
+    debugButtons.printTray.click (function ()
+    {
+      for(var i = 0; i < game.players.length; i ++)
+      {
+        game.players[i].tray.print();
+      }
+    });
+
+    //////////////////////////////////////////////////
+
+    debugButtons.printPlaced.click (function ()
+    {
+      game.board.printPlaced();
+    });
+
+    //////////////////////////////////////////////////
+
+    debugButtons.hideDebug.click (function ()
+    {
+      hideDebugButtons();
+    });
+  };
 
   //////////////////////////////////////////////////
 
-  $('#print-placed-button').click (function ()
+  var hideDebugButtons = function ()
   {
-    game.board.printPlaced();
-  });
+    $.each(debugButtons, function(name, DOMbutton)
+    {
+      DOMbutton.hide();
+      DOMbutton.off('click');
+    });
+  };
+
+  if(debug) {showDebugButtons();}
 };
