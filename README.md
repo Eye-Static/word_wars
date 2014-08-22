@@ -1,6 +1,6 @@
 #Word Wars
 
-This is a Scrabble-like game we made as a final project at Code Fellows JavaScript Developer Accelerator. It is fully functional, with dictionary lookup, scoring, and local multiplayer.
+This is a Scrabble-like game we made as a final project at Code Fellows JavaScript Developer Accelerator. It is fully functional, with dictionary lookup, scoring, and local multiplayer. The most recent version is hosted at http://burningfreak.com/zb/freelancewordwars
 
 In the future we plan work on:
 * Implementing network multiplayer
